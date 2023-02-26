@@ -1,0 +1,39 @@
+.nav {
+    background-color: #ffff81;
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.navItem {
+    /* color: red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.searchBar {
+    height: auto;
+    width: 400px;
+    border-radius: 50px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+
+.searchInput {
+    width: 350px;
+}
+
+.SearchIcon {
+    margin-left: auto;
+    /* margin-right: 10px; */
+}
+
+.iconBox {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}

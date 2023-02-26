@@ -1,0 +1,27 @@
+.footer {
+    background-color: #232F3E;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    height: 300px;
+}
+
+.footerBox1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    color: #fff;
+}
+
+.copyrightBox {
+    position: relative;
+    /* bottom: 2px; */
+    top: 90px;
+}
+
+.heading {
+    /* color: red */
+}
