@@ -7,7 +7,7 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "crow": "next dev"
+        "crow": "next dev -p 6969"
     },
     "dependencies": {
         "@chakra-ui/icons": "^2.0.17",
