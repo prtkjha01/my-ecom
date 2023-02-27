@@ -1,5 +1,9 @@
+.footerabs {}
+
 .footer {
     background-color: #232F3E;
+    /* position: absolute; */
+    /* top: 0px; */
     display: flex;
     flex-direction: column;
     justify-content: center;

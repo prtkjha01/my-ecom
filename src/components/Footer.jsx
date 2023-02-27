@@ -2,6 +2,7 @@ import React from "react";
 import styles from "../styles/Footer.module.css";
 const Footer = () => {
   return (
+    <footer className={`${styles.footerabs} `}>
     <section className={`${styles.footer} `} >
       <div className={`${styles.footerBox1} mb-3`}>
         <div>
@@ -30,6 +31,7 @@ const Footer = () => {
           <p className={`${styles.heading} text-xs`}>©{(new Date).getFullYear()} <a href="https://www.linkedin.com/in/prateekjha01/">Prateek Jha</a> & <a href="https://www.linkedin.com/in/pushpander/"> Puhspander Singh Tanwar</a></p>
         </div>
     </section>
+    </footer>
   );
 };
 
