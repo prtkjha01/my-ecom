@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import Head from 'next/head'
 const testRoute = () => {
   const [myArray, setMyArray] = useState([{ id: 1, name: "John" }, { id: 2, name: "Jane" }]);
 
@@ -19,6 +19,9 @@ const testRoute = () => {
   }
   return (
     <div>
+      <Head>
+        <title>test-route</title>
+      </Head>
       <p></p>
        <button onClick={() => updateName(1, "Johnny")}>Update name</button>
     </div>

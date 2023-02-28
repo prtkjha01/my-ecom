@@ -5,6 +5,7 @@
     align-items: center;
     gap: 2rem;
     padding-right: 1rem;
+    height: 60px;
     max-height: 60px;
     overflow: hidden;
 }
@@ -17,17 +18,18 @@
 }
 
 .navItem.logo {
-    height: inherit;
+    /* height: inherit; */
+    padding-left: 20px;
     overflow: hidden;
-    align-self: start;
+    align-self: center;
     /* padding: 5px; */
     /* mix-blend-mode: color-burn; */
 }
 
 .brandLogo {
     /* mix-blend-mode: color-burn; */
-    height: inherit;
-    width: 60px;
+    height: 50px;
+    width: 50px;
 }
 
 .searchBar {

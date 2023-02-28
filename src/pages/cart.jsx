@@ -1,8 +1,13 @@
 import React from 'react'
-
+import Head from 'next/head'
 const cart = () => {
   return (
-    <div>Welcome to cart</div>
+    <div>
+      <Head>
+        <title>cart</title>
+      </Head>
+      Welcome to cart
+    </div>
   )
 }
 
