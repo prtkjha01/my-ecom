@@ -1,7 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
 // import logo from '../assets/logoBlackBG.png'
-import myEcom from '../assets/logoTransparent.png'
+import logoTransparent from '../assets/logoTransparent.png'
+import logo from '../assets/logo.png'
 import styles from '../styles/Navbar.module.css'
 import { SearchIcon } from '@chakra-ui/icons'
 import { Icon } from '@chakra-ui/react'
@@ -59,8 +60,10 @@ const Navbar = () => {
               )
             })
           } */}
-          <div className={styles.navItem+" xyz"}>
-            <NextImage height={30} src={myEcom} alt="brand logo"/>
+          <div className={`${styles.navItem} ${styles.logo}`}>
+            <a href="/">  
+            <NextImage className={styles.brandLogo} src={logoTransparent} alt="brand logo"/>
+            </a>
           </div>
           <div className={styles.navItem+" xyz"}>
             <div className={styles.searchBar}>
@@ -81,7 +84,7 @@ const Navbar = () => {
               <a href="/wishlist">
               <Icon as={AiOutlineHeart} boxSize={6}/>
               </a>
-              <a href="">
+              <a href="/">
               <Icon as={MdAccountCircle} boxSize={6}/>
               </a>
             </div>
