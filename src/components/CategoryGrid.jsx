@@ -32,7 +32,7 @@ const gridItems = [
     },
     {
         id : 5,
-        title : 'Books',
+        title : 'Stationary',
         banner: 'https://images.unsplash.com/photo-1581447109217-19026003eba5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fDElM0ExJTIwYm9va3N8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
         row : 1,
         col : 1,

@@ -7,37 +7,37 @@ const ProductCard = () => {
         {
             id: 1,
             name : "product 1",
-            description : "mera loda sabse lamba",
+            description : "some random description",
             price: 2.5
         },
         {
             id: 2,
             name : "product 1",
-            description : "mera loda sabse lamba",
+            description : "some random description",
             price: 2.5
         },
         {
             id: 3,
             name : "product 1",
-            description : "mera loda sabse lamba",
+            description : "some random description",
             price: 2.5
         },
         {
             id: 4,
             name : "product 1",
-            description : "mera loda sabse lamba",
+            description : "some random description",
             price: 2.5
         },
         {
             id: 5,
             name : "product 1",
-            description : "mera loda sabse lamba",
+            description : "some random description",
             price: 2.5
         },
         {
             id: 6,
             name : "product 1",
-            description : "mera loda sabse lamba",
+            description : "some random description",
             price: 2.5
         }
     ]
@@ -46,37 +46,37 @@ const ProductCard = () => {
             {
                 id: 1,
                 name : "product 1",
-                description : "mera loda sabse lamba",
+                description : "some random description",
                 price: 2.5
             },
             {
                 id: 2,
                 name : "product 2",
-                description : "mera loda sabse lamba",
+                description : "some random description",
                 price: 2.5
             },
             {
                 id: 3,
                 name : "product 3",
-                description : "mera loda sabse lamba",
+                description : "some random description",
                 price: 2.5
             },
             {
                 id: 4,
                 name : "product 4",
-                description : "mera loda sabse lamba",
+                description : "some random description",
                 price: 2.5
             },
             {
                 id: 5,
                 name : "product 5",
-                description : "mera loda sabse lamba",
+                description : "some random description",
                 price: 2.5
             },
             {
                 id: 6,
                 name : "product 6",
-                description : "mera loda sabse lamba",
+                description : "some random description",
                 price: 2.5
             }
         ]
@@ -108,12 +108,11 @@ const ProductCard = () => {
                         <p>{wishlistProduct.name}</p>
                         <p>{wishlistProduct.description}</p>
                         <p>{wishlistProduct.price}</p>
-                        <button type="button" onClick={()=>{fun(index)}}>fuck meee!!!</button>
+                        <button type="button" onClick={()=>{fun(index)}}>click meee!!!</button>
                     </Box>
                     )
                 })
             } 
-            accha
         </div>
     </div>
   )

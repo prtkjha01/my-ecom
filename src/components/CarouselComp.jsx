@@ -115,6 +115,7 @@ const CarouselComp = () => {
   );
   return (
     <div className="">
+      {/* <img src="https://lh4.googleusercontent.com/idjPZ63unXZXi8wO4v7EyTr_lyS7sO_00L2V80bYctLKGTLSx5BCPR39bv9uOgYmtTI=w2400" alt="my image here"></img> */}
       <div className=" flex justify-center w-screen  items-center">
       <div className="relative w-full">
         <div className={styles.carousel}>

@@ -1,5 +1,5 @@
 .nav {
-    background-color: #ffff81;
+    background-color: #ffa837;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -33,16 +33,17 @@
 }
 
 .searchBar {
-    height: auto;
+    height: 30px;
     width: 400px;
     border-radius: 50px;
     background-color: white;
     display: flex;
     justify-content: center;
-    align-items: end;
+    align-items: center;
 }
 
 .searchInput {
+    height: 30px;
     width: 350px;
 }
 
