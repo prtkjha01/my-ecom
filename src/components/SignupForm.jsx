@@ -49,7 +49,7 @@ const SignupForm = () => {
   const signUp = async (signUpDetails) => {
  
     new Promise((resolve, reject)=>{
-        axios.post("http://localhost:3000/users/signUp",signUpDetails)
+        axios.post(`${process.env.NEXT_PUBLIC_SERVER_LOCAL}/users/signUp`,signUpDetails)
         .then((res)=>{
             console.log(res);
             resolve(res)
