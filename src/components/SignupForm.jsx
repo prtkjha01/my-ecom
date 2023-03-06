@@ -19,7 +19,10 @@ import {
   Link,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import Image from 'next/image'
+import logoTransparent from '../assets/logoTransparent.png'
 
+let NextImage = Image
 
 const SignupForm = () => {
   const router = useRouter();
@@ -62,17 +65,17 @@ const SignupForm = () => {
     })
   };
   return (
-    <div>
       <Flex
-        maxH={"90vh"}
-        align={"center"}
-        justify={"center"}
-        rounded="lg"
-        boxShadow="2xl"
-        bg={useColorModeValue("gray.50", "gray.800")}
-      > 
+    className= {`${styles.signUpForm}`}
+    minH={'100vh'}
+    align={'center'}
+    justify={'center'}
+    > 
         <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
           <Stack align={"center"}>
+          <div>
+        <NextImage className={`${styles.logo}`}src={logoTransparent} alt="brand logo"/>
+        </div>
             <Heading fontSize={"4xl"} textAlign={"center"}>
               Sign up
             </Heading>
@@ -82,11 +85,10 @@ const SignupForm = () => {
             </Text> */}
           </Stack>
           <Box
-            rounded={"lg"}
-            bg={useColorModeValue("white", "gray.700")}
-            boxShadow={"lg"}
-            p={8}
-          >
+        rounded={'lg'}
+        bg={useColorModeValue('white', 'gray.700')}
+        boxShadow={'lg'}
+        p={8}>
             <Stack spacing={4}>
               <HStack>
                 <Box>
@@ -155,30 +157,27 @@ const SignupForm = () => {
                 </InputGroup>
               </FormControl>
               <Stack spacing={10} pt={2}>
-                <Button onClick={()=>{console.log(givenSignUpDetails);}}>show filled details</Button>
+                {/* <Button onClick={()=>{console.log(givenSignUpDetails);}}>show filled details</Button> */}
                 <Button
                   loadingText="Submitting"
                   size="lg"
-                  bg={"blue.400"}
                   color={"white"}
+                  bg={'rgb(252, 88, 23)'}
                   _hover={{
-                    bg: "blue.500",
+                    bg: 'rgb(249, 77, 25)',
                   }}
                   onClick={handleSignUp}
                 >
                   Sign up
                 </Button>
-              </Stack>
-              <Stack pt={6}>
                 <Text align={"center"}>
                   Already a user? <Link href="/login" color={"blue.400"}>Login</Link>
                 </Text>
               </Stack>
             </Stack>
-          </Box>
+            </Box>
         </Stack>
       </Flex>
-    </div>
   );
 };
 
