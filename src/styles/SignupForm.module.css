@@ -2,3 +2,13 @@
     opacity: 100% !important;
     /* box-shadow: 10px; */
 }
+
+.logo {
+    /* mix-blend-mode: color-burn; */
+    height: 90px;
+    width: 90px;
+}
+
+.signUpForm{
+    background: linear-gradient(to bottom, rgb(208, 191, 255), rgb(255, 164, 133));
+}
