@@ -4,16 +4,9 @@ import SignupForm from '@/components/SignupForm'
 
 const signup = () => {
   return (
-    <div 
-    style={{
-        height: '100vh',
-        backgroundColor: '#c5c7c7',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-    }}>
+    <div>
         <Head>
-            <title>signup</title>
+            <title>Sign up</title>
         </Head>
         <SignupForm/>
     </div>
