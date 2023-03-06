@@ -95,8 +95,12 @@ const WishlistContainer = () => {
                 })
             } 
         </Box>
-        <Box width={{ base: '0px', md: '30vw', lg: '30vw' }} bg={'#3A003D'} className={styles.infoDiv}>
-            <p className='text-3xl'>I DONT KNOW WHAT TO DO WITH THIS PART</p>
+        <Box 
+            width={{ base: '0px', md: '30vw', lg: '30vw' }} 
+            //bg={'#3A003D'} 
+            className={styles.infoDiv}
+        >
+            <p color='#000' className='text-3xl text-black'>I DONT KNOW WHAT TO DO WITH THIS PART</p>
             {/* <Box 
                 bg={'tomato'}
                 p={0}

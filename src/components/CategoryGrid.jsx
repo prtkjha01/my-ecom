@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Image, Grid, GridItem } from "@chakra-ui/react";
 import styles from '../styles/CategoryGrid.module.css'
 const gridItems = [
@@ -39,15 +39,30 @@ const gridItems = [
     }
 ]
 const CategoryGrid = () => {
+    const [width, setWidth] = useState(0)
+    const [height, setHeight] = useState(0)
+    const handleWindowResize = () => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+      }
+    
+      useEffect(() => {
+        // component is mounted and window is available
+        handleWindowResize();
+        window.addEventListener('resize', handleWindowResize);
+        // unsubscribe from the event on component unmount
+        return () => window.removeEventListener('resize', handleWindowResize);
+      }, []);
   return (
     <div>
       <Grid
-        h="500px"
+        className={styles.wrapper}
+        //h="500px"
         templateRows="repeat(2, 1fr)"
         templateColumns="repeat(5, 1fr)"
-        px={8}
+        px={width<768? 1 : 8}
         my={4}
-        gap={4}
+        gap={width<768? 1:4}
       >
         {
             gridItems.map((gridItem, i)=>{
