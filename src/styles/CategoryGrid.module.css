@@ -1,3 +1,7 @@
+.wrapper {
+    height: 500px;
+}
+
 .gridItem {
     overflow: hidden;
 }
@@ -14,4 +18,18 @@
     left: 10px;
     color: aliceblue;
     z-index: 1;
+}
+
+@media only screen and (max-width: 768px) {
+    .wrapper {
+        height: 200px;
+    }
+    .text {
+        font-size: 12px;
+        position: relative;
+        bottom: 60px;
+        left: 10px;
+        color: aliceblue;
+        z-index: 1;
+    }
 }

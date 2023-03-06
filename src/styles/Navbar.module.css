@@ -59,3 +59,25 @@
     justify-content: center;
     gap: 2rem;
 }
+
+@media only screen and (max-width: 768px) {
+    .searchBar {
+        height: 30px;
+        width: 200px;
+        border-radius: 50px;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .searchInput {
+        height: 30px;
+        width: 200px;
+        border-radius: 50px;
+        margin-right: -5px;
+    }
+    .cart,
+    .wishlist {
+        display: none;
+    }
+}

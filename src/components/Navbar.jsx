@@ -13,53 +13,12 @@ const runClick = () =>{
   console.log('i am clicked');
 }
 let NextImage = Image
-const Navbar = () => {
-  // const accha = () => {
-  //   console.log(process.env.NEXT_PUBLIC_VAR)
-  // }
-  // const navItems = [
-  //   {
-  //     id : 1,
-  //     title : 'item 1',
-  //     redirect: '/testRoute'
-  //   },
-  //   {
-  //     id : 2,
-  //     title : 'item 2',
-  //     redirect: '/testRoute'
-  //   },
-  //   {
-  //     id : 3,
-  //     title : 'item 3',
-  //     redirect: '/testRoute'
-  //   },
-  //   {
-  //     id : 4,
-  //     title : 'item 4',
-  //     redirect: '/testRoute'
-  //   }
-  // ]  
+const Navbar = () => { 
   return (
     <div>
-        {/* <div onClick={accha} className="text-4xl text-center font-bold underline">
-            Navbar ! {process.env.NEXT_PUBLIC_VAR}
-        </div> */}
         <nav className=
         {styles.nav}
         >
-          {/* {
-            navItems.map((navItem,index)=>{
-              return (
-              <div className={styles.navItem+" xyz"} key={navItem.id}>
-                <a href={navItem.redirect}>
-
-                {navItem.title}
-                </a>
-                  
-              </div>
-              )
-            })
-          } */}
           <div className={`${styles.navItem} ${styles.logo}`}>
             <a href="/">  
             <NextImage className={styles.brandLogo} src={logoTransparent} alt="brand logo"/>
@@ -78,14 +37,14 @@ const Navbar = () => {
           </div>
           <div className={styles.navItem+" xyz"}>
             <div className={styles.iconBox}>
-              <a href="/cart">
+              <a className={`${styles.cart}`} href="/cart">
               <Icon as={MdShoppingCart} boxSize={6}/>
               </a>
-              <a href="/wishlist">
+              <a className={`${styles.wishlist}`} href="/wishlist">
               <Icon as={AiOutlineHeart} boxSize={6}/>
               </a>
-              <a href="/">
-              <Icon as={MdAccountCircle} boxSize={6}/>
+              <a className={`${styles.account}`} href="/">
+              <Icon as={MdAccountCircle} boxSize={{base: '7', md: '6', lg: '6'}}/>
               </a>
             </div>
           </div>

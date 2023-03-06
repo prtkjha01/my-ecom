@@ -33,7 +33,7 @@ const ProductCard = ({ name, index, description, price, handleClick, handleDelet
         </div>
         <div className={styles.productInfo}>
           <p className={`${styles.productName} text-xl font-medium`}>{name}</p>
-          <p>{description}</p>
+          <p className={`${styles.productDesc}`}>{description}</p>
           <p className={`${styles.productPrice} text-xl font-bold`}>
             ₹ {price}{" "}
             <span className={`${styles.incPrice} text-sm font-normal`}>

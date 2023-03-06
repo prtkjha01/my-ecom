@@ -39,3 +39,20 @@
     background-color: #3A003D !important;
     color: #fff;
 }
+
+@media only screen and (max-width: 768px) {
+    .infoDiv {
+        display: none;
+    }
+    .buttonWrapper {
+        display: flex;
+        flex-direction: column;
+    }
+    .imageContainer {
+        height: inherit;
+        width: 30%;
+    }
+    .productDesc {
+        display: none;
+    }
+}
