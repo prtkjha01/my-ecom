@@ -44,7 +44,7 @@ const SignupForm = () => {
         password: givenSignUpDetails.password
     }
     if(givenSignUpDetails.fName.length === 0){
-        alert('naam theek se daal lawde !!!!!')
+        alert('Please Enter a Valid Name')
     }else{
         signUp(signUpDetails)
     } 
@@ -171,7 +171,7 @@ const SignupForm = () => {
                   Sign up
                 </Button>
                 <Text align={"center"}>
-                  Already a user? <Link href = '/login' color={"blue.400"}>Login</Link>
+                  Already a user? <Link href="/login" color={"blue.400"}>Login</Link>
                 </Text>
               </Stack>
             </Stack>

@@ -1,0 +1,27 @@
+.abc {
+    min-height: 430px;
+    display: flex;
+    /* justify-content: space-between; */
+}
+
+.infoDiv {
+    width: 30vw;
+    height: auto;
+    border-left: 1px solid lightgray;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+@media only screen and (max-width: 768px) {
+    .infoDiv {
+        display: none;
+    }
+}
+
+.wishlistWrapper {
+    /* color: red; */
+    /* width: 70vw; */
+}

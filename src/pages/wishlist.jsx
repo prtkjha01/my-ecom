@@ -4,7 +4,7 @@ import { Inter } from "@next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { StylesProvider } from '@chakra-ui/react';
-import ProductCard from '@/components/ProductCard';
+import WishlistContainer from '@/components/WishlistContainer';
 
 const wishlist = () => {
   return (
@@ -13,7 +13,7 @@ const wishlist = () => {
         <title>wishlist</title>
       </Head>
       <Navbar/>
-      <ProductCard/>
+      <WishlistContainer/>
       <Footer/>
     </div>
   )
