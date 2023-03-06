@@ -1,7 +1,41 @@
-.abc {
-    min-height: 430px;
+/* .myWishlist {
+    text-align: start;
+} */
+
+.cardContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    text-align: start;
 }
 
-.wishlistWrapper {
-    /* color: red; */
+.imageContainer {
+    height: inherit;
+    width: 20%;
+}
+
+.productInfo {
+    /* width: 60px; */
+    max-width: 600px;
+}
+
+.productName {}
+
+.productPrice {}
+
+.incPrice {
+    text-decoration: line-through;
+}
+
+.buttonWrapper {
+    display: flex;
+    /* min-width: 300px !important; */
+    /* justify-content: space-around; */
+    gap: .25rem;
+}
+
+.button {
+    background-color: #3A003D !important;
+    color: #fff;
 }

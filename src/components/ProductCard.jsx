@@ -1,121 +1,77 @@
-import React, {useState} from 'react'
-import styles from '../styles/ProductCard.module.css'
-import { Box } from '@chakra-ui/react'
+import React from "react";
+import styles from "../styles/ProductCard.module.css";
+import {
+  Box,
+  Image,
+  Button,
+  IconButton,
+  textDecoration,
+  color,
+} from "@chakra-ui/react";
+import { ArrowForwardIcon, DeleteIcon } from "@chakra-ui/icons";
 
-const ProductCard = () => {
-    const dummy = [
-        {
-            id: 1,
-            name : "product 1",
-            description : "some random description",
-            price: 2.5
-        },
-        {
-            id: 2,
-            name : "product 1",
-            description : "some random description",
-            price: 2.5
-        },
-        {
-            id: 3,
-            name : "product 1",
-            description : "some random description",
-            price: 2.5
-        },
-        {
-            id: 4,
-            name : "product 1",
-            description : "some random description",
-            price: 2.5
-        },
-        {
-            id: 5,
-            name : "product 1",
-            description : "some random description",
-            price: 2.5
-        },
-        {
-            id: 6,
-            name : "product 1",
-            description : "some random description",
-            price: 2.5
-        }
-    ]
-    const [wishlistProducts, setWishlistProducts] =  useState(
-        [
-            {
-                id: 1,
-                name : "product 1",
-                description : "some random description",
-                price: 2.5
-            },
-            {
-                id: 2,
-                name : "product 2",
-                description : "some random description",
-                price: 2.5
-            },
-            {
-                id: 3,
-                name : "product 3",
-                description : "some random description",
-                price: 2.5
-            },
-            {
-                id: 4,
-                name : "product 4",
-                description : "some random description",
-                price: 2.5
-            },
-            {
-                id: 5,
-                name : "product 5",
-                description : "some random description",
-                price: 2.5
-            },
-            {
-                id: 6,
-                name : "product 6",
-                description : "some random description",
-                price: 2.5
-            }
-        ]
-    );
-    // setWishlistProducts(dummy);
-    const fun = (i) => {
-        console.log("aaah!");
-        const temp = wishlistProducts.map((ekObject,index)=>{
-            if(index === i) {
-                console.log('fuddiyan paado!');
-                ekObject.price++;
-                return ekObject
-            }
-            else {
-                console.log('tu dalla behen ka loda')
-                return ekObject
-            };
-        })
-        // temp[i].price += 1;
-        setWishlistProducts(temp);
-    }
+const ProductCard = ({ name, index, description, price, handleClick, handleDelete}) => {
+  var loadState = false;
   return (
-    <div className={`${styles.abc}`}>
-        <div className={`${styles.wishlistWrapper}`}>
-            {
-                wishlistProducts.map((wishlistProduct, index)=>{
-                    return(
-                    <Box key={index} borderRadius='' mx={4} p={4} borderWidth='1px' boxShadow=''>
-                        <p>{wishlistProduct.name}</p>
-                        <p>{wishlistProduct.description}</p>
-                        <p>{wishlistProduct.price}</p>
-                        <button type="button" onClick={()=>{fun(index)}}>click meee!!!</button>
-                    </Box>
-                    )
-                })
-            } 
+    <Box _hover={{ bg: '#dedede' }}> 
+      <Box
+        key={index}
+        borderRadius=""
+        className={styles.cardContainer}
+        mb={2}
+        p={2}
+        
+        borderBottomWidth="1px"
+        // borderRightWidth={1}
+        boxShadow=""
+      >
+        <div className={styles.imageContainer}>
+          <Image
+            className={styles.productImage}
+            src="https://images.unsplash.com/photo-1677589205417-338f4d164cf6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+          ></Image>
         </div>
-    </div>
-  )
-}
+        <div className={styles.productInfo}>
+          <p className={`${styles.productName} text-xl font-medium`}>{name}</p>
+          <p>{description}</p>
+          <p className={`${styles.productPrice} text-xl font-bold`}>
+            ₹ {price}{" "}
+            <span className={`${styles.incPrice} text-sm font-normal`}>
+              ₹{parseInt(price) + 0.2 * parseInt(price)}
+            </span>
+          </p>
+        </div>
+        <div className={styles.buttonWrapper}>
+          <IconButton
+            size="sm"
+            // className={styles.button}
+            variant="outline"
+            colorScheme="red"
+            aria-label="Add to friends"
+            icon={<DeleteIcon />}
+            _hover={{bg: '#C73636' , color: "#fff" }}
+            onClick={()=>handleDelete(index)}
+          />
+          <Button
+            type="button"
+            border="1px"
+            variant="outline"
+            borderColor="#3A003D"
+            _hover={{ bg: "#3A003D", color: "#fff" }}
+            // className={styles.button}
+            size="sm"
+            rightIcon={<ArrowForwardIcon />}
+            isLoading={loadState}
+            onClick={() => {
+              handleClick(index);
+            }}
+          >
+            Add to Cart
+          </Button>
+        </div>
+      </Box>
+    </Box>
+  );
+};
 
-export default ProductCard
+export default ProductCard;
