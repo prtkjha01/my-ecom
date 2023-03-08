@@ -1,13 +1,19 @@
+.wrapper {
+    min-height: 431px;
+}
+
 .container {
     display: flex;
     flex-direction: row;
-    /* justify-content: center; */
+    /* justify-content: start; */
     overflow: scroll;
-    width: 500px;
+    align-items: center;
+    height: 110px;
+    /* width: 500px; */
 }
 
 .singleItem {
     background-color: lightblue;
-    min-width: 110px;
-    height: 110px;
+    min-width: 100vw;
+    /* height: inherit; */
 }

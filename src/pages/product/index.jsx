@@ -1,3 +1,5 @@
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import React from "react";
 import styles from "./index.module.css";
 const index = () => {
@@ -7,16 +9,20 @@ const index = () => {
   ];
   return (
     <div>
-      This is index
-      <div className={styles.container}>
-        {data.map((dataItem) => {
-          return (
-            <div className={styles.singleItem}>
-              <p> {dataItem}</p>
-            </div>
-          );
-        })}
+      <Navbar />
+      <div className={styles.wrapper}>
+        This is index
+        <div className={styles.container}>
+          {data.map((dataItem) => {
+            return (
+              <div className={styles.singleItem}>
+                <p> {dataItem}</p>
+              </div>
+            );
+          })}
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };
