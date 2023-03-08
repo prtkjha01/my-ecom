@@ -64,3 +64,24 @@
     align-items: center;
     gap: 1rem;
 }
+
+@media only screen and (max-width:768px) {
+    .container1 {
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center; */
+    }
+    .imageWrapper {
+        width: 100vw;
+    }
+    .detailsWrapper {
+        /* align-self: flex-end; */
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+        /* align-items: stretch; */
+        /* text-align: start; */
+        /* justify-content: space-evenly; */
+        width: 100vw;
+    }
+}

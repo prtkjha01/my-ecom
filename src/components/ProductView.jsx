@@ -26,9 +26,18 @@ const ProductView = ({ productDetails }) => {
       <div className={styles.container1}>
         {/**************************** PRODUCT IMAGE *************************************/}
         <div className={styles.imageWrapper}>
-          <Image src={productDetails.images[0]} h={500} w={500} m={10} />
+          <Image
+            src={productDetails.images[0]}
+            h={{ base: "300px", md: "500px", lg: "500px" }}
+            w={{ base: "300px", md: "500px", lg: "500px" }}
+            m={{ base: 7, md: 7, lg: 10 }}
+          />
         </div>
-        <Box pt={10} className={`${styles.detailsWrapper} pl-20`}>
+        <Box
+          pt={10}
+          pl={{ base: 10, md: 10, lg: 20 }}
+          className={`${styles.detailsWrapper} `}
+        >
           {/**************************** TITLE *************************************/}
           <p className={`text-lg font-semibold`}>
             {productDetails.brand} {productDetails.name}
@@ -227,7 +236,7 @@ const ProductView = ({ productDetails }) => {
                 className={`${styles.similarProduct} scrollbar-hide`}
                 key={index}
               >
-                <Card maxW="sm ">
+                <Card maxW="sm " boxShadow="xl">
                   <CardBody p={0} borderRadius="lg">
                     <Image
                       src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
