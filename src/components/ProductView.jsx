@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Image,
@@ -19,8 +19,11 @@ import {
 } from "@chakra-ui/react";
 import { StarIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import { MdLocationOn, MdAccountCircle } from "react-icons/md";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import styles from "../styles/ProductView.module.css";
 const ProductView = ({ productDetails }) => {
+  // var isRed = false;
+  const [isRed, setIsRed] = useState(false);
   return (
     <div className={styles.wrapper}>
       <div className={styles.container1}>
@@ -40,7 +43,24 @@ const ProductView = ({ productDetails }) => {
         >
           {/**************************** TITLE *************************************/}
           <p className={`text-lg font-semibold`}>
-            {productDetails.brand} {productDetails.name}
+            {productDetails.brand} {productDetails.name}{" "}
+            <IconButton
+              variant="ghost"
+              colorScheme="black"
+              aria-label="Call Sage"
+              fontSize="20px"
+              icon={
+                isRed === false ? (
+                  <AiOutlineHeart />
+                ) : (
+                  <AiFillHeart color="red" />
+                )
+              }
+              onClick={() => {
+                setIsRed(!isRed);
+              }}
+            />
+            {/* <span>{isRed ? "yes" : ""}</span> */}
           </p>
           {/**************************** RATING *************************************/}
           <div>

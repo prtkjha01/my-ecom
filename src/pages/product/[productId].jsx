@@ -25,6 +25,7 @@ const ProductDetails = () => {
       "Active Noise cancellation",
       "500 mAh battery",
       "Google Assistant Compatible",
+      "IPX4 water resistant",
     ],
     similarProducts: [
       "Product_1",
