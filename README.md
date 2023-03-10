@@ -18,13 +18,13 @@ My E-com provides the following features for users:
 
 - ![NextJs](https://img.shields.io/badge/nextjs-000000?style=for-the-badge&logo=next.js&logoColor=%FFFFFF)
 
-- ![ReactJs](https://img.shields.io/badge/Reactjs-purple.svg?style=for-the-badge&logo=react&logoColor=yellow)
+- ![ReactJs](https://img.shields.io/badge/Reactjs-FFFFFF.svg?style=for-the-badge&logo=react&logoColor=5fc4fa)
 
-- ![Chakra_UI](https://img.shields.io/badge/Chakra_UI-a.svg?style=for-the-badge&logo=chakra-ui&logoColor=purple)
+- ![Chakra_UI](https://img.shields.io/badge/Chakra_UI-yellow.svg?style=for-the-badge&logo=chakra-ui&logoColor=90EE90)
 
 - ![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white)
 
-- ![JavaScript](https://img.shields.io/badge/javascript-red.svg?style=for-the-badge&logo=javascript&logoColor=blue)
+- ![JavaScript](https://img.shields.io/badge/javascript-black.svg?style=for-the-badge&logo=javascript&logoColor=FFFF00)
 
 ## Getting Started
 
