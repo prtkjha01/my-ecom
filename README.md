@@ -1,4 +1,4 @@
-# Task Manager
+# My E-com
 
 This is a simple task manager application built using Node.js, Express.js, JavaScript and MongoDB database. It allows users to signUp, and create, update, and delete tasks with a expire date. Users can also mark tasks as completed or incomplete, and sort them based on completed or pending.
 
