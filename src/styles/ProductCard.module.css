@@ -41,16 +41,44 @@
 }
 
 @media only screen and (max-width: 768px) {
+    /* .superContainer {
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    } */
+    .cardContainer {
+        height: 200px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        text-align: start;
+    }
     .infoDiv {
         display: none;
     }
     .buttonWrapper {
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
     }
+    /* .counter {
+        display: flex;
+        flex-direction: column;
+    } */
     .imageContainer {
+        /* align-self: center; */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         height: inherit;
         width: 30%;
+    }
+    .productImage {
+        margin-bottom: 10px;
     }
     .productDesc {
         display: none;
