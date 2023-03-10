@@ -70,6 +70,19 @@
         justify-content: center;
         align-items: center;
     }
+    .navItem.logo {
+        /* height: inherit; */
+        padding-left: 0px;
+        overflow: hidden;
+        align-self: center;
+        /* padding: 5px; */
+        /* mix-blend-mode: color-burn; */
+    }
+    .brandLogo {
+        /* mix-blend-mode: color-burn; */
+        height: 50px;
+        width: 50px;
+    }
     .searchInput {
         height: 30px;
         width: 200px;

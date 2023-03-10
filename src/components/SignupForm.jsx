@@ -86,10 +86,6 @@ const SignupForm = () => {
           <Heading fontSize={"4xl"} textAlign={"center"}>
             Sign up
           </Heading>
-          {/* <Button onClick={() => router.push('/wishlist')}>change route</Button> */}
-          {/* <Text fontSize={"lg"} color={"gray.600"}>
-              to enjoy all of our cool features ✌️
-            </Text> */}
         </Stack>
         <Box
           rounded={"lg"}

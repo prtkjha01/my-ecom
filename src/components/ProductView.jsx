@@ -47,7 +47,7 @@ const ProductView = ({ productDetails }) => {
             <IconButton
               variant="ghost"
               colorScheme="black"
-              aria-label="Call Sage"
+              aria-label="add to wishlist"
               fontSize="20px"
               icon={
                 isRed === false ? (
