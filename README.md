@@ -30,18 +30,10 @@ My E-com provides the following features for users:
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-1. Clone the repository:
+1. Clone the repository: `git clone https://github.com/prtkjha01/my-ecom.git`
 
-shell
-git clone https://github.com/prtkjha01/my-ecom.git
+2. Install dependencies: `npm install`
 
-2. Install dependencies:
+3. Start the application: `npm run dev`
 
-shell
-npm install
-
-3. Start the application:
-   shell
-   npm run dev
-
-4. Access the Website at `http://localhost:8000/`
+4. Access the Website at: `http://localhost:8000/`
