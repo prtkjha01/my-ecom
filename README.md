@@ -1,18 +1,20 @@
 # My E-com
 
-This is a simple task manager application built using Node.js, Express.js, JavaScript and MongoDB database. It allows users to signUp, and create, update, and delete tasks with a expire date. Users can also mark tasks as completed or incomplete, and sort them based on completed or pending.
+An E-commerce website that offers all the modern features
 
 ## Features
 
-- User signup and login.
+My E-com provides the following features for users:
 
-- CRUD(Create, Read, Update and Delete) operations for tasks.
+- Browse a catalog of products
+- Search for products
+- Filter products by category
+- Add products to a cart
+- View cart and modify quantities of products
+- Checkout and place an order
+- View order history
 
-- Sorting based on completed or pending tasks.
-
-- Configured caching to reduce the time to read data from the database, TTL for cache is 10 minutes.
-
-### Technology Stack
+### Tech Stack
 
 - ![NextJs](https://img.shields.io/badge/nextjs-000000?style=for-the-badge&logo=next.js&logoColor=%FFFFFF)
 
