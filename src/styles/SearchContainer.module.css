@@ -2,6 +2,20 @@
     min-height: 431px;
 }
 
-.loda {
+.wrapper {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.sidebar {
+    width: 20vw;
+    border-right: .5px solid #D3D3D3;
+}
+
+.grid {
+    width: 80vw;
+}
+
+.list {
     height: 500px;
 }
