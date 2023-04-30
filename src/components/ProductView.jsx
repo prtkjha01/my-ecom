@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getProduct } from "../redux/slices/product";
 import {
   Box,
   Image,
@@ -21,11 +23,27 @@ import { StarIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import { MdLocationOn, MdAccountCircle } from "react-icons/md";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import styles from "../styles/ProductView.module.css";
-const ProductView = ({ productDetails }) => {
+
+const ProductView = ({ productId, productDetails }) => {
   // var isRed = false;
   const [isRed, setIsRed] = useState(false);
+  const dispatch = useDispatch();
+  const [hasData, setHasData] = useState(false);
+  function getProductFromStore(productId) {
+    dispatch(getProduct(productId));
+    setHasData(true);
+  }
+  const { product } = useSelector((state) => state.product);
+  useEffect(() => {
+    console.log(productId);
+    getProductFromStore(productId);
+    // dispatch(getProduct());
+    // setHasData(true);
+  }, []);
+
   return (
     <div className={styles.wrapper}>
+      {hasData && <p> {product?.data.name}</p>}
       <div className={styles.container1}>
         {/**************************** PRODUCT IMAGE *************************************/}
         <div className={styles.imageWrapper}>
@@ -249,20 +267,26 @@ const ProductView = ({ productDetails }) => {
         <h1 className={`text-3xl font-bold text-start ml-10 mb-10`}>
           Similar Products
         </h1>
-        <div className={`${styles.productWrapper} px-10 pb-10 scrollbar-hide`}>
+        <div className={`${styles.productWrapper} px-10 py-10 scrollbar-hide`}>
           {productDetails.similarProducts.map((product, index) => {
             return (
               <div
                 className={`${styles.similarProduct} scrollbar-hide`}
                 key={index}
               >
-                <Card maxW="sm " boxShadow="xl">
-                  <CardBody p={0} borderRadius="lg">
+                <Card
+                  maxW="sm "
+                  boxShadow="xl"
+                  borderRadius="xl"
+                  _hover={{ transform: "scale(1.1,1.1)" }}
+                >
+                  <CardBody p={0}>
                     <Image
                       src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
                       alt="Green double couch with wooden legs"
-                      borderRadius="lg"
+                      borderTopRadius="xl"
                     />
+
                     <Stack mt="6" spacing="3">
                       <Heading size="md">{product}</Heading>
                       <Text>
