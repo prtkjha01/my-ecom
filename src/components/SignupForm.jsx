@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/SignupForm.module.css";
 import axios from "axios";
@@ -21,11 +21,15 @@ import {
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import Image from "next/image";
 import logoTransparent from "../assets/logoTransparent.png";
+import { useDispatch, useSelector } from "react-redux";
+import { signUp } from "../redux/slices/auth";
+// import { dispatch } from "@/redux/store";
 
 let NextImage = Image;
 
 const SignupForm = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [signUPInput, setSignUPInput] = useState({
     fName: "",
@@ -35,6 +39,8 @@ const SignupForm = () => {
     email: "",
     password: "",
   });
+  const cookies = document.cookie;
+  console.log("cookies =>", cookies);
   const handleSignUp = () => {
     const signUpDetails = {
       name: `${signUPInput.fName.trim()} ${signUPInput.lName.trim()}`,
@@ -46,26 +52,33 @@ const SignupForm = () => {
     if (signUPInput.fName.length === 0) {
       alert("Please Enter a Valid Name");
     } else {
-      signUp(signUpDetails);
+      signUpabc(signUpDetails);
     }
   };
-  const signUp = async (signUpDetails) => {
-    new Promise((resolve, reject) => {
-      axios
-        .post(
-          `${process.env.NEXT_PUBLIC_SERVER_IP}/users/signUp`,
-          signUpDetails
-        )
-        .then((res) => {
-          console.log(res);
-          resolve(res);
-          router.push("/");
-        })
-        .catch((err) => {
-          console.log(err.message);
-          reject(err);
-        });
-    });
+  const signUpabc = (signUpDetails) => {
+    console.log("inside Signup");
+    console.log(signUpDetails);
+    dispatch(signUp(signUpDetails));
+    //.then(() => {
+    router.push("/");
+    //});
+    // new Promise((resolve, reject) => {
+    //   axios
+    //     .post(
+    //       `${process.env.NEXT_PUBLIC_SERVER_IP}/users/signUp`,
+    //       signUpDetails
+    //     )
+    //     .then((res) => {
+    //       console.log(res);
+    //       resolve(res);
+    //       router.push("/");
+    //     })
+    //     .catch((err) => {
+    //       console.log(err.message);
+    //       reject(err);
+    //     });
+    // });
+    // dispatch(signUp(signUpDetails));
   };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -73,6 +86,10 @@ const SignupForm = () => {
     setSignUPInput((prevState) => ({ ...prevState, [name]: value }));
     // console.log(e.target.value);
   };
+  useEffect(() => {
+    console.log("test");
+    console.log("cookies", document.cookie);
+  }, []);
   return (
     <Flex
       className={`${styles.signUpForm}`}

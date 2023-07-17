@@ -35,17 +35,40 @@ const slice = createSlice({
   },
 });
 
-export const getProduct = async () => {
-  dispatch(slice.actions.setLoadingForProduct(true));
-  try {
-    const response = await api.getProduct("644e2b862ab04fc66a9de91c");
-    dispatch(slice.actions.setProduct(response.data.data));
-    dispatch(slice.actions.setErrorForProduct(false));
-  } catch (error) {
-    dispatch(slice.actions.setErrorForProduct(true));
-    dispatch(slice.actions.setLoadingForProduct(false));
-  } finally {
-    dispatch(slice.actions.setLoadingForProduct(false));
-  }
+// export const getProduct = async () => {
+//   dispatch(slice.actions.setLoadingForProduct(true));
+//   try {
+//     const response = await api.getProduct("644e2b862ab04fc66a9de91c");
+//     console.log(response);
+//     dispatch(slice.actions.setProduct(response.data.data));
+//     dispatch(slice.actions.setErrorForProduct(false));
+//   } catch (error) {
+//     dispatch(slice.actions.setErrorForProduct(true));
+//     dispatch(slice.actions.setLoadingForProduct(false));
+//   } finally {
+//     dispatch(slice.actions.setLoadingForProduct(false));
+//   }
+// };
+export const getProduct = (id) => {
+  return (dispatch, getState) => {
+    // dispatch({ type: "FETCH_DATA_START" });
+
+    api
+      .getProduct(id)
+      .then((response) => {
+        // dispatch({ type: "FETCH_DATA_SUCCESS", payload: response.data });
+        console.log(response);
+        dispatch(slice.actions.setProduct(response.data.data));
+        dispatch(slice.actions.setErrorForProduct(false));
+      })
+      .catch((error) => {
+        dispatch(slice.actions.setErrorForProduct(true));
+        dispatch(slice.actions.setLoadingForProduct(false));
+        // dispatch({ type: "FETCH_DATA_FAILURE", payload: error.message });
+      })
+      .finally(() => {
+        dispatch(slice.actions.setLoadingForProduct(false));
+      });
+  };
 };
 export default slice.reducer;

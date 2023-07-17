@@ -23,12 +23,10 @@ import {
   Button,
   Center,
 } from "@chakra-ui/react";
-import { StarIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-import { MdLocationOn, MdAccountCircle } from "react-icons/md";
+import { StarIcon } from "@chakra-ui/icons";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import FilterContainer from "./FilterContainer";
 import MyEcomAssured from "../assets/MyEcomAssured.png";
-import logoTransparent from "../assets/logoTransparent.png";
 import { useSelector, useDispatch } from "react-redux";
 import { getProducts } from "../redux/slices/search";
 
@@ -60,7 +58,7 @@ const SearchContainer = () => {
 
         <div>
           {!hasData && (
-            <Center>
+            <Center style={{ minHeight: "65vh" }}>
               <Spinner
                 mt={10}
                 thickness="4px"
@@ -109,8 +107,7 @@ const SearchContainer = () => {
                       h={300}
                       // w={250}
                       className={`${styles.productImage} text-center`}
-                      src={product.images[0]}
-                      // "https://cdn.shopify.com/s/files/1/0057/8938/4802/products/177292c0-d3d8-4ee3-adfe-7c539f030252_600x.png?v=1625046016"
+                      src={product.images.length && product.images[0]}
                       onClick={() => {
                         router.push(`/product/${product._id}`);
                       }}
@@ -120,6 +117,7 @@ const SearchContainer = () => {
                       <div className={`${styles.productName}`}>
                         <p className={`text-base font-semibold text-start`}>
                           {product.brand + " " + product.name}
+                          {/* Some Brand */}
                         </p>
                         <IconButton
                           variant="ghost"
@@ -151,7 +149,8 @@ const SearchContainer = () => {
                           }
                           variant="solid"
                         >
-                          {product.rating} <StarIcon />
+                          {product.rating}
+                          <StarIcon />
                         </Badge>
                       </div>
                       <div className={`${styles.assuranceContainer}`}>

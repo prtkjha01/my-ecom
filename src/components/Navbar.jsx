@@ -14,8 +14,11 @@ const runClick = () => {
   console.log("i am clicked");
 };
 let NextImage = Image;
-const Navbar = () => {
+const Navbar = ({ user }) => {
   const router = useRouter();
+  // let t = localStorage();
+  // console.log(t);
+
   const handleSearch = () => {
     console.log("search clicked");
     router.push("/search");

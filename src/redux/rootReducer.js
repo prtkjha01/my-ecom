@@ -4,7 +4,7 @@ import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import testReducer from "./slices/test";
 import searchReducer from "./slices/search";
 import productReducer from "./slices/product";
-
+import authReducer from "./slices/auth";
 import { persistReducer } from "redux-persist";
 // ----------------------------------------------------------------------
 
@@ -44,6 +44,7 @@ const rootReducer = combineReducers({
   test: testReducer,
   search: searchReducer,
   product: productReducer,
+  auth: authReducer,
   //   auth: persistReducer(authPersistConfig, authReducer),
 });
 
