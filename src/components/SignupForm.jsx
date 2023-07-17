@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/SignupForm.module.css";
 import axios from "axios";
@@ -21,52 +21,75 @@ import {
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import Image from "next/image";
 import logoTransparent from "../assets/logoTransparent.png";
+import { useDispatch, useSelector } from "react-redux";
+import { signUp } from "../redux/slices/auth";
+// import { dispatch } from "@/redux/store";
 
 let NextImage = Image;
 
 const SignupForm = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
-  const givenSignUpDetails = {
+  const [signUPInput, setSignUPInput] = useState({
     fName: "",
     lName: "",
-    age: 0,
-    mobile: 0,
+    age: "",
+    mobile: "",
     email: "",
     password: "",
-  };
+  });
+  const cookies = document.cookie;
+  console.log("cookies =>", cookies);
   const handleSignUp = () => {
     const signUpDetails = {
-      name: `${givenSignUpDetails.fName} ${givenSignUpDetails.lName}`,
-      age: givenSignUpDetails.age,
-      mobile: givenSignUpDetails.mobile,
-      email: givenSignUpDetails.email,
-      password: givenSignUpDetails.password,
+      name: `${signUPInput.fName.trim()} ${signUPInput.lName.trim()}`,
+      age: parseInt(signUPInput.age),
+      mobile: parseInt(signUPInput.mobile),
+      email: signUPInput.email,
+      password: signUPInput.password,
     };
-    if (givenSignUpDetails.fName.length === 0) {
+    if (signUPInput.fName.length === 0) {
       alert("Please Enter a Valid Name");
     } else {
-      signUp(signUpDetails);
+      signUpabc(signUpDetails);
     }
   };
-  const signUp = async (signUpDetails) => {
-    new Promise((resolve, reject) => {
-      axios
-        .post(
-          `${process.env.NEXT_PUBLIC_SERVER_IP}/users/signUp`,
-          signUpDetails
-        )
-        .then((res) => {
-          console.log(res);
-          resolve(res);
-          router.push("/");
-        })
-        .catch((err) => {
-          console.log(err.message);
-          reject(err);
-        });
-    });
+  const signUpabc = (signUpDetails) => {
+    console.log("inside Signup");
+    console.log(signUpDetails);
+    dispatch(signUp(signUpDetails));
+    //.then(() => {
+    router.push("/");
+    //});
+    // new Promise((resolve, reject) => {
+    //   axios
+    //     .post(
+    //       `${process.env.NEXT_PUBLIC_SERVER_IP}/users/signUp`,
+    //       signUpDetails
+    //     )
+    //     .then((res) => {
+    //       console.log(res);
+    //       resolve(res);
+    //       router.push("/");
+    //     })
+    //     .catch((err) => {
+    //       console.log(err.message);
+    //       reject(err);
+    //     });
+    // });
+    // dispatch(signUp(signUpDetails));
   };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    // console.log(`${name} : ${value}`);
+    setSignUPInput((prevState) => ({ ...prevState, [name]: value }));
+    // console.log(e.target.value);
+  };
+  useEffect(() => {
+    console.log("test");
+    console.log("cookies", document.cookie);
+  }, []);
   return (
     <Flex
       className={`${styles.signUpForm}`}
@@ -100,9 +123,10 @@ const SignupForm = () => {
                   <FormLabel>First Name</FormLabel>
                   <Input
                     type="text"
+                    name="fName"
+                    value={signUPInput.fName}
                     onChange={(e) => {
-                      givenSignUpDetails.fName = e.target.value;
-                      console.log(givenSignUpDetails.fName);
+                      handleInputChange(e);
                     }}
                   />
                 </FormControl>
@@ -112,9 +136,10 @@ const SignupForm = () => {
                   <FormLabel>Last Name</FormLabel>
                   <Input
                     type="text"
+                    name="lName"
+                    value={signUPInput.lName}
                     onChange={(e) => {
-                      givenSignUpDetails.lName = e.target.value;
-                      console.log(givenSignUpDetails.lName);
+                      handleInputChange(e);
                     }}
                   />
                 </FormControl>
@@ -126,9 +151,10 @@ const SignupForm = () => {
                   <FormLabel>Age</FormLabel>
                   <Input
                     type="text"
+                    name="age"
+                    value={signUPInput.age}
                     onChange={(e) => {
-                      givenSignUpDetails.age = e.target.value;
-                      console.log(givenSignUpDetails.age);
+                      handleInputChange(e);
                     }}
                   />
                 </FormControl>
@@ -138,9 +164,10 @@ const SignupForm = () => {
                   <FormLabel>Mobile</FormLabel>
                   <Input
                     type="text"
+                    name="mobile"
+                    value={signUPInput.mobile}
                     onChange={(e) => {
-                      givenSignUpDetails.mobile = e.target.value;
-                      console.log(givenSignUpDetails.age);
+                      handleInputChange(e);
                     }}
                   />
                 </FormControl>
@@ -150,9 +177,10 @@ const SignupForm = () => {
               <FormLabel>Email address</FormLabel>
               <Input
                 type="email"
+                name="email"
+                value={signUPInput.email}
                 onChange={(e) => {
-                  givenSignUpDetails.email = e.target.value;
-                  console.log(givenSignUpDetails.email);
+                  handleInputChange(e);
                 }}
               />
             </FormControl>
@@ -161,9 +189,10 @@ const SignupForm = () => {
               <InputGroup>
                 <Input
                   type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={signUPInput.password}
                   onChange={(e) => {
-                    givenSignUpDetails.password = e.target.value;
-                    console.log(givenSignUpDetails.password);
+                    handleInputChange(e);
                   }}
                 />
                 <InputRightElement h={"full"}>
@@ -179,7 +208,13 @@ const SignupForm = () => {
               </InputGroup>
             </FormControl>
             <Stack spacing={10} pt={2}>
-              {/* <Button onClick={()=>{console.log(givenSignUpDetails);}}>show filled details</Button> */}
+              <Button
+                onClick={() => {
+                  console.log(signUPInput);
+                }}
+              >
+                show filled details
+              </Button>
               <Button
                 loadingText="Submitting"
                 size="lg"

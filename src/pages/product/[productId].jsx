@@ -82,7 +82,7 @@ const ProductDetails = () => {
         <title>{productId}</title>
       </Head>
       <Navbar />
-      <ProductView productDetails={productDetails} />
+      <ProductView productId={productId} productDetails={productDetails} />
       <Footer />
     </div>
   );
