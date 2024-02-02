@@ -27,9 +27,9 @@ const App = ({ Component, pageProps }) => {
   // console.log("cookies =>", cookies);
 
   const checkLogin = () => {
-    if (!cookies.auth_token) {
-      router.push("/login");
-    }
+    // if (!cookies.auth_token) {
+    //   router.push("/login");
+    // }
   };
   useEffect(() => {
     // handleAuth();
