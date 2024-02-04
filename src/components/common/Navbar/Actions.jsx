@@ -21,7 +21,14 @@ const Actions = () => {
           A
         </div>
       ) : (
-        <Button bgColor={"#014aad"} textColor={"#fff"} size="sm">
+        <Button
+          bgColor={"#014aad"}
+          textColor={"#fff"}
+          size="sm"
+          onClick={() => {
+            router.push("/login");
+          }}
+        >
           Login
         </Button>
       )}

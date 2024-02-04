@@ -66,7 +66,7 @@ const Footer = () => {
       <div className="footer-left w-full">
         <AboutUsColumn />
       </div>
-      <div className="footer-center pl-32 w-full">
+      <div className="footer-center md:pl-32 w-full">
         <QuickLinksColumn />
       </div>
       <div className="footer-right w-full">

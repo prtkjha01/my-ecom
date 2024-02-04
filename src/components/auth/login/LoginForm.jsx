@@ -44,7 +44,7 @@ const index = () => {
     }, 1000);
   };
   return (
-    <div className="p-4">
+    <div className="p-4 md:p-48 lg:p-28 w-full">
       <header className="login-form-header flex flex-col items-center gap-3 mb-10">
         <img src={logo.src} className="brand h-16 w-16" alt="brand-logo" />
         <Text className=" text-[#3A003D] font-[700] text-4xl">
