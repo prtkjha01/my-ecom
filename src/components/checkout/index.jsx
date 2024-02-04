@@ -10,29 +10,32 @@ const index = () => {
   const handleClick = (step) => {
     setStep(step);
   };
+
   return (
     <div className="p-4 sm:p-12">
       {/* TO BR REMOVED */}
-      <div className="step-handler-dev absolute right-2 top-[85px] flex gap-2">
-        <button
-          className="h-10 w-10 bg-slate-400 text-white rounded-full"
-          onClick={() => setStep(0)}
-        >
-          1
-        </button>
-        <button
-          className="h-10 w-10 bg-slate-400 text-white rounded-full"
-          onClick={() => setStep(1)}
-        >
-          2
-        </button>
-        <button
-          className="h-10 w-10 bg-slate-400 text-white rounded-full"
-          onClick={() => setStep(2)}
-        >
-          3
-        </button>
-      </div>
+      {process.env.NEXT_PUBLIC_MODE === "DEV" && (
+        <div className="step-handler-dev absolute right-2 top-[85px] flex gap-2">
+          <button
+            className="h-10 w-10 bg-slate-400 text-white rounded-full"
+            onClick={() => setStep(0)}
+          >
+            1
+          </button>
+          <button
+            className="h-10 w-10 bg-slate-400 text-white rounded-full"
+            onClick={() => setStep(1)}
+          >
+            2
+          </button>
+          <button
+            className="h-10 w-10 bg-slate-400 text-white rounded-full"
+            onClick={() => setStep(2)}
+          >
+            3
+          </button>
+        </div>
+      )}
       {/* TO BR REMOVED */}
 
       <div className="steps-wrapper">

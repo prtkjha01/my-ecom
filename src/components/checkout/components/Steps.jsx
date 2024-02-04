@@ -27,7 +27,6 @@ const Stepss = ({ step, handleClick }) => {
   const [activeStep, setActiveStep] = useState(step);
   return (
     <>
-      <div>{activeStep}</div>
       <Stepper index={activeStep}>
         {steps.map((step, index) => (
           <Step key={index}>

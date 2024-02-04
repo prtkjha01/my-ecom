@@ -34,7 +34,7 @@ const CartSummary = () => {
         <h2 className="text-lg font-semibold">Got a Promo Code ?</h2>
         <div className="offer-input relative mt-4">
           <input
-            className="w-full border-b outline-none border-slate-500 h-8 pr-14"
+            className="w-full border-b rounded-none outline-none border-slate-500 h-8 pr-14"
             type="text"
           />
           <button className="absolute right-0 bottom-1 text-sm bg-slate-300 text-slate-900 p-1 px-2">
