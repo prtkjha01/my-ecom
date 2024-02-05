@@ -62,7 +62,7 @@ const StayConnectedColumn = () => {
 
 const Footer = () => {
   return (
-    <footer className=" bg-[#014aad]   w-full text-white flex flex-col md:flex-row justify-between items-start p-4 lg:p-10 gap-3">
+    <footer className=" bg-[#014aad]   w-full text-white flex flex-col md:flex-row justify-between items-start gap-10 px-4 py-20 lg:px-10">
       <div className="footer-left w-full">
         <AboutUsColumn />
       </div>

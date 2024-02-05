@@ -10,7 +10,7 @@ const Carousel = () => {
       color: "red",
 
       image:
-        "https://images.unsplash.com/photo-1566389437851-a35bddb62402?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://res.cloudinary.com/debwkutxb/image/upload/v1707131240/my-ecom/clothing/Adidas_Yeazy_Ultraboost_qqi9ei.png",
       active: true,
     },
     {
@@ -18,7 +18,7 @@ const Carousel = () => {
       color: "green",
 
       image:
-        "https://images.unsplash.com/photo-1588408903124-af244c1a9dee?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://res.cloudinary.com/debwkutxb/image/upload/v1707131491/my-ecom/fitness/Optimum_Nutrition_Gold_Standard_Whey_wsejax.png",
       active: false,
     },
     {
@@ -26,7 +26,7 @@ const Carousel = () => {
       color: "blue",
 
       image:
-        "https://images.unsplash.com/photo-1560356062-e67bd9e034d5?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://res.cloudinary.com/debwkutxb/image/upload/v1707131190/my-ecom/clothing/Varsity_Jacket_xneucg.png",
       active: false,
     },
     {
@@ -34,7 +34,7 @@ const Carousel = () => {
       color: "yellow",
 
       image:
-        "https://images.unsplash.com/photo-1540290349534-f21032d65357?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://res.cloudinary.com/debwkutxb/image/upload/v1707131463/my-ecom/fitness/1RM_JK-500_Power_Rack_r5mmca.png",
       active: false,
     },
     {
@@ -42,7 +42,7 @@ const Carousel = () => {
       color: "purple",
 
       image:
-        "https://images.unsplash.com/photo-1563737936580-61f7fedf3c6b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://res.cloudinary.com/debwkutxb/image/upload/v1707131494/my-ecom/fitness/C4_Pre_Workout_ft47n9.png",
       active: false,
     },
     {
@@ -50,7 +50,7 @@ const Carousel = () => {
       color: "orange",
 
       image:
-        "https://images.unsplash.com/photo-1560598411-d79104773985?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://res.cloudinary.com/debwkutxb/image/upload/v1707131239/my-ecom/clothing/Nike_Air_Jordan_Travis_Scott_rijxfw.png",
       active: false,
     },
   ]);
@@ -130,11 +130,11 @@ const Carousel = () => {
             return (
               <div
                 key={carouselItem.id}
-                className={`carousel-item bg-gray-500 min-w-full`}
+                className={`carousel-item bg-white min-w-full`}
               >
                 <img
                   src={carouselItem.image}
-                  className="lg:h-[600px] md:h-[500px] sm:h-[400px] h-[250px] w-full object-cover"
+                  className="lg:h-[600px] md:h-[500px] sm:h-[400px] h-[250px] w-full object-contain"
                   alt="product-image"
                 />
               </div>

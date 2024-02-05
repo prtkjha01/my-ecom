@@ -20,7 +20,6 @@
     --card-border-rgb: 131, 134, 135;
 } */
 
-
 /* @media (prefers-color-scheme: dark) {
      :root {
         --foreground-rgb: 255, 255, 255;
@@ -39,18 +38,19 @@
 } */
 
 body {
-    min-height: 100vh;
+  min-height: 100vh;
+  background-color: #f2f2f2 !important;
 }
 
 body::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .product-row::-webkit-scrollbar,
 .search-results::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .chakra-input__left-element.location {
-    justify-content: start;
+  justify-content: start;
 }
