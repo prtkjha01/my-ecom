@@ -13,7 +13,7 @@ const index = () => {
         <PopularProducts />
       </div>
       <Banner />
-      <div className="home-content-wrapper my-48 px-4 lg:px-10">
+      <div className="home-content-wrapper mt-48 mb-20 md:mb-48 px-4 lg:px-10">
         <Perks />
       </div>
     </div>

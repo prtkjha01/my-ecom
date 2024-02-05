@@ -50,7 +50,7 @@ const Perks = () => {
       <Text className="perks-section-header text-center text-5xl font-[600]">
         What we offer ?
       </Text>
-      <div className="perks flex  justify-around mt-20">
+      <div className="perks grid grid-cols-2 gap-6 md:grid-cols-4 mt-20">
         {perks.map((perk) => (
           <div className="perk flex flex-col items-center" key={perk.id}>
             <div>{perk.icon}</div>
