@@ -35,7 +35,7 @@ instance.interceptors.response.use(
 );
 // AUTH_TOKEN = useSelector((state) => state.auth.user.data.token) || "";
 // instance.defaults.headers.common["Authorization"] = AUTH_TOKEN;
-const signUp = (payload) => instance.post("/auth/signup", payload);
+const register = (payload) => instance.post("/auth/register", payload);
 const login = (payload) => instance.post("/auth/login", payload);
 const getProductArray = () => instance.get("products/get-all");
 const getProduct = (id) => instance.get(`products/get/${id}`);
@@ -44,6 +44,6 @@ export const api = {
     getProductArray,
     getProduct,
     initService,
-    signUp,
+    register,
     login,
 };

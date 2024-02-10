@@ -32,23 +32,20 @@ export const login = (payload) => {
     return async(dispatch) => {
         try {
             api.initService();
-            let response = await api.login(payload);
+            await api.login(payload);
             console.log(response);
             await dispatch(slice.actions.setToken(response.data.token));
             await dispatch(slice.actions.setIsLoggedIn(true));
-            // console.log(state.user);
-            // console.log("here");
-            return response;
         } catch (error) {
             console.log(error);
         }
     };
 };
-export const signUp = (payload) => {
+export const register = (payload) => {
     return async(dispatch) => {
         try {
-            let response = await api.signUp(payload);
-            console.log(response);
+            await api.register(payload);
+            // console.log(response);
         } catch (error) {
             console.log(error);
         } finally {

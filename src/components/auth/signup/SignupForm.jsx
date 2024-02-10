@@ -4,7 +4,6 @@ import { Field, Form, Formik } from "formik";
 import {
   Button,
   Input,
-  NumberInput,
   Text,
   InputGroup,
   InputRightElement,
@@ -16,8 +15,13 @@ import {
   FormErrorMessage,
   FormHelperText,
 } from "@chakra-ui/react";
+import { useSelector, useDispatch } from "react-redux";
+import { register } from "@/redux/slices/auth";
+import { useRouter } from "next/router";
 
 const SignupForm = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
   const handleClick = () => setShow(!show);
@@ -61,6 +65,7 @@ const SignupForm = () => {
     }
     return error;
   };
+
   const validateConfirmedPassword = (value, { password }) => {
     let error;
     if (!value) {
@@ -70,14 +75,21 @@ const SignupForm = () => {
     }
     return error;
   };
-  const handleLogin = (values, actions) => {
-    setTimeout(() => {
-      console.log(values);
-      actions.setSubmitting(false);
-    }, 1000);
+  const handleRegister = (values, actions) => {
+    const payload = { ...values };
+    delete payload.confirmedPassword;
+    console.log(payload);
+
+    dispatch(register(payload))
+      .then(() => {
+        actions.setSubmitting(false);
+      })
+      .catch(() => {
+        actions.setSubmitting(false);
+      });
   };
   return (
-    <div className="p-4 md:p-48 lg:p-28 w-full">
+    <div className="p-4 md:px-48 lg:px-28 w-full">
       <header className="login-form-header flex flex-col items-center gap-3 mb-10">
         <img src={logo.src} className="brand h-16 w-16" alt="brand-logo" />
         <Text className=" text-[#3A003D] font-[700] text-4xl">
@@ -93,7 +105,7 @@ const SignupForm = () => {
           confirmedPassword: "",
         }}
         onSubmit={(values, actions) => {
-          handleLogin(values, actions);
+          handleRegister(values, actions);
         }}
       >
         {(props) => (
