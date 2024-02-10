@@ -5,19 +5,18 @@ import { Icon, Button } from "@chakra-ui/react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
 import { useSelector } from "react-redux";
-import { getCookie } from "@/utils/cookies";
+import { getCookie, deleteCookie } from "@/utils/cookies";
 const Actions = () => {
   const router = useRouter();
   const token = getCookie("token");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const isLoggedIn = useSelector((state) => state.auth.user.isLoggedIn);
-  // console.log(isLoggedIn);
-  // console.log(getCookie('token'));
-  useEffect(()=>{
-    if(token){
+
+  useEffect(() => {
+    if (token) {
       setIsLoggedIn(true);
     }
-  },[isLoggedIn])
+  }, [isLoggedIn]);
+  
   return (
     <div className="flex items-center gap-7">
       <Icon
@@ -28,7 +27,14 @@ const Actions = () => {
       />
       <Icon className="cursor-pointer" as={AiOutlineHeart} boxSize={6} />
       {isLoggedIn ? (
-        <div className="h-8 w-8 flex justify-center items-center rounded-full bg-[#014aad] text-white font-bold cursor-pointer">
+        <div
+          className="h-8 w-8 flex justify-center items-center rounded-full bg-[#014aad] text-white font-bold cursor-pointer"
+          onClick={() => {
+            deleteCookie("token");
+            setIsLoggedIn(false);
+            window.location.reload();
+          }}
+        >
           A
         </div>
       ) : (
