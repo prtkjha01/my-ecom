@@ -32,8 +32,7 @@ export const login = (payload) => {
     return async(dispatch) => {
         try {
             api.initService();
-            await api.login(payload);
-            console.log(response);
+            const response = await api.login(payload);
             await dispatch(slice.actions.setToken(response.data.token));
             await dispatch(slice.actions.setIsLoggedIn(true));
         } catch (error) {
