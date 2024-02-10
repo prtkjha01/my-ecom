@@ -7,7 +7,7 @@ const ProductCard = ({ product }) => {
   const {
     id,
     product_name,
-    product_image,
+    images,
     product_category,
     price,
     currency_symbol,
@@ -24,7 +24,7 @@ const ProductCard = ({ product }) => {
         onClick={() => router.push("/product/" + id)}
       >
         <img
-          src={product_image}
+          src={images[0]}
           className="h-[150px]  w-full  object-cover"
           alt="product-image"
         />

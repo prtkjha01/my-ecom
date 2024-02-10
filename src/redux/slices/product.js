@@ -8,6 +8,7 @@ const initialState = {
     hasError: null,
     data: {},
   },
+  products: []
   //   product: [],
 };
 const slice = createSlice({
@@ -32,9 +33,23 @@ const slice = createSlice({
         data: action.payload,
       };
     },
+    setProducts(state, action) {
+      state.products = action.payload;
+    },
   },
 });
+export const getProducts = (payload) => {
+  return async (dispatch) => {
+    try {
 
+      const response = await api.getProducts(payload, 1, 5);
+      // console.log(response);
+      await dispatch(slice.actions.setProducts(response.data.products));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 // export const getProduct = async () => {
 //   dispatch(slice.actions.setLoadingForProduct(true));
 //   try {

@@ -37,11 +37,11 @@ instance.interceptors.response.use(
 // instance.defaults.headers.common["Authorization"] = AUTH_TOKEN;
 const register = (payload) => instance.post("/auth/register", payload);
 const login = (payload) => instance.post("/auth/login", payload);
-const getProductArray = () => instance.get("products/get-all");
+const getProducts = (query, page, limit) => instance.get(`product/search?page=${page}&limit=${limit}&query=${query}`);
 const getProduct = (id) => instance.get(`products/get/${id}`);
 
 export const api = {
-    getProductArray,
+    getProducts,
     getProduct,
     initService,
     register,
