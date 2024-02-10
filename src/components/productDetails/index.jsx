@@ -111,7 +111,7 @@ const index = () => {
   veritatis dicta.`;
 
   return (
-    <div className="pt-8 px-4 md:px-12 lg:px-12 relative flex flex-col sm:flex-col md:flex-row lg:flex-row gap-12">
+    <div className="pt-8 px-4 md:px-12 lg:px-12 relative flex flex-col sm:flex-col md:flex-row lg:flex-row gap-12 bg-white">
       <div className="left-container md:sticky top-[112px] self-start md:h-[700px]">
         <ProductImage url={url} />
 

@@ -124,7 +124,7 @@ const Suggestions = () => {
     },
   ];
   return (
-    <div className="px-4 lg:px-12">
+    <div className="px-4 lg:px-12 bg-white">
       <Text className="text-2xl font-bold mb-2 ">Suggestions</Text>
       <div className="product-row pl-[1px] py-6  flex overflow-x-scroll gap-3 lg:gap-4 ">
         {suggestions.map((product) => (

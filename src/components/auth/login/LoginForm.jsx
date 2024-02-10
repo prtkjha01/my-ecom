@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
 import {
   Button,
@@ -15,10 +15,16 @@ import {
   FormErrorMessage,
   FormHelperText,
 } from "@chakra-ui/react";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "@/redux/slices/auth";
+import { useRouter } from "next/router";
 const index = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [show, setShow] = useState(false);
+  const isLoggedIn = useSelector((state) => state.auth.user.isLoggedIn);
   const handleClick = () => setShow(!show);
-
   const validateEmail = (value) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const isValidEmail = emailRegex.test(value);
@@ -38,11 +44,30 @@ const index = () => {
     return error;
   };
   const handleLogin = (values, actions) => {
-    setTimeout(() => {
-      console.log(values);
-      actions.setSubmitting(false);
-    }, 1000);
+    // console.log(values);
+    dispatch(login(values))
+      .then(() => {
+        actions.setSubmitting(false);
+        router.push("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        actions.setSubmitting(false);
+      });
   };
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(process.env.NEXT_PUBLIC_SERVER_LOCAL);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+
   return (
     <div className="p-4 md:p-48 lg:p-28 w-full">
       <header className="login-form-header flex flex-col items-center gap-3 mb-10">

@@ -48,7 +48,7 @@ const SignupForm = () => {
     if (!value) {
       error = "Mobile is required";
     }
-    if (value > 999999999) {
+    if (value.length > 10) {
       error = "Enter a valid mobile number";
     }
     return error;
@@ -116,7 +116,7 @@ const SignupForm = () => {
                   <FormLabel>Mobile</FormLabel>
                   <Input
                     {...field}
-                    type="number"
+                    type="text"
                     placeholder="Enter Mobile Number"
                   />
                   <FormErrorMessage>{form.errors.mobile}</FormErrorMessage>

@@ -3,7 +3,7 @@ import ResultsGrid from "./components/ResultsGrid";
 import SortOptions from "./components/SortOptions";
 const index = () => {
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-white">
       <div className="filters hidden sm:block md:block lg:block w-[20%]  shadow-lg">
         <Filters />
       </div>

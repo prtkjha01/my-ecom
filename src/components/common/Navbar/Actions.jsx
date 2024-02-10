@@ -1,12 +1,23 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Icon, Button } from "@chakra-ui/react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
+import { useSelector } from "react-redux";
+import { getCookie } from "@/utils/cookies";
 const Actions = () => {
   const router = useRouter();
+  const token = getCookie("token");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const isLoggedIn = useSelector((state) => state.auth.user.isLoggedIn);
+  // console.log(isLoggedIn);
+  // console.log(getCookie('token'));
+  useEffect(()=>{
+    if(token){
+      setIsLoggedIn(true);
+    }
+  },[isLoggedIn])
   return (
     <div className="flex items-center gap-7">
       <Icon
