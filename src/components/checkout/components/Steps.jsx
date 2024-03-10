@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Step,
@@ -25,6 +25,10 @@ const Stepss = ({ step, handleClick }) => {
   //   count: steps.length,
   // });
   const [activeStep, setActiveStep] = useState(step);
+  useEffect(() => {
+    setActiveStep(step);
+    // console.log(activeStep);
+  }, [step]);
   return (
     <>
       <Stepper index={activeStep}>
@@ -39,7 +43,7 @@ const Stepss = ({ step, handleClick }) => {
                     setActiveStep(0);
                   }
 
-                  console.log(activeStep);
+                  // console.log(activeStep);
                 }}
               >
                 <StepStatus

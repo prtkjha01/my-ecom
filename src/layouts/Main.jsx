@@ -4,7 +4,7 @@ const Layout = ({ children }) => {
   return (
     <div className="min-h-screen">
       <Navabar />
-      <main className=" min-h-[calc(100vh-464px)]">{children}</main>
+      <main className=" min-h-[calc(100vh-436px)]">{children}</main>
       <Footer />
     </div>
   );

@@ -5,18 +5,21 @@ const Categories = () => {
     {
       id: 1,
       category_name: "Clothing",
+      enum_value: "CLOTHING",
       category_thumbnail:
         "https://img.freepik.com/premium-photo/stack-colourful-t-shirt-hanging-fashion-department-store-shopping-mall_33874-272.jpg?w=360",
     },
     {
       id: 2,
       category_name: "Electronics",
+      enum_value: "ELECTRONICS",
       category_thumbnail:
         "https://t4.ftcdn.net/jpg/03/64/41/07/360_F_364410756_Ev3WoDfNyxO9c9n4tYIsU5YBQWAP3UF8.jpg",
     },
     {
       id: 3,
       category_name: "Stationary",
+      enum_value: "STATIONARY",
       category_thumbnail:
         "https://m.media-amazon.com/images/I/813hfEpmb3L._AC_UF1000,1000_QL80_.jpg",
     },
@@ -29,6 +32,7 @@ const Categories = () => {
     {
       id: 5,
       category_name: "Personal Care",
+      enum_value: "PERSONAL_CARE",
       category_thumbnail:
         "https://5.imimg.com/data5/SELLER/Default/2021/3/EK/CP/CQ/9277553/all-types-of-cosmetics.jpg",
     },
@@ -42,7 +46,7 @@ const Categories = () => {
         {categories.map((category) => (
           <div
             key={category.id}
-            className="category-item flex flex-col items-center"
+            className="category-item flex flex-col items-center cursor-pointer"
           >
             <img
               src={category.category_thumbnail}

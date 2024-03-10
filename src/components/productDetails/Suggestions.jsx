@@ -1,6 +1,20 @@
+"use client";
 import { Text } from "@chakra-ui/react";
 import ProductCard from "../search/components/ProductCard";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductsByCategory } from "@/redux/slices/product";
 const Suggestions = () => {
+  const dispatch = useDispatch();
+
+  const product = useSelector((state) => state?.product?.product);
+  const products = useSelector((state) => state?.product?.products);
+
+  useEffect(() => {
+    if (product) {
+      dispatch(getProductsByCategory(product.category));
+    }
+  }, [product]);
   const suggestions = [
     {
       id: "1a2b3c4d-5e6f-7g8h-9i10-j11k12l13m14",
@@ -127,9 +141,10 @@ const Suggestions = () => {
     <div className="px-4 lg:px-12 bg-white">
       <Text className="text-2xl font-bold mb-2 ">Suggestions</Text>
       <div className="product-row pl-[1px] py-6  flex overflow-x-scroll gap-3 lg:gap-4 ">
-        {suggestions.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+        {products.length > 0 &&
+          products.map((product) => (
+            <ProductCard key={product._id} product={product} />
+          ))}
       </div>
     </div>
   );

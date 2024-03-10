@@ -6,14 +6,14 @@ import OrderSummary from "./components/OrderSummary";
 import Payment from "./components/Payment";
 
 const index = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   const handleClick = (step) => {
     setStep(step);
   };
 
   return (
     <div className="p-4 sm:p-12">
-      {/* TO BR REMOVED */}
+      {/* TO BE REMOVED */}
       {process.env.NEXT_PUBLIC_MODE === "DEV" && (
         <div className="step-handler-dev absolute right-2 top-[85px] flex gap-2">
           <button
@@ -36,7 +36,7 @@ const index = () => {
           </button>
         </div>
       )}
-      {/* TO BR REMOVED */}
+      {/* TO BE REMOVED */}
 
       <div className="steps-wrapper">
         <Steps step={step} handleClick={handleClick} />

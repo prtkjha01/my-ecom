@@ -1,7 +1,16 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import CartItems from "./components/CartItems";
 import CartSummary from "./components/CartSummary";
+import { useSelector, useDispatch } from "react-redux";
+import { getCart } from "@/redux/slices/cart";
+
 const index = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCart());
+  }, []);
   return (
     <div className="p-4 sm:p-12">
       <div className="cart-container flex flex-col md:flex-row ">
