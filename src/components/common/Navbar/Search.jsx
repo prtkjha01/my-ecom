@@ -9,8 +9,8 @@ const Search = () => {
       <input
         className="outline-none bg-slate-50 h-min rounded w-full py-1 pl-3 pr-12"
         type="text"
-        name=""
-        id=""
+        name="search-bar"
+        id="search-bar"
         onKeyUp={(e) => {
           setQuery(e.target.value);
 

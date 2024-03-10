@@ -5,6 +5,7 @@ import testReducer from "./slices/test";
 import searchReducer from "./slices/search";
 import productReducer from "./slices/product";
 import authReducer from "./slices/auth";
+import cartReducer from './slices/cart';
 import { persistReducer } from "redux-persist";
 // ----------------------------------------------------------------------
 
@@ -21,9 +22,9 @@ const createNoopStorage = () => ({
 });
 
 const storage =
-  typeof window !== "undefined"
-    ? createWebStorage("local")
-    : createNoopStorage();
+  typeof window !== "undefined" ?
+    createWebStorage("local") :
+    createNoopStorage();
 
 const rootPersistConfig = {
   key: "root",
@@ -45,6 +46,7 @@ const rootReducer = combineReducers({
   search: searchReducer,
   product: productReducer,
   auth: authReducer,
+  cart: cartReducer,
   //   auth: persistReducer(authPersistConfig, authReducer),
 });
 

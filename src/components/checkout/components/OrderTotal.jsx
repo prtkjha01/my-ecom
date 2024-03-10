@@ -5,7 +5,7 @@ import { ArrowForwardIcon } from "@chakra-ui/icons";
 const CartSummary = () => {
   return (
     <>
-      <div className="w-full border p-5 shadow-sm rounded">
+      <div className="w-full border p-5 shadow-sm rounded bg-white">
         <h2 className="text-lg font-semibold">Order Summary</h2>
         <div className="cart-summary-details mt-4">
           <div className="flex justify-between">
@@ -30,7 +30,7 @@ const CartSummary = () => {
         </div>
       </div>
 
-      <div className="offers w-full border p-5 shadow-sm rounded mt-4">
+      <div className="offers w-full border p-5 shadow-sm rounded mt-4 bg-white">
         <h2 className="text-lg font-semibold">Got a Promo Code ?</h2>
         <div className="offer-input relative mt-4">
           <input
@@ -45,9 +45,10 @@ const CartSummary = () => {
       <Button
         className="mt-4 w-full bg-[#014AAD]shadow-xl"
         borderRadius={0}
-        fontWeight={500}
+        fontWeight={600}
         color={"#fff"}
         backgroundColor={"#014AAD"}
+        _hover={{ backgroundColor: "#729ad1" }}
         onClick={() => {}}
       >
         Proceed to Payment

@@ -16,22 +16,22 @@ const slice = createSlice({
         setToken(state, payload) {
 
             // console.log("in set Token");
-            state.user = {...state.user, token: payload };
+            state.user = { ...state.user, token: payload };
 
             document.cookie = `token=${payload.payload}`;
 
         },
         setIsLoggedIn(state, payload) {
             console.log("inside isLoggedIn");
-            state.user = {...state.user, isLoggedIn: payload };
+            state.user = { ...state.user, isLoggedIn: payload };
         },
     },
 });
 
 export const login = (payload) => {
-    return async(dispatch) => {
+    return async (dispatch) => {
         try {
-            api.initService();
+            // api.initService();
             const response = await api.login(payload);
             await dispatch(slice.actions.setToken(response.data.token));
             await dispatch(slice.actions.setIsLoggedIn(true));
@@ -41,7 +41,7 @@ export const login = (payload) => {
     };
 };
 export const register = (payload) => {
-    return async(dispatch) => {
+    return async (dispatch) => {
         try {
             await api.register(payload);
             // console.log(response);

@@ -48,7 +48,9 @@ const index = () => {
     dispatch(login(values))
       .then(() => {
         actions.setSubmitting(false);
+
         router.push("/");
+        // router.reload();
       })
       .catch((err) => {
         console.log(err);

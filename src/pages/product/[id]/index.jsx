@@ -5,9 +5,6 @@ import Suggestions from "@/components/productDetails/Suggestions";
 const index = () => {
   return (
     <>
-      <Head>
-        <title>{"{product}"} | MyEcom</title>
-      </Head>
       <MainLayout>
         <ProductDetails />
         <Suggestions />

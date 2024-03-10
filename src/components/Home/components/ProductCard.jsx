@@ -1,22 +1,27 @@
 import React, { useState } from "react";
 import { Text } from "@chakra-ui/react";
-
+import { useRouter } from "next/router";
 const ProductCard = ({ product }) => {
+  const router = useRouter();
+  const { _id, product_name, brand, images, price, currency_symbol } = product;
   return (
-    <div className="product-card min-w-[128px] md:min-w-[165px] lg:min-w-[200px] h-full">
+    <div
+      className="product-card min-w-[128px] md:min-w-[165px] lg:min-w-[200px] h-full border bg-white cursor-pointer hover:scale-105 transition-all duration-300"
+      onClick={() => router.push("/product/" + _id)}
+    >
       <div className="product-image">
         <img
-          src={product.product_image}
+          src={images && images[0]}
           className=" w-full h-28 md:h-[165px] lg:h-[200px] object-cover"
         />
       </div>
-      <div className="product-details">
-        <Text className="product-name text-sm md:text-base lg:text-base">
-          {product.product_name}
+      <div className="product-details p-2">
+        <Text className="product-name min-h-12 text-sm md:text-base lg:text-base">
+          {brand + " " + product_name}
         </Text>
         <Text className="product-price text-sm md:text-base lg:text-base">
-          {product.currency_symbol}
-          {product.price}
+          {currency_symbol}
+          {price}
         </Text>
       </div>
     </div>

@@ -5,9 +5,10 @@ import myEcomAssured from "@assets/MyEcomAssured.png";
 import RatingBadge from "@/components/common/RatingBadge";
 const ProductCard = ({ product }) => {
   const {
-    id,
+    _id,
     product_name,
-    product_image,
+    brand,
+    images,
     product_category,
     price,
     currency_symbol,
@@ -17,19 +18,20 @@ const ProductCard = ({ product }) => {
   } = product;
 
   const router = useRouter();
+  // console.log(product);
   return (
     <>
       <div
         className="bg-white shadow hover:scale-105 transition duration-300 cursor-pointer"
-        onClick={() => router.push("/product/" + id)}
+        onClick={() => router.push("/product/" + _id)}
       >
         <img
-          src={product_image}
+          src={images&&images[0]}
           className="h-[150px]  w-full  object-cover"
           alt="product-image"
         />
         <div className="product-details px-4 py-2">
-          <div className="product-name mb-4">{product_name}</div>
+          <div className="product-name mb-4">{brand} {product_name}</div>
 
           <RatingBadge rating={rating} />
           <div className="product-price flex gap-2 mt-2">
