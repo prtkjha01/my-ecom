@@ -6,7 +6,7 @@ import OrderSummary from "./components/OrderSummary";
 import Payment from "./components/Payment";
 
 const index = () => {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(0);
   const handleClick = (step) => {
     setStep(step);
   };

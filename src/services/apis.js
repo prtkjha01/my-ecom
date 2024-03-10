@@ -47,13 +47,16 @@ const getProductsByCategory = (category, page, limit) => instance.get(`product/b
 const getProduct = (id) => instance.get(`product/${id}`);
 const getCart = () => instance.get('/cart')
 const addToCart = (payload) => instance.patch(`/cart/add`, payload)
-
+const getAddresses = () => instance.get('/address')
+const createAddress = (payload) => instance.post('/address', payload)
 export const api = {
     getProducts,
     getProductsByCategory,
     getProduct,
     getCart,
     addToCart,
+    getAddresses,
+    createAddress,
     // initService,
     register,
     login,

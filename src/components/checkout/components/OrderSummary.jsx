@@ -1,7 +1,15 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import CartItems from "@/components/cart/components/CartItems";
 import OrderTotal from "./OrderTotal";
+import { useSelector, useDispatch } from "react-redux";
+import { getCart } from "@/redux/slices/cart";
 const OrderSummary = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCart());
+  }, []);
   return (
     <>
       <div className="order-summary-container flex flex-col md:flex-row">

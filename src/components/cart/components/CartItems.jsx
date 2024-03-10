@@ -87,6 +87,7 @@ const CartItem = ({ item: { product, count }, isLast, variant }) => {
 };
 const CartItems = ({ variant }) => {
   const cart = useSelector((state) => state?.cart?.cart);
+
   return (
     <>
       {variant === "CART" && (
