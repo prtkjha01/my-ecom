@@ -2,7 +2,9 @@
 import React from "react";
 import { Button } from "@chakra-ui/react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 const Payment = () => {
+  const cart = useSelector((state) => state?.cart?.cart);
   function loadScript(src) {
     return new Promise((resolve) => {
       const script = document.createElement("script");
@@ -30,7 +32,7 @@ const Payment = () => {
     const result = await axios.post(
       `${process.env.NEXT_PUBLIC_SERVER_LOCAL}/order`,
       {
-        amount: 100,
+        amount: cart?.total_subtotal,
       }
     );
 
@@ -48,22 +50,23 @@ const Payment = () => {
       name: "My Ecom",
       description: "Test Transaction",
       order_id: order_id,
-      handler: async function (response) {
-        const payload = {
-          orderCreationId: order_id,
-          razorpayPaymentId: response.razorpay_payment_id,
-          razorpayOrderId: response.razorpay_order_id,
-          razorpaySignature: response.razorpay_signature,
-        };
+      handler: async (response) => handlePayment(response, order_id),
+      // async function (response) {
+      //   const payload = {
+      //     orderCreationId: order_id,
+      //     razorpayPaymentId: response.razorpay_payment_id,
+      //     razorpayOrderId: response.razorpay_order_id,
+      //     razorpaySignature: response.razorpay_signature,
+      //   };
 
-        const result = await axios.post(
-          `${process.env.NEXT_PUBLIC_SERVER_LOCAL}/order/payment-success`,
-          payload
-        );
+      //   const result = await axios.post(
+      //     `${process.env.NEXT_PUBLIC_SERVER_LOCAL}/order/payment-success`,
+      //     payload
+      //   );
 
-        console.log(result.data);
-        // alert(result.data.message);
-      },
+      //   console.log(result.data);
+      //   // alert(result.data.message);
+      // },
 
       theme: {
         color: "#014aad",
@@ -73,7 +76,21 @@ const Payment = () => {
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
   };
+  const handlePayment = async (response, orderId) => {
+    const payload = {
+      orderCreationId: orderId,
+      razorpayPaymentId: response.razorpay_payment_id,
+      razorpayOrderId: response.razorpay_order_id,
+      razorpaySignature: response.razorpay_signature,
+    };
 
+    const result = await axios.post(
+      `${process.env.NEXT_PUBLIC_SERVER_LOCAL}/order/payment-success`,
+      payload
+    );
+
+    console.log(result.data);
+  };
   return (
     <>
       <div className="flex flex-col justify-center items-center mt-20 gap-4">

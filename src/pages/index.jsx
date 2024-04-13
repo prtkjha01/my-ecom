@@ -11,6 +11,11 @@ export default function Home() {
         <title> My E-com </title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+        <script
+          src="https://accounts.google.com/gsi/client"
+          async
+          defer
+        ></script>
       </Head>
       <main>
         <MainLayout>

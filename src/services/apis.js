@@ -47,16 +47,22 @@ const getProductsByCategory = (category, page, limit) => instance.get(`product/b
 const getProduct = (id) => instance.get(`product/${id}`);
 const getCart = () => instance.get('/cart')
 const addToCart = (payload) => instance.patch(`/cart/add`, payload)
+const removeFromCart = (id) => instance.patch(`/cart/remove/${id}`)
+const updateProductQuantity = (id, payload) => instance.patch(`/cart/update-count/${id}`, payload)
 const getAddresses = () => instance.get('/address')
 const createAddress = (payload) => instance.post('/address', payload)
+const deleteAddress = (id) => instance.delete(`/address/${id}`)
 export const api = {
     getProducts,
     getProductsByCategory,
     getProduct,
     getCart,
     addToCart,
+    removeFromCart,
+    updateProductQuantity,
     getAddresses,
     createAddress,
+    deleteAddress,
     // initService,
     register,
     login,

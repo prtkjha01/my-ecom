@@ -23,15 +23,17 @@ const QuickLinksColumn = () => {
   return (
     <div className="footer-column">
       <h3 className="text-lg font-semibold mb-2">Quick Links</h3>
-      <ul className="text-sm text-slate-200">
-        <li>Home</li>
-        <li>Shop</li>
-        <li>About Us</li>
-        <li>Contact Us</li>
-        <li>FAQ</li>
-        <li>Terms and Conditions</li>
-        <li>Privacy Policy</li>
-        <li>Returns</li>
+      <ul className="text-sm text-slate-200 w-full">
+        <li className="cursor-pointer hover:underline w-max">Home</li>
+        <li className="cursor-pointer hover:underline w-max">Shop</li>
+        <li className="cursor-pointer hover:underline w-max">About Us</li>
+        <li className="cursor-pointer hover:underline w-max">Contact Us</li>
+        <li className="cursor-pointer hover:underline w-max">FAQ</li>
+        <li className="cursor-pointer hover:underline w-max">
+          Terms and Conditions
+        </li>
+        <li className="cursor-pointer hover:underline w-min">Privacy Policy</li>
+        <li className="cursor-pointer hover:underline w-min">Returns</li>
       </ul>
     </div>
   );
@@ -45,16 +47,32 @@ const StayConnectedColumn = () => {
         Follow us on social media for the latest updates, promotions, and more.
       </p>
       <div className="flex space-x-2 items-center mt-2 mb-4">
-        <Icon as={MdFacebook} boxSize={6} />
-        <Icon as={FaXTwitter} boxSize={6} />
-        <Icon as={FaLinkedin} boxSize={6} />
-        <Icon as={FaInstagram} boxSize={6} />
+        <Icon
+          className=" transition duration-300 hover:scale-105 cursor-pointer"
+          as={MdFacebook}
+          boxSize={6}
+        />
+        <Icon
+          className=" transition duration-300 hover:scale-105 cursor-pointer"
+          as={FaXTwitter}
+          boxSize={6}
+        />
+        <Icon
+          className=" transition duration-300 hover:scale-105 cursor-pointer"
+          as={FaLinkedin}
+          boxSize={6}
+        />
+        <Icon
+          className=" transition duration-300 hover:scale-105 cursor-pointer"
+          as={FaInstagram}
+          boxSize={6}
+        />
       </div>
       <p className="text-sm text-slate-200">Subscribe to our newsletter:</p>
       <input
+        className="p-2 rounded-sm outline-none w-1/2 mt-1 text-slate-600"
         type="email"
         placeholder="Enter your email"
-        className="p-2 border border-gray-300 rounded"
       />
     </div>
   );

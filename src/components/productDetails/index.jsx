@@ -56,6 +56,10 @@ const index = () => {
           position: "top-right",
           duration: 1500,
           isClosable: true,
+          // containerStyle: {
+          //   position: "absolute",
+          //   top: "5rem",
+          // },
         });
       })
       .catch((error) => {
@@ -66,6 +70,10 @@ const index = () => {
           position: "top-right",
           duration: 1500,
           isClosable: true,
+          // containerStyle: {
+          //   position: "absolute",
+          //   top: "5rem",
+          // },
         });
       });
   };

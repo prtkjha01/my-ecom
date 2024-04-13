@@ -39,4 +39,14 @@ export const createAddress = (payload) => {
     };
 };
 
+export const deleteAddress = (payload) => {
+    return async (dispatch) => {
+        try {
+            await api.deleteAddress(payload);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};
+
 export default slice.reducer;

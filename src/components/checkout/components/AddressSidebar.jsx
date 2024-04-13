@@ -48,7 +48,7 @@ const AddressSidebar = ({ onClose }) => {
     <>
       <DrawerOverlay />
       <DrawerContent position={"relative"}>
-        <DrawerCloseButton />
+        <DrawerCloseButton top={"1rem"} />
         <DrawerHeader className="!font-[700]">Add New Address</DrawerHeader>
 
         <Formik
@@ -69,7 +69,7 @@ const AddressSidebar = ({ onClose }) => {
         >
           {(props) => (
             <Form>
-              <DrawerBody className="!py-10">
+              <DrawerBody h={"calc(100vh - 134px)"}>
                 <Field name="name" validate={validateName}>
                   {({ field, form }) => (
                     <FormControl
@@ -108,7 +108,7 @@ const AddressSidebar = ({ onClose }) => {
                       isRequired
                     >
                       <FormLabel>Address Line 1</FormLabel>
-                      <Input {...field} />
+                      <Input {...field} placeholder="Enter Address Line 1" />
                       <FormErrorMessage>
                         {form.errors.address_line_1}
                       </FormErrorMessage>
@@ -126,7 +126,7 @@ const AddressSidebar = ({ onClose }) => {
                       }
                     >
                       <FormLabel>Address Line 2</FormLabel>
-                      <Input {...field} />
+                      <Input {...field} placeholder="Enter Address Line 2" />
                     </FormControl>
                   )}
                 </Field>

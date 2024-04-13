@@ -3,7 +3,8 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "next dev -p 8000",
+        "dev": "next dev -p 3000",
+        "dev2": "next dev -p 8000",
         "build": "next build",
         "start": "next start -p 8000",
         "lint": "next lint"
@@ -19,6 +20,7 @@
         "formik": "^2.4.5",
         "framer-motion": "^9.0.1",
         "next": "13.1.6",
+        "next-auth": "^4.24.7",
         "react": "18.2.0",
         "react-cookie": "^4.1.1",
         "react-dom": "18.2.0",

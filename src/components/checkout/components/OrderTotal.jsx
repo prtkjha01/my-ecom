@@ -2,7 +2,10 @@ import React from "react";
 
 import { Button } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-const CartSummary = () => {
+import { useSelector } from "react-redux";
+const CartSummary = ({ handleClick }) => {
+  const cart = useSelector((state) => state?.cart?.cart);
+  // console.log(cart);
   return (
     <>
       <div className="w-full border p-5 shadow-sm rounded bg-white">
@@ -10,7 +13,7 @@ const CartSummary = () => {
         <div className="cart-summary-details mt-4">
           <div className="flex justify-between">
             <p>Subtotal</p>
-            <p>₹ 0.00</p>
+            <p>₹ {cart.total_subtotal}</p>
           </div>
 
           <div className="flex justify-between mt-1">
@@ -25,7 +28,7 @@ const CartSummary = () => {
 
           <div className="flex justify-between border-t border-gray-400 border-dashed mt-2 pt-1">
             <p>Total</p>
-            <p>₹ 0.00</p>
+            <p>₹ {cart.total_subtotal}</p>
           </div>
         </div>
       </div>
@@ -49,7 +52,9 @@ const CartSummary = () => {
         color={"#fff"}
         backgroundColor={"#014AAD"}
         _hover={{ backgroundColor: "#729ad1" }}
-        onClick={() => {}}
+        onClick={() => {
+          handleClick(2);
+        }}
       >
         Proceed to Payment
         <ArrowForwardIcon ml={2} />

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Steps from "./components/Steps";
 import Addresses from "./components/Addresses";
 import OrderSummary from "./components/OrderSummary";
@@ -7,10 +7,20 @@ import Payment from "./components/Payment";
 
 const index = () => {
   const [step, setStep] = useState(0);
+  const [checkoutPayload, setCheckoutPayload] = useState({});
   const handleClick = (step) => {
     setStep(step);
   };
-
+  const handleAddressSelect = (selectedAddressId) => {
+    setCheckoutPayload((prev) => ({
+      ...prev,
+      address: selectedAddressId,
+    }));
+    // console.log(checkoutPayload);
+  };
+  useEffect(() => {
+    console.log(checkoutPayload);
+  }, [checkoutPayload]);
   return (
     <div className="p-4 sm:p-12">
       {/* TO BE REMOVED */}
@@ -42,8 +52,10 @@ const index = () => {
         <Steps step={step} handleClick={handleClick} />
       </div>
       <div className="steps mt-4">
-        {step === 0 && <Addresses />}
-        {step === 1 && <OrderSummary />}
+        {step === 0 && (
+          <Addresses handleClick={handleClick} onSelect={handleAddressSelect} />
+        )}
+        {step === 1 && <OrderSummary handleClick={handleClick} />}
         {step === 2 && <Payment />}
       </div>
     </div>

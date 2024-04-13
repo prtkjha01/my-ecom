@@ -4,9 +4,12 @@ import CartItems from "@/components/cart/components/CartItems";
 import OrderTotal from "./OrderTotal";
 import { useSelector, useDispatch } from "react-redux";
 import { getCart } from "@/redux/slices/cart";
-const OrderSummary = () => {
+const OrderSummary = ({ handleClick }) => {
   const dispatch = useDispatch();
 
+  // const moveToPayment = () => {
+  //   handleClick(2);
+  // };
   useEffect(() => {
     dispatch(getCart());
   }, []);
@@ -17,7 +20,7 @@ const OrderSummary = () => {
           <CartItems variant={"ORDER_SUMMARY"} />
         </div>
         <div className="price-info w-full mt-10 md:mt-0 md:w-[25%] lg:w-[20%] md:sticky top-[128px] self-start">
-          <OrderTotal />
+          <OrderTotal handleClick={handleClick} />
         </div>
       </div>
     </>
