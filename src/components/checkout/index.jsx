@@ -4,10 +4,13 @@ import Steps from "./components/Steps";
 import Addresses from "./components/Addresses";
 import OrderSummary from "./components/OrderSummary";
 import Payment from "./components/Payment";
-
+import { useSelector, useDispatch } from "react-redux";
+import { getCart } from "@/redux/slices/cart";
 const index = () => {
   const [step, setStep] = useState(0);
   const [checkoutPayload, setCheckoutPayload] = useState({});
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state?.cart?.cart);
   const handleClick = (step) => {
     setStep(step);
   };
@@ -21,10 +24,27 @@ const index = () => {
   useEffect(() => {
     console.log(checkoutPayload);
   }, [checkoutPayload]);
+  useEffect(() => {
+    dispatch(getCart());
+  }, []);
+  useEffect(() => {
+    if (cart) {
+      const checkoutProducts = cart.products?.map((product) => ({
+        product: product.product._id,
+        count: product.count,
+      }));
+
+      setCheckoutPayload((prev) => ({
+        ...prev,
+        products: checkoutProducts,
+        total: cart.total_subtotal,
+      }));
+    }
+  }, [cart]);
   return (
     <div className="p-4 sm:p-12">
       {/* TO BE REMOVED */}
-      {process.env.NEXT_PUBLIC_MODE === "DEV" && (
+      {/* {process.env.NEXT_PUBLIC_MODE === "DEV" && (
         <div className="step-handler-dev absolute right-2 top-[85px] flex gap-2">
           <button
             className="h-10 w-10 bg-slate-400 text-white rounded-full"
@@ -45,7 +65,7 @@ const index = () => {
             3
           </button>
         </div>
-      )}
+      )} */}
       {/* TO BE REMOVED */}
 
       <div className="steps-wrapper">
@@ -56,7 +76,7 @@ const index = () => {
           <Addresses handleClick={handleClick} onSelect={handleAddressSelect} />
         )}
         {step === 1 && <OrderSummary handleClick={handleClick} />}
-        {step === 2 && <Payment />}
+        {step === 2 && <Payment payload={checkoutPayload} />}
       </div>
     </div>
   );

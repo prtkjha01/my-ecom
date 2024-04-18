@@ -19,15 +19,17 @@ const slice = createSlice({
     },
   },
 });
-export const getProducts = (payload) => {
+export const getProducts = (payload, type) => {
+  console.log(type);
   return async (dispatch) => {
     try {
 
-      const response = await api.getProducts(payload, 1, 15)
+      const response = await api.getProducts(payload, type)
+
       dispatch(slice.actions.setProducts(response.data.products));
 
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 };

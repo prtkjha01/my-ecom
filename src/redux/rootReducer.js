@@ -7,6 +7,7 @@ import productReducer from "./slices/product";
 import authReducer from "./slices/auth";
 import cartReducer from './slices/cart';
 import addressReducer from "./slices/address";
+import orderReducer from './slices/order'
 import { persistReducer } from "redux-persist";
 // ----------------------------------------------------------------------
 
@@ -49,6 +50,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   cart: cartReducer,
   address: addressReducer,
+  order: orderReducer
   //   auth: persistReducer(authPersistConfig, authReducer),
 });
 

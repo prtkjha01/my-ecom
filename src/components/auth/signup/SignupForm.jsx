@@ -224,7 +224,17 @@ const SignupForm = () => {
                 </FormControl>
               )}
             </Field>
-
+            <div className="login-redirect mt-8">
+              <Text align={"end"}>
+                Already have an account?{" "}
+                <span
+                  className="text-[#014aad] cursor-pointer hover:underline"
+                  onClick={() => router.push("/login")}
+                >
+                  Login
+                </span>
+              </Text>
+            </div>
             <Button
               mt={8}
               className="w-full"

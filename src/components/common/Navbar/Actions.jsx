@@ -1,22 +1,43 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { Icon, Button } from "@chakra-ui/react";
+import {
+  Icon,
+  Button,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverHeader,
+  PopoverFooter,
+} from "@chakra-ui/react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { FaBox } from "react-icons/fa";
+import { TbLogout2 } from "react-icons/tb";
+import { useSelector, useDispatch } from "react-redux";
 import { getCookie, deleteCookie } from "@/utils/cookies";
+import { getCurrentUser } from "@/redux/slices/auth";
 const Actions = () => {
   const router = useRouter();
   const token = getCookie("token");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     if (token) {
       setIsLoggedIn(true);
+      dispatch(getCurrentUser());
     }
   }, [isLoggedIn]);
-  
+  const handleLogout = () => {
+    deleteCookie("token");
+    setIsLoggedIn(false);
+    window.location.reload();
+  };
+  const user = useSelector((state) => state?.auth?.currentUser);
+
   return (
     <div className="flex items-center gap-7">
       <Icon
@@ -27,16 +48,34 @@ const Actions = () => {
       />
       <Icon className="cursor-pointer" as={AiOutlineHeart} boxSize={6} />
       {isLoggedIn ? (
-        <div
-          className="h-8 w-8 flex justify-center items-center rounded-full bg-[#014aad] text-white font-bold cursor-pointer"
-          onClick={() => {
-            deleteCookie("token");
-            setIsLoggedIn(false);
-            window.location.reload();
-          }}
-        >
-          A
-        </div>
+        <Popover placement="bottom-end">
+          <PopoverTrigger>
+            <div className="h-8 w-8 flex justify-center items-center rounded-full bg-[#014aad] text-white font-bold cursor-pointer">
+              {user && user?.name?.charAt(0).toUpperCase()}
+            </div>
+          </PopoverTrigger>
+          <PopoverContent>
+            <PopoverArrow />
+            <PopoverCloseButton top={"1rem"} />
+            <PopoverHeader className="name font-bold" py={4}>
+              Welcome {user?.name}
+            </PopoverHeader>
+            <PopoverBody>
+              <div className="orders cursor-pointer flex items-center gap-2 font-semibold">
+                <FaBox /> Orders
+              </div>
+            </PopoverBody>
+            <PopoverFooter>
+              <div
+                className="Logout cursor-pointer flex items-center gap-2 "
+                onClick={handleLogout}
+              >
+                <TbLogout2 />
+                <span className=" text-black hover:underline">Logout</span>
+              </div>
+            </PopoverFooter>
+          </PopoverContent>
+        </Popover>
       ) : (
         <Button
           bgColor={"#014aad"}

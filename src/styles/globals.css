@@ -22,3 +22,7 @@ body::-webkit-scrollbar {
 .chakra-input__left-element.location {
   justify-content: start;
 }
+.chakra-popover__content:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}

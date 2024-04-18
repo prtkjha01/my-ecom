@@ -130,6 +130,17 @@ const index = () => {
                 </FormControl>
               )}
             </Field>
+            <div className="signup-redirect mt-8">
+              <Text align={"end"}>
+                Don't have an account?{" "}
+                <span
+                  className="text-[#014aad] cursor-pointer hover:underline"
+                  onClick={() => router.push("/signup")}
+                >
+                  Signup
+                </span>
+              </Text>
+            </div>
             <Button
               mt={8}
               className="w-full"

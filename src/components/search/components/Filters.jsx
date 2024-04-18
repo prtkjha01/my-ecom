@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Text,
   RangeSlider,
@@ -9,18 +9,96 @@ import {
   useRangeSlider,
   Radio,
   RadioGroup,
+  Tooltip,
 } from "@chakra-ui/react";
+import { useDispatch } from "react-redux";
+import { getProducts } from "@/redux/slices/product";
+import { useRouter } from "next/router";
 const Filters = () => {
   //   const { getTrackProps, getFilledTrackProps, getThumbProps, value } =
   //     useRangeSlider();
-  const [value, setValue] = React.useState("1");
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const [priceRange, setPriceRange] = React.useState([0, 10000]);
+  const [isAssured, setIsAssured] = React.useState("");
+  const [discount, setDiscount] = React.useState("");
+  const [filters, setFilters] = React.useState({});
   const { val } = useRangeSlider({
-    min: 100,
+    min: 0,
     max: 10000,
     defaultValue: [120, 2400],
     step: 500,
   });
-  //   console.log(val);
+  const handlePriceRange = (val) => {
+    setPriceRange([val[0], val[1]]);
+    handleFiltering();
+  };
+  const handleSetAssured = (val) => {
+    setIsAssured((prev) => (prev === "true" ? "false" : "true"));
+  };
+
+  const handleDiscount = (val) => {
+    setDiscount(val);
+  };
+  useEffect(() => {
+    handleFiltering();
+  }, [discount, isAssured]);
+  const handleFiltering = () => {
+    let newFilters = {};
+    if (priceRange.length == 2) {
+      // console.log("here");
+      newFilters = {
+        ...newFilters,
+        min_price: priceRange[0],
+        max_price: priceRange[1],
+      };
+      // console.log(filters, priceRange);
+    }
+    if (discount && discount.length) {
+      switch (discount) {
+        case "LT_20":
+          newFilters = {
+            ...newFilters,
+            min_discount: 0,
+            max_discount: 20,
+          };
+
+          break;
+        case "20_40":
+          newFilters = {
+            ...newFilters,
+            min_discount: 20,
+            max_discount: 40,
+          };
+
+          break;
+        case "MT_40":
+          newFilters = {
+            ...newFilters,
+            min_discount: 40,
+            max_discount: 100,
+          };
+          break;
+        default:
+          break;
+      }
+    }
+    if (isAssured) {
+      newFilters = {
+        ...newFilters,
+        is_assured: isAssured,
+      };
+    }
+    setFilters(newFilters);
+  };
+  useEffect(() => {
+    getProducts({ query: router?.query?.q || "" }, "WITHOUT_FILTERS");
+  }, []);
+  useEffect(() => {
+    dispatch(
+      getProducts({ query: router?.query?.q || "", ...filters }, "WITH_FILTERS")
+    );
+  }, [filters]);
   return (
     <div className="mt-5 px-5 ">
       <Text className="text-center font-[600]">FILTERS</Text>
@@ -28,36 +106,47 @@ const Filters = () => {
         <div className="filter-header mb-2">Price Range</div>
         <RangeSlider
           aria-label={["min", "max"]}
-          defaultValue={[120, 2400]}
-          min={100}
           max={10000}
+          min={0}
+          value={[priceRange[0], priceRange[1]]}
+          onChange={(val) => setPriceRange(val)}
           step={500}
-          //   onChangeEnd={(val) => console.log("val", val)}
+          onChangeEnd={handlePriceRange}
         >
           <RangeSliderTrack>
             <RangeSliderFilledTrack />
           </RangeSliderTrack>
-          <RangeSliderThumb index={0} />
-          <RangeSliderThumb index={1} />
+          <Tooltip label={priceRange[0]} placement="top">
+            <RangeSliderThumb boxSize={6} index={0} />
+          </Tooltip>
+          <Tooltip label={priceRange[1]} placement="top">
+            <RangeSliderThumb boxSize={6} index={1} />
+          </Tooltip>
         </RangeSlider>
       </div>
       <div className="discount mt-5">
         <div className="filter-header mb-2">Discount</div>
         <RadioGroup
           className="flex flex-col gap-1"
-          onChange={setValue}
-          value={value}
+          defaultValue="LT_20"
+          value={discount}
+          onChange={handleDiscount}
         >
-          <Radio value="1">First</Radio>
-          <Radio value="2">Second</Radio>
-          <Radio value="3">Third</Radio>
+          <Radio value="LT_20">{"< "}20%</Radio>
+          <Radio value="20_40">20 % - 40%</Radio>
+          <Radio value="MT_40">{" >"}40% </Radio>
         </RadioGroup>
       </div>
       <div className="assurance mt-5">
         <div className="filter-header mb-2">My Ecom Assured</div>
-        <RadioGroup className="flex gap-2" onChange={setValue} value={value}>
-          <Radio value="1">Yes</Radio>
-          <Radio value="2">No</Radio>
+        <RadioGroup
+          className="flex gap-2"
+          defaultValue="false"
+          value={isAssured}
+          onChange={handleSetAssured}
+        >
+          <Radio value={"true"}>Yes</Radio>
+          <Radio value={"false"}>No</Radio>
         </RadioGroup>
       </div>
     </div>

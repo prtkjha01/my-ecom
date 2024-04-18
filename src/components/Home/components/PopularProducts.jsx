@@ -6,9 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "@/redux/slices/product";
 const PopularProducts = () => {
   const dispatch = useDispatch();
-  const productsData = useSelector((state) => state.product.products);
+  const productsData = useSelector((state) => state.product?.products);
   const getProductsData = async () => {
-    dispatch(getProducts(""));
+    dispatch(getProducts({ query: "" }, "WITHOUT_FILTERS"));
   };
   useEffect(() => {
     if (typeof window !== "undefined") {
