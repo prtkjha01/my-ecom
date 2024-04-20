@@ -6,11 +6,14 @@ import OrderSummary from "./components/OrderSummary";
 import Payment from "./components/Payment";
 import { useSelector, useDispatch } from "react-redux";
 import { getCart } from "@/redux/slices/cart";
-const index = () => {
+import product from "@/redux/slices/product";
+
+const BuyNow = () => {
   const [step, setStep] = useState(0);
   const [checkoutPayload, setCheckoutPayload] = useState({});
   const dispatch = useDispatch();
   const cart = useSelector((state) => state?.cart?.cart);
+  const product = useSelector((state) => state.product?.product);
   const handleClick = (step) => {
     setStep(step);
   };
@@ -19,7 +22,6 @@ const index = () => {
       ...prev,
       address: selectedAddressId,
     }));
-    // console.log(checkoutPayload);
   };
   useEffect(() => {
     console.log(checkoutPayload);
@@ -28,7 +30,7 @@ const index = () => {
     dispatch(getCart());
   }, []);
   useEffect(() => {
-    if (cart) {
+    if (cart && !product) {
       const checkoutProducts = cart.products?.map((product) => ({
         product: product.product._id,
         count: product.count,
@@ -39,8 +41,19 @@ const index = () => {
         products: checkoutProducts,
         total: cart.total_subtotal,
       }));
+    } else if (product) {
+      setCheckoutPayload((prev) => ({
+        ...prev,
+        products: [
+          {
+            product: product._id,
+            count: 1,
+          },
+        ],
+        total: product.price,
+      }));
     }
-  }, [cart]);
+  }, [cart, product]);
   return (
     <div className="p-4 sm:p-12">
       <div className="steps-wrapper">
@@ -50,11 +63,13 @@ const index = () => {
         {step === 0 && (
           <Addresses handleClick={handleClick} onSelect={handleAddressSelect} />
         )}
-        {step === 1 && <OrderSummary type={"CART"} handleClick={handleClick} />}
+        {step === 1 && (
+          <OrderSummary type={"BUY_NOW"} handleClick={handleClick} />
+        )}
         {step === 2 && <Payment payload={checkoutPayload} />}
       </div>
     </div>
   );
 };
 
-export default index;
+export default BuyNow;

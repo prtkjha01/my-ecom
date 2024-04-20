@@ -20,20 +20,52 @@ const AboutUsColumn = () => {
 };
 
 const QuickLinksColumn = () => {
+  const quickLinks = [
+    {
+      id: 1,
+      title: "Home",
+      link: "/",
+    },
+    {
+      id: 2,
+      title: "About Us",
+      link: "/about-us",
+    },
+    {
+      id: 3,
+      title: "Contact Us",
+      link: "/contact-us",
+    },
+    {
+      id: 4,
+      title: "FAQ",
+      link: "/faq",
+    },
+    {
+      id: 5,
+      title: "Terms and Conditions",
+      link: "/terms-and-conditions",
+    },
+    {
+      id: 6,
+      title: "Privacy Policy",
+      link: "/privacy-policy",
+    },
+    {
+      id: 7,
+      title: "Returns",
+      link: "/returns",
+    },
+  ];
   return (
     <div className="footer-column">
       <h3 className="text-lg font-semibold mb-2">Quick Links</h3>
       <ul className="text-sm text-slate-200 w-full">
-        <li className="cursor-pointer hover:underline w-max">Home</li>
-        <li className="cursor-pointer hover:underline w-max">Shop</li>
-        <li className="cursor-pointer hover:underline w-max">About Us</li>
-        <li className="cursor-pointer hover:underline w-max">Contact Us</li>
-        <li className="cursor-pointer hover:underline w-max">FAQ</li>
-        <li className="cursor-pointer hover:underline w-max">
-          Terms and Conditions
-        </li>
-        <li className="cursor-pointer hover:underline w-min">Privacy Policy</li>
-        <li className="cursor-pointer hover:underline w-min">Returns</li>
+        {quickLinks?.map((link) => (
+          <li key={link.id} className="cursor-pointer hover:underline w-max">
+            {link.title}
+          </li>
+        ))}
       </ul>
     </div>
   );
@@ -51,21 +83,31 @@ const StayConnectedColumn = () => {
           className=" transition duration-300 hover:scale-105 cursor-pointer"
           as={MdFacebook}
           boxSize={6}
+          onClick={() => window.open("https://www.facebook.com/", "_blank")}
         />
         <Icon
           className=" transition duration-300 hover:scale-105 cursor-pointer"
           as={FaXTwitter}
           boxSize={6}
+          onClick={() =>
+            window.open("https://twitter.com/Prateek_Jha01", "_blank")
+          }
         />
         <Icon
           className=" transition duration-300 hover:scale-105 cursor-pointer"
           as={FaLinkedin}
           boxSize={6}
+          onClick={() =>
+            window.open("https://www.linkedin.com/in/prateekjha01/", "_blank")
+          }
         />
         <Icon
           className=" transition duration-300 hover:scale-105 cursor-pointer"
           as={FaInstagram}
           boxSize={6}
+          onClick={() =>
+            window.open("https://www.instagram.com/_prateek_jha_/", "_blank")
+          }
         />
       </div>
       <p className="text-sm text-slate-200">Subscribe to our newsletter:</p>

@@ -7,8 +7,10 @@ import { placeOrder } from "@/redux/slices/order";
 import { FaMoneyBill } from "react-icons/fa";
 import { MdOutlinePayment } from "react-icons/md";
 import { useRouter } from "next/router";
+
 const Payment = ({ payload }) => {
   const cart = useSelector((state) => state?.cart?.cart);
+  const product = useSelector((state) => state?.product?.product);
   const dispatch = useDispatch();
   const toast = useToast();
   const router = useRouter();
@@ -42,7 +44,7 @@ const Payment = ({ payload }) => {
     const result = await axios.post(
       `${process.env.NEXT_PUBLIC_SERVER_LOCAL}/order`,
       {
-        amount: cart?.total_subtotal,
+        amount: router.query.id ? product.price : cart?.total_subtotal,
       }
     );
 
@@ -52,7 +54,7 @@ const Payment = ({ payload }) => {
     }
 
     const { amount, id: order_id, currency } = result.data.data;
-    // console.log(result.data.data);
+
     const options = {
       key: "rzp_test_lgqTsaqH49g4LM", // Enter the Key ID generated from the Dashboard
       amount: amount.toString(),

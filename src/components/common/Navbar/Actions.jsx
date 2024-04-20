@@ -20,6 +20,7 @@ import { TbLogout2 } from "react-icons/tb";
 import { useSelector, useDispatch } from "react-redux";
 import { getCookie, deleteCookie } from "@/utils/cookies";
 import { getCurrentUser } from "@/redux/slices/auth";
+import { getCart } from "@/redux/slices/cart";
 const Actions = () => {
   const router = useRouter();
   const token = getCookie("token");
@@ -29,6 +30,7 @@ const Actions = () => {
     if (token) {
       setIsLoggedIn(true);
       dispatch(getCurrentUser());
+      dispatch(getCart());
     }
   }, [isLoggedIn]);
   const handleLogout = () => {
@@ -37,15 +39,22 @@ const Actions = () => {
     window.location.reload();
   };
   const user = useSelector((state) => state?.auth?.currentUser);
-
+  const cart = useSelector((state) => state?.cart?.cart);
   return (
     <div className="flex items-center gap-7">
-      <Icon
-        className="cursor-pointer"
-        as={MdOutlineShoppingCart}
-        boxSize={6}
-        onClick={() => router.push("/cart")}
-      />
+      <div className="relative">
+        <Icon
+          className="cursor-pointer"
+          as={MdOutlineShoppingCart}
+          boxSize={6}
+          onClick={() => router.push("/cart")}
+        />
+        {cart.products?.length > 0 && (
+          <span className="absolute top-[-5px] right-[-4px] bg-red-500 text-[10px] font-semibold text-white rounded-full w-[13px] h-[13px] flex justify-center items-center">
+            {cart.products?.length}
+          </span>
+        )}
+      </div>
       <Icon className="cursor-pointer" as={AiOutlineHeart} boxSize={6} />
       {isLoggedIn ? (
         <Popover placement="bottom-end">

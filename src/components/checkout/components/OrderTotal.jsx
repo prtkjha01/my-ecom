@@ -1,11 +1,14 @@
+"use client";
 import React from "react";
-
 import { Button } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 const CartSummary = ({ handleClick }) => {
+  const router = useRouter();
   const cart = useSelector((state) => state?.cart?.cart);
-  // console.log(cart);
+  const product = useSelector((state) => state.product?.product);
+
   return (
     <>
       <div className="w-full border p-5 shadow-sm rounded bg-white">
@@ -13,7 +16,7 @@ const CartSummary = ({ handleClick }) => {
         <div className="cart-summary-details mt-4">
           <div className="flex justify-between">
             <p>Subtotal</p>
-            <p>₹ {cart.total_subtotal}</p>
+            <p>₹ {router.query.id ? product.price : cart.total_subtotal}</p>
           </div>
 
           <div className="flex justify-between mt-1">
@@ -28,7 +31,7 @@ const CartSummary = ({ handleClick }) => {
 
           <div className="flex justify-between border-t border-gray-400 border-dashed mt-2 pt-1">
             <p>Total</p>
-            <p>₹ {cart.total_subtotal}</p>
+            <p>₹ {router.query.id ? product.price : cart.total_subtotal}</p>
           </div>
         </div>
       </div>
