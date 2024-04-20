@@ -8,6 +8,7 @@ const initialState = {
         token: null,
         data: {},
     },
+    currentUser: {}
 };
 const slice = createSlice({
     name: "auth",
@@ -25,9 +26,21 @@ const slice = createSlice({
             console.log("inside isLoggedIn");
             state.user = { ...state.user, isLoggedIn: payload };
         },
+        setCurrentUser(state, action) {
+            state.currentUser = action.payload;
+        },
     },
 });
-
+export const getCurrentUser = () => {
+    return async (dispatch) => {
+        try {
+            const response = await api.getCurrentUser();
+            await dispatch(slice.actions.setCurrentUser(response.data));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+}
 export const login = (payload) => {
     return async (dispatch) => {
         try {

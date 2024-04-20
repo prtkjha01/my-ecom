@@ -1,7 +1,9 @@
 "use client";
+import { sortProducts } from "@/redux/slices/product";
 import React, { useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
 const SortOptions = () => {
+  const dispatch = useDispatch();
   const [sortOptions, setSortOptions] = useState([
     {
       id: 1,
@@ -24,10 +26,11 @@ const SortOptions = () => {
     {
       id: 4,
       label: "Rating Low to High",
-      value: "RHTL",
+      value: "RLTH",
       active: false,
     },
   ]);
+  const products = useSelector((state) => state?.product?.products);
   const handleSort = (index) => {
     const updatedSortOptions = sortOptions.map((option, i) => ({
       ...option,
@@ -48,6 +51,7 @@ const SortOptions = () => {
             }`}
             onClick={(e) => {
               handleSort(index);
+              dispatch(sortProducts(products, option.value));
             }}
           >
             {option.label}

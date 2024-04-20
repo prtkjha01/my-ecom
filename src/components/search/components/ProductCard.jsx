@@ -18,20 +18,22 @@ const ProductCard = ({ product }) => {
   } = product;
 
   const router = useRouter();
-  // console.log(product);
+
   return (
     <>
       <div
-        className="bg-white shadow hover:scale-105 transition duration-300 cursor-pointer"
+        className="bg-white min-w-52 shadow hover:scale-105 transition duration-300 cursor-pointer"
         onClick={() => router.push("/product/" + _id)}
       >
         <img
-          src={images&&images[0]}
+          src={images && images[0]}
           className="h-[150px]  w-full  object-cover"
           alt="product-image"
         />
         <div className="product-details px-4 py-2">
-          <div className="product-name mb-4">{brand} {product_name}</div>
+          <div className="product-name mb-4">
+            {brand} {product_name}
+          </div>
 
           <RatingBadge rating={rating} />
           <div className="product-price flex gap-2 mt-2">

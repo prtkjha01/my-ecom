@@ -19,6 +19,7 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "@/redux/slices/auth";
 import { useRouter } from "next/router";
+import { useSession, signIn, signOut } from "next-auth/react";
 const index = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -44,20 +45,25 @@ const index = () => {
     return error;
   };
   const handleLogin = (values, actions) => {
-    // console.log(values);
     dispatch(login(values))
       .then(() => {
         actions.setSubmitting(false);
 
-        router.push("/");
-        // router.reload();
+        if (typeof window !== "undefined") {
+          window.location.href = "/";
+        }
       })
       .catch((err) => {
         console.log(err);
         actions.setSubmitting(false);
       });
   };
-
+  const handleGoogleLoginSuccess = (response) => {
+    console.log(response);
+  };
+  const handleGoogleLoginFailure = (response) => {
+    console.log(response);
+  };
   const fetchData = async () => {
     try {
       const response = await axios.get(process.env.NEXT_PUBLIC_SERVER_LOCAL);
@@ -124,6 +130,17 @@ const index = () => {
                 </FormControl>
               )}
             </Field>
+            <div className="signup-redirect mt-8">
+              <Text align={"end"}>
+                Don't have an account?{" "}
+                <span
+                  className="text-[#014aad] cursor-pointer hover:underline"
+                  onClick={() => router.push("/signup")}
+                >
+                  Signup
+                </span>
+              </Text>
+            </div>
             <Button
               mt={8}
               className="w-full"
@@ -141,7 +158,7 @@ const index = () => {
         <div className="or">or</div>
         <div className="separator bg-gray-200 h-[2px] w-full"></div>
       </div>
-      <Button className="w-full">
+      <Button type="button" className="w-full" onClick={() => signIn("google")}>
         <span>
           <img
             src="https://w7.pngwing.com/pngs/543/934/png-transparent-google-app-logo-google-logo-g-suite-google-text-logo-circle.png"
@@ -151,6 +168,25 @@ const index = () => {
         </span>
         Login With Google
       </Button>
+      {/* <GoogleLogin
+        clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+        render={(renderProps) => (
+          <Button className="w-full" onClick={renderProps.onClick}>
+            <span>
+              <img
+                src="https://w7.pngwing.com/pngs/543/934/png-transparent-google-app-logo-google-logo-g-suite-google-text-logo-circle.png"
+                className=" h-5 w-5 mix-blend-multiply mr-2"
+                alt="google-icon"
+              />
+            </span>
+            Login With Google
+          </Button>
+        )}
+        onSuccess={handleGoogleLoginSuccess}
+        onFailure={handleGoogleLoginFailure}
+        cookiePolicy="single_host_origin"
+        isSignedIn
+      /> */}
     </div>
   );
 };

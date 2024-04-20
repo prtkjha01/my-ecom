@@ -1,18 +1,28 @@
 import { SearchIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const Search = () => {
   const router = useRouter();
   const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    if (router.query.q) {
+      setQuery(router.query.q);
+    }
+  }, []);
   return (
     <div className="w-full relative">
       <input
         className="outline-none bg-slate-50 h-min rounded w-full py-1 pl-3 pr-12"
         type="text"
         name="search-bar"
+        value={query}
         id="search-bar"
-        onKeyUp={(e) => {
+        onChange={(e) => {
           setQuery(e.target.value);
+        }}
+        onKeyUp={(e) => {
+          // setQuery(e.target.value);
 
           if (e.key === "Enter") {
             router.push("/search?q=" + query);

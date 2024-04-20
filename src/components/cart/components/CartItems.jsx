@@ -1,20 +1,88 @@
 "use client";
 import React, { useState } from "react";
-import { Input, Text, HStack, Button, useNumberInput } from "@chakra-ui/react";
+import {
+  Input,
+  Text,
+  HStack,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  useNumberInput,
+} from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
+import {
+  getCart,
+  removeFromCart,
+  updateProductQuantity,
+} from "@/redux/slices/cart";
+
 const CartItem = ({ item: { product, count }, isLast, variant }) => {
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
     useNumberInput({
       step: 1,
       min: 1,
       defaultValue: count,
     });
-
+  const [productQuantity, setProductQuantity] = useState(count);
   const inc = getIncrementButtonProps();
   const dec = getDecrementButtonProps();
   const input = getInputProps();
 
-  const handleRemove = () => {};
+  const handleRemove = () => {
+    dispatch(removeFromCart(product._id))
+      .then(() => {
+        dispatch(getCart());
+        onClose();
+        toast({
+          title: "Product removed !",
+          status: "success",
+          variant: "left-accent",
+          position: "top-right",
+          duration: 1500,
+          isClosable: true,
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: error.message,
+          status: "error",
+          variant: "left-accent",
+          position: "top-right",
+          duration: 1500,
+          isClosable: true,
+        });
+      });
+  };
+
+  const handleProductQuantityUpdate = (type) => {
+    dispatch(
+      updateProductQuantity({
+        id: product._id,
+        count: type === "INCREMENT" ? productQuantity + 1 : productQuantity - 1,
+      })
+    )
+      .then(() => {})
+      .catch((error) => {
+        toast({
+          title: error.message,
+          status: "error",
+          variant: "left-accent",
+          position: "top-right",
+          duration: 1500,
+          isClosable: true,
+        });
+      });
+  };
 
   return (
     <div
@@ -41,7 +109,6 @@ const CartItem = ({ item: { product, count }, isLast, variant }) => {
             </HStack>
           </div>
         </div>
-
         <div className="text-container">
           <Text className="product-name font-medium">
             {product.product_name}
@@ -71,27 +138,63 @@ const CartItem = ({ item: { product, count }, isLast, variant }) => {
       >
         <Text className="quantity text-center mb-3">Quantity</Text>
         <HStack w={"150px"}>
-          <Button {...inc}>+</Button>
+          <Button
+            {...dec}
+            onClick={() => {
+              handleProductQuantityUpdate("DECREMENT");
+            }}
+          >
+            -
+          </Button>
           <Input {...input} />
-          <Button {...dec}>-</Button>
+          <Button
+            {...inc}
+            onClick={() => {
+              handleProductQuantityUpdate("INCREMENT");
+            }}
+          >
+            +
+          </Button>
         </HStack>
+
         <button
           className="w-full text-center mt-3 font-[500] text-sm text-[#c70000] "
-          onClick={handleRemove}
+          onClick={onOpen}
         >
           REMOVE
         </button>
       </div>
+
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Remove {product.product_name}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            Are you sure you want to remove this product from cart ?
+          </ModalBody>
+
+          <ModalFooter>
+            <Button variant="ghost" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button colorScheme="blue" ml={3} onClick={handleRemove}>
+              Confirm
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </div>
   );
 };
 const CartItems = ({ variant }) => {
   const cart = useSelector((state) => state?.cart?.cart);
+
   return (
     <>
       {variant === "CART" && (
         <h2 className="text-lg font-semibold mb-8">
-          Your Cart {`(${cart?.products?.length})`}
+          Your Cart {`(${cart?.products?.length || 0})`}
         </h2>
       )}
       <div className="cart-items-list ">

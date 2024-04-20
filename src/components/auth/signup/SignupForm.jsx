@@ -7,6 +7,7 @@ import {
   Text,
   InputGroup,
   InputRightElement,
+  useToast,
 } from "@chakra-ui/react";
 import logo from "@assets/logo.png";
 import {
@@ -26,7 +27,7 @@ const SignupForm = () => {
   const [show2, setShow2] = useState(false);
   const handleClick = () => setShow(!show);
   const handleClick2 = () => setShow2(!show2);
-
+  const toast = useToast();
   const validateEmail = (value) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const isValidEmail = emailRegex.test(value);
@@ -78,14 +79,31 @@ const SignupForm = () => {
   const handleRegister = (values, actions) => {
     const payload = { ...values };
     delete payload.confirmedPassword;
-    console.log(payload);
+    // console.log(payload);
 
     dispatch(register(payload))
       .then(() => {
         actions.setSubmitting(false);
+        toast({
+          title: "Successfully Registered !",
+          status: "success",
+          variant: "left-accent",
+          position: "top-right",
+          duration: 1500,
+          isClosable: true,
+        });
+        router.push("/login");
       })
       .catch(() => {
         actions.setSubmitting(false);
+        toast({
+          title: error.message,
+          status: "error",
+          variant: "left-accent",
+          position: "top-right",
+          duration: 1500,
+          isClosable: true,
+        });
       });
   };
   return (
@@ -206,7 +224,17 @@ const SignupForm = () => {
                 </FormControl>
               )}
             </Field>
-
+            <div className="login-redirect mt-8">
+              <Text align={"end"}>
+                Already have an account?{" "}
+                <span
+                  className="text-[#014aad] cursor-pointer hover:underline"
+                  onClick={() => router.push("/login")}
+                >
+                  Login
+                </span>
+              </Text>
+            </div>
             <Button
               mt={8}
               className="w-full"

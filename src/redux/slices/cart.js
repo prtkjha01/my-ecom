@@ -39,4 +39,29 @@ export const addToCart = (payload) => {
     };
 };
 
+export const updateProductQuantity = ({ id, count }) => {
+    return async (dispatch) => {
+        try {
+
+            const response = await api.updateProductQuantity(id, { count })
+            return response;
+        } catch (error) {
+
+            throw new Error(error);
+        }
+    }
+}
+export const removeFromCart = (payload) => {
+    return async (dispatch) => {
+        try {
+
+            const response = await api.removeFromCart(payload)
+            return response;
+        } catch (error) {
+
+            throw new Error(error);
+        }
+    };
+};
+
 export default slice.reducer;

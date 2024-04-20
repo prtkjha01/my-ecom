@@ -56,6 +56,10 @@ const index = () => {
           position: "top-right",
           duration: 1500,
           isClosable: true,
+          // containerStyle: {
+          //   position: "absolute",
+          //   top: "5rem",
+          // },
         });
       })
       .catch((error) => {
@@ -66,10 +70,16 @@ const index = () => {
           position: "top-right",
           duration: 1500,
           isClosable: true,
+          // containerStyle: {
+          //   position: "absolute",
+          //   top: "5rem",
+          // },
         });
       });
   };
-
+  const handleBuyNow = () => {
+    router.push(`/checkout/${product._id}`);
+  };
   return (
     <>
       <Head>
@@ -82,7 +92,7 @@ const index = () => {
           />
 
           <div className="actions flex gap-2 mt-5">
-            <Button className="w-full" borderRadius={0}>
+            <Button className="w-full" borderRadius={0} onClick={handleBuyNow}>
               Buy Now
             </Button>
             <Button
