@@ -22,12 +22,12 @@ const ProductCard = ({ product }) => {
   return (
     <>
       <div
-        className="bg-white min-w-52 shadow hover:scale-105 transition duration-300 cursor-pointer"
+        className="bg-white sm:min-w-52 shadow hover:scale-105 transition duration-300 cursor-pointer"
         onClick={() => router.push("/product/" + _id)}
       >
         <img
           src={images && images[0]}
-          className="h-[150px]  w-full  object-cover"
+          className="h-[150px]  w-full  object-contain"
           alt="product-image"
         />
         <div className="product-details px-4 py-2">
@@ -39,7 +39,7 @@ const ProductCard = ({ product }) => {
           <div className="product-price flex gap-2 mt-2">
             <span className="">
               {currency_symbol}
-              {price - price * (discount / 100)}
+              {parseInt(price - price * (discount / 100))}
             </span>
             <span className="line-through">
               {currency_symbol}

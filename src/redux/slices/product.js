@@ -4,7 +4,8 @@ import { api } from "../../services/apis";
 
 const initialState = {
   product: {},
-  products: []
+  products: [],
+  carouselProducts: []
 };
 const slice = createSlice({
   name: "product",
@@ -14,9 +15,11 @@ const slice = createSlice({
       state.product = action.payload;
     },
     setProducts(state, action) {
-      // console.log(action.payload);
       state.products = action.payload || [];
     },
+    setCarouselProducts(state, action) {
+      state.carouselProducts = action.payload || [];
+    }
   },
 });
 export const sortProducts = (products, type) => {
@@ -43,6 +46,23 @@ export const sortProducts = (products, type) => {
     dispatch(slice.actions.setProducts(sortedProducts));
   }
 
+}
+
+export const getCarouselProducts = () => {
+  return async (dispatch) => {
+    try {
+      const response = await api.getCarouselProducts();
+      if (response?.data) {
+        const carouselData = response.data.map((product, index) => ({
+          ...product,
+          active: index === 0
+        }))
+        dispatch(slice.actions.setCarouselProducts(carouselData));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 export const getProducts = (payload, type) => {
   return async (dispatch) => {

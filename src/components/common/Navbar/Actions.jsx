@@ -70,7 +70,10 @@ const Actions = () => {
               Welcome {user?.name}
             </PopoverHeader>
             <PopoverBody>
-              <div className="orders cursor-pointer flex items-center gap-2 font-semibold">
+              <div
+                className="orders cursor-pointer flex items-center gap-2 font-semibold"
+                onClick={() => router.push("/orders")}
+              >
                 <FaBox /> Orders
               </div>
             </PopoverBody>

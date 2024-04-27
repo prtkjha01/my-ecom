@@ -2,58 +2,18 @@
 import React, { useRef, useState, useEffect } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { Icon, createIcon } from "@chakra-ui/react";
+import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/router";
+import { getCarouselProducts } from "@/redux/slices/product";
 const Carousel = () => {
   const test = useRef(null);
-  const [carouselData, setCarouselData] = useState([
-    {
-      id: 1,
-      color: "red",
-
-      image:
-        "https://res.cloudinary.com/debwkutxb/image/upload/v1707131240/my-ecom/clothing/Adidas_Yeazy_Ultraboost_qqi9ei.png",
-      active: true,
-    },
-    {
-      id: 2,
-      color: "green",
-
-      image:
-        "https://res.cloudinary.com/debwkutxb/image/upload/v1707131491/my-ecom/fitness/Optimum_Nutrition_Gold_Standard_Whey_wsejax.png",
-      active: false,
-    },
-    {
-      id: 3,
-      color: "blue",
-
-      image:
-        "https://res.cloudinary.com/debwkutxb/image/upload/v1707131190/my-ecom/clothing/Varsity_Jacket_xneucg.png",
-      active: false,
-    },
-    {
-      id: 4,
-      color: "yellow",
-
-      image:
-        "https://res.cloudinary.com/debwkutxb/image/upload/v1707131463/my-ecom/fitness/1RM_JK-500_Power_Rack_r5mmca.png",
-      active: false,
-    },
-    {
-      id: 5,
-      color: "purple",
-
-      image:
-        "https://res.cloudinary.com/debwkutxb/image/upload/v1707131494/my-ecom/fitness/C4_Pre_Workout_ft47n9.png",
-      active: false,
-    },
-    {
-      id: 6,
-      color: "orange",
-
-      image:
-        "https://res.cloudinary.com/debwkutxb/image/upload/v1707131239/my-ecom/clothing/Nike_Air_Jordan_Travis_Scott_rijxfw.png",
-      active: false,
-    },
-  ]);
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const carouselProducts = useSelector(
+    (state) => state.product?.carouselProducts
+  );
+  // console.log("carouselProducts", carouselProducts);
+  const [carouselData, setCarouselData] = useState(carouselProducts || []);
   const [activeIndex, setActiveIndex] = useState(0);
 
   const updateCarouselData = (index) => {
@@ -119,6 +79,12 @@ const Carousel = () => {
     };
   }, [activeIndex, carouselData.length]);
 
+  useEffect(() => {
+    dispatch(getCarouselProducts());
+  }, []);
+  useEffect(() => {
+    setCarouselData(carouselProducts);
+  }, [carouselProducts]);
   return (
     <>
       <div className="carousel-container relative w-full">
@@ -129,11 +95,12 @@ const Carousel = () => {
           {carouselData.map((carouselItem, index) => {
             return (
               <div
-                key={carouselItem.id}
-                className={`carousel-item bg-white min-w-full`}
+                key={carouselItem._id}
+                className={`carousel-item bg-white min-w-full cursor-pointer`}
+                onClick={() => router.push(`/product/${carouselItem._id}`)}
               >
                 <img
-                  src={carouselItem.image}
+                  src={carouselItem.images[0]}
                   className="lg:h-[600px] md:h-[500px] sm:h-[400px] h-[250px] w-full object-contain"
                   alt="product-image"
                 />
@@ -146,7 +113,7 @@ const Carousel = () => {
           {carouselData.map((item, index) => {
             return (
               <div
-                key={item.id}
+                key={item._id}
                 className="pagination-indicator cursor-pointer"
                 onClick={() => scrollToIndex(index)}
               >

@@ -10,6 +10,7 @@ import {
   Radio,
   RadioGroup,
   Tooltip,
+  Button,
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { getProducts } from "@/redux/slices/product";
@@ -43,16 +44,20 @@ const Filters = () => {
   useEffect(() => {
     handleFiltering();
   }, [discount, isAssured]);
+  const handleClearFilter = () => {
+    setPriceRange([0, 10000]);
+    setIsAssured("");
+    setDiscount("");
+    setFilters({});
+  };
   const handleFiltering = () => {
     let newFilters = {};
     if (priceRange.length == 2) {
-      // console.log("here");
       newFilters = {
         ...newFilters,
         min_price: priceRange[0],
         max_price: priceRange[1],
       };
-      // console.log(filters, priceRange);
     }
     if (discount && discount.length) {
       switch (discount) {
@@ -148,6 +153,16 @@ const Filters = () => {
           <Radio value={"true"}>Yes</Radio>
           <Radio value={"false"}>No</Radio>
         </RadioGroup>
+      </div>
+      <div className="clear mt-5">
+        <Button
+          className="btn btn-primary"
+          onClick={() => {
+            handleClearFilter();
+          }}
+        >
+          Clear
+        </Button>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ const SortOptions = () => {
   const [sortOptions, setSortOptions] = useState([
     {
       id: 1,
-      label: "Price Hight to Low",
+      label: "Price High to Low",
       value: "PHTL",
       active: false,
     },
@@ -41,14 +41,14 @@ const SortOptions = () => {
   };
   return (
     <div className="sort-widget flex gap-5 mt-2 mb-4">
-      <div>sort by</div>
+      <div className="text-xs sm:text-sm md:text-sm lg:text-sm">sort by</div>
       <div className="sort-options gap-3 flex">
         {sortOptions.map((option, index) => (
           <div
             key={option.id}
             className={`cursor-pointer ${
               option.active ? " text-blue-600" : ""
-            }`}
+            } text-xs sm:text-sm md:text-sm lg:text-sm`}
             onClick={(e) => {
               handleSort(index);
               dispatch(sortProducts(products, option.value));
