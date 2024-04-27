@@ -71,7 +71,9 @@ const CartItem = ({ item: { product, count }, isLast, variant }) => {
         count: type === "INCREMENT" ? productQuantity + 1 : productQuantity - 1,
       })
     )
-      .then(() => {})
+      .then(() => {
+        dispatch(getCart());
+      })
       .catch((error) => {
         toast({
           title: error.message,
@@ -90,7 +92,7 @@ const CartItem = ({ item: { product, count }, isLast, variant }) => {
         isLast && "border-b border-gray-200 "
       } `}
     >
-      <div className="details w-full flex items-center gap-2 sm:gap-5">
+      <div className="details w-full flex justify-around items-center gap-2 sm:gap-5">
         <div className="image-container ">
           <img
             src={product.images && product.images[0]}
@@ -102,10 +104,24 @@ const CartItem = ({ item: { product, count }, isLast, variant }) => {
               variant === "ORDER_SUMMARY" ? "hidden" : ""
             }`}
           >
-            <HStack w={"150px"}>
-              <Button {...inc}>+</Button>
+            <HStack w={"150px"} mb={2}>
+              <Button
+                {...dec}
+                onClick={() => {
+                  handleProductQuantityUpdate("DECREMENT");
+                }}
+              >
+                -
+              </Button>
               <Input {...input} />
-              <Button {...dec}>-</Button>
+              <Button
+                {...inc}
+                onClick={() => {
+                  handleProductQuantityUpdate("INCREMENT");
+                }}
+              >
+                +
+              </Button>
             </HStack>
           </div>
         </div>

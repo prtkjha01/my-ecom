@@ -81,7 +81,7 @@ export const getProductsByCategory = (payload) => {
   return async (dispatch) => {
     try {
 
-      const response = await api.getProductsByCategory(payload, 1, 15);
+      const response = await api.getProductsByCategory(payload, 1, 100);
       dispatch(slice.actions.setProducts(response.data.products));
     } catch (error) {
       console.log(error);

@@ -16,9 +16,9 @@ const OrderSuccess = () => {
       </div>
       <div
         className="home-btn flex items-center text-[#014AAD] font-semibold cursor-pointer"
-        onClick={() => router.push("/")}
+        onClick={() => router.push("/orders")}
       >
-        <span className="hover:underline">Home</span>
+        <span className="hover:underline">View Your Orders</span>
         <span>
           <FaAngleRight />
         </span>

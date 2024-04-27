@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 const Categories = () => {
+  const router = useRouter();
   const [categories, setCategories] = useState([
     {
       id: 1,
@@ -47,6 +49,9 @@ const Categories = () => {
           <div
             key={category.id}
             className="category-item flex flex-col items-center cursor-pointer"
+            onClick={() => {
+              router.push(`/products/${category.category_name.toLowerCase()}`);
+            }}
           >
             <img
               src={category.category_thumbnail}

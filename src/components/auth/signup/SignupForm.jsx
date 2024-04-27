@@ -9,6 +9,7 @@ import {
   InputRightElement,
   useToast,
 } from "@chakra-ui/react";
+import { LuEye, LuEyeOff } from "react-icons/lu";
 import logo from "@assets/logo.png";
 import {
   FormControl,
@@ -107,7 +108,7 @@ const SignupForm = () => {
       });
   };
   return (
-    <div className="p-4 md:px-48 lg:px-28 w-full">
+    <div className="p-4  md:px-48 lg:px-28 w-full">
       <header className="login-form-header flex flex-col items-center gap-3 mb-10">
         <img src={logo.src} className="brand h-16 w-16" alt="brand-logo" />
         <Text className=" text-[#3A003D] font-[700] text-4xl">
@@ -179,10 +180,20 @@ const SignupForm = () => {
                       type={show ? "text" : "password"}
                       placeholder="Enter your password"
                     />
-                    <InputRightElement width="4.5rem">
-                      <Button h="1.75rem" size="sm" onClick={handleClick}>
-                        {show ? "Hide" : "Show"}
-                      </Button>
+                    <InputRightElement width="2.5rem">
+                      {show ? (
+                        <LuEye
+                          onClick={handleClick}
+                          className="cursor-pointer"
+                          color="#9CA3AF"
+                        />
+                      ) : (
+                        <LuEyeOff
+                          onClick={handleClick}
+                          className="cursor-pointer"
+                          color="#9CA3AF"
+                        />
+                      )}
                     </InputRightElement>
                   </InputGroup>
                   <FormErrorMessage>{form.errors.password}</FormErrorMessage>
@@ -212,10 +223,20 @@ const SignupForm = () => {
                       type={show2 ? "text" : "password"}
                       placeholder="Enter your password"
                     />
-                    <InputRightElement width="4.5rem">
-                      <Button h="1.75rem" size="sm" onClick={handleClick2}>
-                        {show2 ? "Hide" : "Show"}
-                      </Button>
+                    <InputRightElement width="2.5rem">
+                      {show2 ? (
+                        <LuEye
+                          onClick={handleClick2}
+                          className="cursor-pointer"
+                          color="#9CA3AF"
+                        />
+                      ) : (
+                        <LuEyeOff
+                          onClick={handleClick2}
+                          className="cursor-pointer"
+                          color="#9CA3AF"
+                        />
+                      )}
                     </InputRightElement>
                   </InputGroup>
                   <FormErrorMessage>
@@ -242,7 +263,7 @@ const SignupForm = () => {
               isLoading={props.isSubmitting}
               type="submit"
             >
-              Login
+              SignUp
             </Button>
           </Form>
         )}

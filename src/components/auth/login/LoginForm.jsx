@@ -8,6 +8,7 @@ import {
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
+import { LuEye, LuEyeOff } from "react-icons/lu";
 import logo from "@assets/logo.png";
 import {
   FormControl,
@@ -120,10 +121,20 @@ const index = () => {
                       type={show ? "text" : "password"}
                       placeholder="Enter your password"
                     />
-                    <InputRightElement width="4.5rem">
-                      <Button h="1.75rem" size="sm" onClick={handleClick}>
-                        {show ? "Hide" : "Show"}
-                      </Button>
+                    <InputRightElement width="2.5rem">
+                      {show ? (
+                        <LuEye
+                          onClick={handleClick}
+                          className="cursor-pointer"
+                          color="#9CA3AF"
+                        />
+                      ) : (
+                        <LuEyeOff
+                          onClick={handleClick}
+                          className="cursor-pointer"
+                          color="#9CA3AF"
+                        />
+                      )}
                     </InputRightElement>
                   </InputGroup>
                   <FormErrorMessage>{form.errors.password}</FormErrorMessage>

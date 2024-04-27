@@ -47,6 +47,7 @@ const getAddresses = () => instance.get('/address')
 const createAddress = (payload) => instance.post('/address', payload)
 const deleteAddress = (id) => instance.delete(`/address/${id}`)
 const placeOrder = (payload) => instance.post('/order/payment-success', payload)
+const getAllOrders = () => instance.get('/order/all')
 export const api = {
     getCurrentUser,
     getCarouselProducts,
@@ -61,6 +62,7 @@ export const api = {
     createAddress,
     deleteAddress,
     placeOrder,
+    getAllOrders,
     // initService,
     register,
     login,
