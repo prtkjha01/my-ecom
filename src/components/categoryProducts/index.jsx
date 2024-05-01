@@ -9,7 +9,7 @@ const index = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const category = router.query.category;
-  const products = useSelector((state) => state?.product?.products);
+  const products = useSelector((state) => state?.product?.products?.data);
   useEffect(() => {
     if (category) {
       dispatch(getProductsByCategory(category.toUpperCase()));

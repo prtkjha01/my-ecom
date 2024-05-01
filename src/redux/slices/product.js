@@ -3,8 +3,16 @@ import { dispatch } from "../store";
 import { api } from "../../services/apis";
 
 const initialState = {
-  product: {},
-  products: [],
+  product: {
+    isLoading: false,
+    data: {},
+    isError: false
+  },
+  products: {
+    isLoading: false,
+    data: [],
+    isError: false
+  },
   carouselProducts: []
 };
 const slice = createSlice({
@@ -12,10 +20,22 @@ const slice = createSlice({
   initialState,
   reducers: {
     setProduct(state, action) {
-      state.product = action.payload;
+      state.product = { ...state.product, data: action.payload };
+    },
+    setProductLoading(state, action) {
+      state.product = { ...state.product, isLoading: action.payload };
+    },
+    setProductError(state, action) {
+      state.product = { ...state.product, isError: action.payload };
     },
     setProducts(state, action) {
-      state.products = action.payload || [];
+      state.products = { ...state.products, data: action.payload };
+    },
+    setProductsLoading(state, action) {
+      state.products = { ...state.products, isLoading: action.payload };
+    },
+    setProductsError(state, action) {
+      state.products = { ...state.products, isError: action.payload };
     },
     setCarouselProducts(state, action) {
       state.carouselProducts = action.payload || [];
@@ -68,34 +88,43 @@ export const getProducts = (payload, type) => {
   return async (dispatch) => {
     try {
 
+      dispatch(slice.actions.setProductsLoading(true));
       const response = await api.getProducts(payload, type)
 
       dispatch(slice.actions.setProducts(response.data.products));
 
     } catch (error) {
-      // console.log(error);
+
+      dispatch(slice.actions.setProductsError(true));
+    } finally {
+      dispatch(slice.actions.setProductsLoading(false));
     }
   };
 };
 export const getProductsByCategory = (payload) => {
   return async (dispatch) => {
     try {
-
+      dispatch(slice.actions.setProductsLoading(true));
       const response = await api.getProductsByCategory(payload, 1, 100);
       dispatch(slice.actions.setProducts(response.data.products));
     } catch (error) {
       console.log(error);
+      dispatch(slice.actions.setProductsError(true));
+    } finally {
+      dispatch(slice.actions.setProductsLoading(false));
     }
   };
 };
 export const getProduct = (payload) => {
   return async (dispatch) => {
     try {
-
+      dispatch(slice.actions.setProductLoading(true));
       const response = await api.getProduct(payload);
       await dispatch(slice.actions.setProduct(response.data));
     } catch (error) {
-      console.log(error);
+      dispatch(slice.actions.setProductError(true));
+    } finally {
+      dispatch(slice.actions.setProductLoading(false));
     }
   }
 }

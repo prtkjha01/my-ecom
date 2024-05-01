@@ -10,7 +10,7 @@ const index = () => {
   const [step, setStep] = useState(0);
   const [checkoutPayload, setCheckoutPayload] = useState({});
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state?.cart?.cart);
+  const cart = useSelector((state) => state?.cart?.cart?.data);
   const handleClick = (step) => {
     setStep(step);
   };

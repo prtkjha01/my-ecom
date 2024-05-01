@@ -14,6 +14,8 @@ import {
   ModalCloseButton,
   useDisclosure,
   useNumberInput,
+  Skeleton,
+  SkeletonText,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
@@ -23,6 +25,19 @@ import {
   updateProductQuantity,
 } from "@/redux/slices/cart";
 
+export const CartItemsSkeleton = () =>
+  [1, 2, 3, 4].map((i) => (
+    <div
+      key={i}
+      className="cart-item flex items-center shadow gap-2 pr-2 sm:pr-10 mt-1 bg-white"
+    >
+      <Skeleton
+        height={["150px", "180px", "180px", "180px"]}
+        minWidth={["150px", "180px", "180px", "180px"]}
+      />
+      <SkeletonText width="100%" noOfLines={3} spacing="2" skeletonHeight="4" />
+    </div>
+  ));
 const CartItem = ({ item: { product, count }, isLast, variant }) => {
   const dispatch = useDispatch();
   const toast = useToast();
@@ -92,7 +107,7 @@ const CartItem = ({ item: { product, count }, isLast, variant }) => {
         isLast && "border-b border-gray-200 "
       } `}
     >
-      <div className="details w-full flex justify-around items-center gap-2 sm:gap-5">
+      <div className="details w-full flex  items-center gap-2 sm:gap-5">
         <div className="image-container ">
           <img
             src={product.images && product.images[0]}
@@ -204,7 +219,7 @@ const CartItem = ({ item: { product, count }, isLast, variant }) => {
   );
 };
 const CartItems = ({ variant }) => {
-  const cart = useSelector((state) => state?.cart?.cart);
+  const cart = useSelector((state) => state?.cart?.cart?.data);
 
   return (
     <>

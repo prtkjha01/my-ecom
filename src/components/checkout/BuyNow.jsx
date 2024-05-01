@@ -12,8 +12,8 @@ const BuyNow = () => {
   const [step, setStep] = useState(0);
   const [checkoutPayload, setCheckoutPayload] = useState({});
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state?.cart?.cart);
-  const product = useSelector((state) => state.product?.product);
+  const cart = useSelector((state) => state?.cart?.cart?.data);
+  const product = useSelector((state) => state.product?.product?.data);
   const handleClick = (step) => {
     setStep(step);
   };

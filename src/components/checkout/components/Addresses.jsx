@@ -2,14 +2,15 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAddresses } from "@/redux/slices/address";
-import { Button, Drawer, useDisclosure } from "@chakra-ui/react";
+import { Button, Drawer, useDisclosure, Skeleton } from "@chakra-ui/react";
 import { AddIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-import AddressCard from "./AddressCard";
+import AddressCard, { AddressCardSkeleton } from "./AddressCard";
 import AddressSidebar from "./AddressSidebar";
 
 const Addresses = ({ handleClick, onSelect }) => {
   const dispatch = useDispatch();
-  const addresses = useSelector((state) => state?.address?.addresses);
+  const addresses = useSelector((state) => state?.address?.addresses?.data);
+  const loading = useSelector((state) => state?.address?.addresses?.isLoading);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedAddress, setSelectedAddress] = useState(null);
   const handleAddressSelection = (id) => {
@@ -23,43 +24,50 @@ const Addresses = ({ handleClick, onSelect }) => {
   return (
     <div className="">
       <div className="add-address-btn flex justify-end">
-        <Button
-          className=""
-          backgroundColor={"#014aad"}
-          color={"white"}
-          borderRadius={0}
-          onClick={onOpen}
-        >
-          <span className="mr-2">Add New Address</span> <AddIcon boxSize={4} />
-        </Button>
+        {loading ? (
+          <Skeleton height="40px" width="170px" />
+        ) : (
+          <Button
+            className=""
+            backgroundColor={"#014aad"}
+            color={"white"}
+            borderRadius={0}
+            onClick={onOpen}
+          >
+            <span className="mr-2">Add New Address</span>{" "}
+            <AddIcon boxSize={4} />
+          </Button>
+        )}
       </div>
       <div className="addresses flex flex-col sm:grid sm:grid-cols-2 md:grid-cols-3  gap-5 mt-4">
-        {addresses &&
-          addresses.length > 0 &&
-          addresses.map((address) => (
-            <AddressCard
-              key={address._id}
-              address={address}
-              isSelected={selectedAddress === address._id}
-              handleSelect={handleAddressSelection}
-            />
-          ))}
+        {addresses.length > 0 && !loading
+          ? addresses.map((address) => (
+              <AddressCard
+                key={address._id}
+                address={address}
+                isSelected={selectedAddress === address._id}
+                handleSelect={handleAddressSelection}
+              />
+            ))
+          : [1, 2, 3, 4, 5].map((i) => <AddressCardSkeleton key={i} />)}
       </div>
       <div className="flex justify-end mt-4">
-        <Button
-          className=""
-          backgroundColor={"#014aad"}
-          color={"white"}
-          borderRadius={0}
-          colorScheme={"blue"}
-          rightIcon={<ArrowForwardIcon />}
-          isDisabled={!selectedAddress}
-          onClick={() => {
-            handleClick(1);
-          }}
-        >
-          Next
-        </Button>
+        {!loading && (
+          <Button
+            className=""
+            backgroundColor={"#014aad"}
+            color={"white"}
+            borderRadius={0}
+            colorScheme={"blue"}
+            rightIcon={<ArrowForwardIcon />}
+            isDisabled={!selectedAddress}
+            onClick={() => {
+              handleClick(1);
+            }}
+          >
+            Next
+          </Button>
+        )}
       </div>
       <Drawer
         isOpen={isOpen}

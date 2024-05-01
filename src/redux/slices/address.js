@@ -3,27 +3,40 @@ import { dispatch } from "../store";
 import { api } from "../../services/apis";
 
 const initialState = {
-    addresses: [],
+    addresses: {
+        isLoading: false,
+        data: [],
+        isError: false
+    },
 };
 const slice = createSlice({
     name: "address",
     initialState,
     reducers: {
         setAddresses(state, action) {
-            state.addresses = action.payload;
-        }
+            state.addresses = { ...state.addresses, data: action.payload };
+        },
+        setIsLoading(state, action) {
+            state.addresses = { ...state.addresses, isLoading: action.payload };
+        },
+        setIsError(state, action) {
+            state.addresses = { ...state.addresses, isError: action.payload };
+        },
     },
 });
 export const getAddresses = () => {
     return async (dispatch) => {
         try {
-
+            dispatch(slice.actions.setIsLoading(true));
             const response = await api.getAddresses()
 
             dispatch(slice.actions.setAddresses(response.data));
 
         } catch (error) {
-            console.log(error);
+
+            dispatch(slice.actions.setIsError(true));
+        } finally {
+            dispatch(slice.actions.setIsLoading(false));
         }
     };
 };

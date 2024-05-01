@@ -6,8 +6,8 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 const CartSummary = ({ handleClick }) => {
   const router = useRouter();
-  const cart = useSelector((state) => state?.cart?.cart);
-  const product = useSelector((state) => state.product?.product);
+  const cart = useSelector((state) => state?.cart?.cart?.data);
+  const product = useSelector((state) => state.product?.product?.data);
 
   return (
     <>
@@ -36,11 +36,14 @@ const CartSummary = ({ handleClick }) => {
         </div>
       </div>
 
-      <div className="offers w-full border p-5 shadow-sm rounded mt-4 bg-white">
-        <h2 className="text-lg font-semibold">Got a Promo Code ?</h2>
+      <div className="offers w-full border p-5 shadow-sm rounded mt-4 bg-white opacity-50 cursor-not-allowed">
+        <h2 className="text-lg font-semibold">
+          Got a Promo Code ?{"(Coming Soon)"}
+        </h2>
         <div className="offer-input relative mt-4">
           <input
             className="w-full border-b rounded-none outline-none border-slate-500 h-8 pr-14"
+            disabled
             type="text"
           />
           <button className="absolute right-0 bottom-1 text-sm bg-slate-300 text-slate-900 p-1 px-2">

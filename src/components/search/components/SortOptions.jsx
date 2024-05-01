@@ -7,30 +7,31 @@ const SortOptions = () => {
   const [sortOptions, setSortOptions] = useState([
     {
       id: 1,
-      label: "Price High to Low",
+      label: <span>Price &uarr;</span>,
+      // "Price ⬆️",
       value: "PHTL",
       active: false,
     },
     {
       id: 2,
-      label: "Price Low to High",
+      label: <span>Price &darr;</span>,
       value: "PLTH",
       active: false,
     },
     {
       id: 3,
-      label: "Rating High to Low",
+      label: <span>Rating &uarr;</span>,
       value: "RHTL",
       active: false,
     },
     {
       id: 4,
-      label: "Rating Low to High",
+      label: <span>Rating &darr;</span>,
       value: "RLTH",
       active: false,
     },
   ]);
-  const products = useSelector((state) => state?.product?.products);
+  const products = useSelector((state) => state?.product?.products?.data);
   const handleSort = (index) => {
     const updatedSortOptions = sortOptions.map((option, i) => ({
       ...option,
@@ -40,15 +41,17 @@ const SortOptions = () => {
     setSortOptions(updatedSortOptions);
   };
   return (
-    <div className="sort-widget flex gap-5 mt-2 mb-4">
-      <div className="text-xs sm:text-sm md:text-sm lg:text-sm">sort by</div>
+    <div className="sort-widget flex gap-5 ">
+      <div className="font-bold text-xs sm:text-sm md:text-sm lg:text-sm">
+        sort by
+      </div>
       <div className="sort-options gap-3 flex">
         {sortOptions.map((option, index) => (
           <div
             key={option.id}
             className={`cursor-pointer ${
               option.active ? " text-blue-600" : ""
-            } text-xs sm:text-sm md:text-sm lg:text-sm`}
+            } font-bold text-xs sm:text-sm md:text-sm lg:text-sm`}
             onClick={(e) => {
               handleSort(index);
               dispatch(sortProducts(products, option.value));

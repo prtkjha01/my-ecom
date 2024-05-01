@@ -8,12 +8,37 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  SkeletonText,
+  Skeleton,
   useDisclosure,
 } from "@chakra-ui/react";
 import { MdLocalPhone } from "react-icons/md";
 import AddressModal from "./AddressModal";
 import React from "react";
 
+export const AddressCardSkeleton = () => (
+  <div className="p-3 relative bg-white shadow">
+    <Skeleton height="20px" width="150px" />
+
+    <SkeletonText mt={2} noOfLines={3} spacing="4" skeletonHeight="2" />
+
+    <div className="font-[500] flex items-center justify-between mt-3">
+      <Skeleton height="20px" width="100px" />
+      <span className="flex md:flex-col lg:flex-row font-[600] gap-5">
+        <Skeleton height="20px" width="60px" />
+        <Skeleton height="20px" width="60px" />
+      </span>
+    </div>
+
+    <Skeleton
+      position={"absolute"}
+      top={2}
+      right={2}
+      height="20px"
+      width="20px"
+    />
+  </div>
+);
 const Address = ({ address, isSelected, handleSelect }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleAddressDelete = () => {

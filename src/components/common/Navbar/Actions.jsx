@@ -33,13 +33,14 @@ const Actions = () => {
       dispatch(getCart());
     }
   }, [isLoggedIn]);
+
   const handleLogout = () => {
     deleteCookie("token");
     setIsLoggedIn(false);
     window.location.reload();
   };
   const user = useSelector((state) => state?.auth?.currentUser);
-  const cart = useSelector((state) => state?.cart?.cart);
+  const cart = useSelector((state) => state?.cart?.cart?.data);
   return (
     <div className="flex items-center gap-7">
       <div className="relative">
@@ -55,7 +56,7 @@ const Actions = () => {
           </span>
         )}
       </div>
-      <Icon className="cursor-pointer" as={AiOutlineHeart} boxSize={6} />
+      {/* <Icon className="cursor-pointer" as={AiOutlineHeart} boxSize={6} /> */}
       {isLoggedIn ? (
         <Popover placement="bottom-end">
           <PopoverTrigger>

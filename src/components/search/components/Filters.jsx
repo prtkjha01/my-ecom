@@ -157,6 +157,8 @@ const Filters = () => {
       <div className="clear mt-5">
         <Button
           className="btn btn-primary"
+          width={"100%"}
+          borderRadius={0}
           onClick={() => {
             handleClearFilter();
           }}

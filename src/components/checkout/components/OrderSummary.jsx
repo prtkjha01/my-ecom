@@ -12,7 +12,7 @@ const OrderSummary = ({ handleClick, type }) => {
   // const moveToPayment = () => {
   //   handleClick(2);
   // };
-  const product = useSelector((state) => state.product?.product);
+  const product = useSelector((state) => state.product?.product?.data);
   useEffect(() => {
     type === "CART"
       ? dispatch(getCart())

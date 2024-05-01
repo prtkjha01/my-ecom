@@ -1,17 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { dispatch } from "../store";
 import { api } from "../../services/apis";
 
 const initialState = {
-    orders: []
+    orders: {
+        isLoading: false,
+        data: [],
+        isError: false
+    }
 };
 const slice = createSlice({
     name: "order",
     initialState,
     reducers: {
         setOrders: (state, action) => {
-            state.orders = action.payload;
+            state.orders = { ...state.orders, data: action.payload }
         },
+        setOrdersLoading: (state, action) => {
+            state.orders = { ...state.orders, isLoading: action.payload }
+        },
+        setOrdersError: (state, action) => {
+            state.orders = { ...state.orders, isError: action.payload }
+        }
     },
 });
 export const placeOrder = (payload) => {
@@ -35,6 +44,7 @@ export const placeOrder = (payload) => {
  */
 export const getOrders = () => {
     return async (dispatch) => {
+        dispatch(slice.actions.setOrdersLoading(true));
         try {
             const response = await api.getAllOrders();
             if (response?.data) {
@@ -42,6 +52,9 @@ export const getOrders = () => {
             }
         } catch (error) {
             console.log(error);
+            dispatch(slice.actions.setOrdersError(true));
+        } finally {
+            dispatch(slice.actions.setOrdersLoading(false));
         }
     };
 };

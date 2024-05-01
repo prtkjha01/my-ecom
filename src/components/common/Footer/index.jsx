@@ -75,7 +75,7 @@ const StayConnectedColumn = () => {
   return (
     <div className="footer-column">
       <h3 className="text-lg font-semibold mb-2">Stay Connected</h3>
-      <p className="text-sm text-slate-200">
+      <p className="text-sm text-slate-200 h-10">
         Follow us on social media for the latest updates, promotions, and more.
       </p>
       <div className="flex space-x-2 items-center mt-2 mb-4">

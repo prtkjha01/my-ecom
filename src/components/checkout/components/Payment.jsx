@@ -9,8 +9,8 @@ import { MdOutlinePayment } from "react-icons/md";
 import { useRouter } from "next/router";
 
 const Payment = ({ payload }) => {
-  const cart = useSelector((state) => state?.cart?.cart);
-  const product = useSelector((state) => state?.product?.product);
+  const cart = useSelector((state) => state?.cart?.cart?.data);
+  const product = useSelector((state) => state?.product?.product?.data);
   const dispatch = useDispatch();
   const toast = useToast();
   const router = useRouter();

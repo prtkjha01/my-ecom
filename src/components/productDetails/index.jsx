@@ -18,7 +18,7 @@ const index = () => {
   const toast = useToast();
   const router = useRouter();
   const { id } = router.query;
-  const product = useSelector((state) => state?.product?.product);
+  const product = useSelector((state) => state?.product?.product?.data);
 
   const description = `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam at ut
   recusandae sequi, hic soluta velit magnam, facere quis nulla ea debitis
