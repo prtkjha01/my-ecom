@@ -4,12 +4,19 @@ import CartItems, { CartItemsSkeleton } from "./components/CartItems";
 import CartSummary, { CartSummarySkeleton } from "./components/CartSummary";
 import { useSelector, useDispatch } from "react-redux";
 import { getCart } from "@/redux/slices/cart";
-
+import { getCookie } from "@/utils/cookies";
+import { useRouter } from "next/router";
 const index = () => {
+  const token = getCookie("token");
+  const router = useRouter();
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.cart?.cart?.isLoading);
   useEffect(() => {
-    dispatch(getCart());
+    if (token) {
+      dispatch(getCart());
+    } else {
+      router.push("/login");
+    }
   }, []);
   return (
     <div className="p-4 sm:p-12">

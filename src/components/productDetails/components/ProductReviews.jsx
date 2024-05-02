@@ -1,6 +1,12 @@
 import React from "react";
-import { Text } from "@chakra-ui/react";
+import { Text, Skeleton } from "@chakra-ui/react";
 import RatingBadge from "@/components/common/RatingBadge";
+
+export const ProductReviewsSkeleton = () => (
+  <>
+    <Skeleton height="20px" width="100px" mb={2} />
+  </>
+);
 const ProductReviews = ({ reviews }) => {
   return (
     <>

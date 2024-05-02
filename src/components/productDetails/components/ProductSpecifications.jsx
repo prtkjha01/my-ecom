@@ -1,5 +1,15 @@
 import React from "react";
-
+import { Skeleton } from "@chakra-ui/react";
+export const ProductSpecificationsSkeleton = () => (
+  <>
+    <Skeleton height="20px" width="200px" mb={2} />
+    <Skeleton height="15px" width="150px" mb={2} />
+    <Skeleton height="15px" width="150px" mb={2} />
+    <Skeleton height="15px" width="150px" mb={2} />
+    <Skeleton height="15px" width="150px" mb={2} />
+    <Skeleton height="15px" width="150px" />
+  </>
+);
 const ProductSpecifications = ({ specifications }) => {
   return (
     <>

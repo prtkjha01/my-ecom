@@ -1,5 +1,22 @@
-import { Text } from "@chakra-ui/react";
+import { Text, Skeleton, SkeletonText } from "@chakra-ui/react";
 
+export const FAQsSkeleton = () => (
+  <>
+    <Skeleton height="20px" width="100px" mb={2} />
+    <div className="faq mb-4">
+      <Skeleton height="15px" width="100%" mb={2} />
+      <SkeletonText noOfLines={2} spacing="2" skeletonHeight="2" />
+    </div>
+    <div className="faq mb-4">
+      <Skeleton height="15px" width="100%" mb={2} />
+      <SkeletonText noOfLines={2} spacing="2" skeletonHeight="2" />
+    </div>
+    <div className="faq">
+      <Skeleton height="15px" width="100%" mb={2} />
+      <SkeletonText noOfLines={2} spacing="2" skeletonHeight="2" />
+    </div>
+  </>
+);
 const FAQs = ({ faqs }) => {
   return (
     <>
