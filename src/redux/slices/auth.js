@@ -48,8 +48,9 @@ export const login = (payload) => {
             const response = await api.login(payload);
             await dispatch(slice.actions.setToken(response.data.token));
             await dispatch(slice.actions.setIsLoggedIn(true));
+            return response;
         } catch (error) {
-            console.log(error);
+            throw new Error(error);
         }
     };
 };
@@ -59,9 +60,7 @@ export const register = (payload) => {
             await api.register(payload);
             // console.log(response);
         } catch (error) {
-            console.log(error);
-        } finally {
-            console.log("ok !");
+            throw new Error(error);
         }
     };
 };

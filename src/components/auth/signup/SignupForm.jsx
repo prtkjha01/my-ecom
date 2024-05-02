@@ -98,7 +98,8 @@ const SignupForm = () => {
       .catch(() => {
         actions.setSubmitting(false);
         toast({
-          title: error.message,
+          title: "Error",
+          description: "Something went wrong",
           status: "error",
           variant: "left-accent",
           position: "top-right",
@@ -273,7 +274,7 @@ const SignupForm = () => {
         <div className="or">or</div>
         <div className="separator bg-gray-200 h-[2px] w-full"></div>
       </div>
-      <Button className="w-full cursor-not-allowed" disabled>
+      <Button className="w-full cursor-not-allowed" isDisabled>
         <span>
           <img
             src="https://w7.pngwing.com/pngs/543/934/png-transparent-google-app-logo-google-logo-g-suite-google-text-logo-circle.png"

@@ -7,6 +7,7 @@ import {
   Text,
   InputGroup,
   InputRightElement,
+  useToast,
 } from "@chakra-ui/react";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import logo from "@assets/logo.png";
@@ -24,6 +25,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 const index = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const toast = useToast();
   const [show, setShow] = useState(false);
   const isLoggedIn = useSelector((state) => state.auth.user.isLoggedIn);
   const handleClick = () => setShow(!show);
@@ -55,8 +57,15 @@ const index = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
         actions.setSubmitting(false);
+
+        toast({
+          title: "Error",
+          description: "Something went wrong",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
       });
   };
   const handleGoogleLoginSuccess = (response) => {
@@ -171,8 +180,8 @@ const index = () => {
       </div>
       <Button
         type="button"
-        className="w-full cursor-not-allowed"
-        disabled
+        className="w-full"
+        isDisabled
         // onClick={() => signIn("google")}
       >
         <span>

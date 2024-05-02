@@ -16,15 +16,25 @@ const ResultsGrid = () => {
       dispatch(getProducts({ query: router.query.q }, "WITHOUT_FILTERS"));
     }
   }, [router.query.q]);
-  return (
+  return loading ? (
     <div className="product-grid grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
-      {products?.length > 0 && !loading
-        ? products.map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))
-        : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
-            <ProductCardSkeleton key={item} />
-          ))}
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
+        <ProductCardSkeleton key={item} />
+      ))}
+    </div>
+  ) : products.length === 0 ? (
+    <div className="flex flex-col justify-center items-center min-h-[calc(100vh-428px)]">
+      <img
+        src="https://app.lssquare.com/static/media/empty_product_banner.c076afe7.png"
+        alt=""
+      />
+      <h1 className="text-3xl font-bold">No Products Found</h1>
+    </div>
+  ) : (
+    <div className="product-grid grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+      {products.map((product) => (
+        <ProductCard key={product._id} product={product} />
+      ))}
     </div>
   );
 };
