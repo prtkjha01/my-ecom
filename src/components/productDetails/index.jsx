@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { Button, Skeleton } from "@chakra-ui/react";
 import { getProduct } from "@/redux/slices/product";
 import { addToCart } from "@/redux/slices/cart";
+import { getCookie } from "@/utils/cookies";
 import ProductImage, { ProductImageSkeleton } from "./components/ProductImage";
 import ProductInfo, { ProductInfoSkeleton } from "./components/ProductInfo";
 import ProductSpecifications, {
@@ -20,6 +21,7 @@ import DeliveryInfo from "./components/DeliveryInfo";
 const index = () => {
   const dispatch = useDispatch();
   const toast = useToast();
+  const token = getCookie("token");
   const router = useRouter();
   const { id } = router.query;
   const product = useSelector((state) => state?.product?.product?.data);
@@ -47,42 +49,42 @@ const index = () => {
   }, [id]);
 
   const handleAddToCart = () => {
-    dispatch(
-      addToCart({
-        products: [id],
-      })
-    )
-      .then(() => {
-        toast({
-          title: "Product added to cart",
-          status: "success",
-          variant: "left-accent",
-          position: "top-right",
-          duration: 1500,
-          isClosable: true,
-          // containerStyle: {
-          //   position: "absolute",
-          //   top: "5rem",
-          // },
+    if (token) {
+      dispatch(
+        addToCart({
+          products: [id],
+        })
+      )
+        .then(() => {
+          toast({
+            title: "Product added to cart",
+            status: "success",
+            variant: "left-accent",
+            position: "top-right",
+            duration: 1500,
+            isClosable: true,
+          });
+        })
+        .catch((error) => {
+          toast({
+            title: error.message,
+            status: "error",
+            variant: "left-accent",
+            position: "top-right",
+            duration: 1500,
+            isClosable: true,
+          });
         });
-      })
-      .catch((error) => {
-        toast({
-          title: error.message,
-          status: "error",
-          variant: "left-accent",
-          position: "top-right",
-          duration: 1500,
-          isClosable: true,
-          // containerStyle: {
-          //   position: "absolute",
-          //   top: "5rem",
-          // },
-        });
-      });
+    } else {
+      router.push("/login");
+    }
   };
   const handleBuyNow = () => {
-    router.push(`/checkout/${product._id}`);
+    if (token) {
+      router.push(`/checkout/${product._id}`);
+    } else {
+      router.push("/login");
+    }
   };
   return (
     <>
