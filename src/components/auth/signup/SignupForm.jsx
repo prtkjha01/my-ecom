@@ -273,7 +273,7 @@ const SignupForm = () => {
         <div className="or">or</div>
         <div className="separator bg-gray-200 h-[2px] w-full"></div>
       </div>
-      <Button className="w-full">
+      <Button className="w-full cursor-not-allowed" disabled>
         <span>
           <img
             src="https://w7.pngwing.com/pngs/543/934/png-transparent-google-app-logo-google-logo-g-suite-google-text-logo-circle.png"
