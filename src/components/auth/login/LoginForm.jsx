@@ -68,23 +68,6 @@ const index = () => {
         });
       });
   };
-  const handleGoogleLoginSuccess = (response) => {
-    console.log(response);
-  };
-  const handleGoogleLoginFailure = (response) => {
-    console.log(response);
-  };
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(process.env.NEXT_PUBLIC_SERVER_LOCAL);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
 
   return (
     <div className="p-4 md:p-48 lg:p-28 w-full">
@@ -173,45 +156,21 @@ const index = () => {
           </Form>
         )}
       </Formik>
-      <div className="or-container flex items-center my-3 gap-3">
+      <div className="or-container items-center my-3 gap-3 hidden">
         <div className="separator bg-gray-200 h-[2px] w-full"></div>
         <div className="or">or</div>
         <div className="separator bg-gray-200 h-[2px] w-full"></div>
       </div>
-      <Button
-        type="button"
-        className="w-full"
-        isDisabled
-        // onClick={() => signIn("google")}
-      >
+      <Button type="button" className="w-full" display={"none"} isDisabled>
         <span>
           <img
             src="https://w7.pngwing.com/pngs/543/934/png-transparent-google-app-logo-google-logo-g-suite-google-text-logo-circle.png"
-            className=" h-5 w-5 mix-blend-multiply mr-2"
+            className=" h-5 w-5 mix-blend-multiply mr-2 "
             alt="google-icon"
           />
         </span>
         Login With Google
       </Button>
-      {/* <GoogleLogin
-        clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
-        render={(renderProps) => (
-          <Button className="w-full" onClick={renderProps.onClick}>
-            <span>
-              <img
-                src="https://w7.pngwing.com/pngs/543/934/png-transparent-google-app-logo-google-logo-g-suite-google-text-logo-circle.png"
-                className=" h-5 w-5 mix-blend-multiply mr-2"
-                alt="google-icon"
-              />
-            </span>
-            Login With Google
-          </Button>
-        )}
-        onSuccess={handleGoogleLoginSuccess}
-        onFailure={handleGoogleLoginFailure}
-        cookiePolicy="single_host_origin"
-        isSignedIn
-      /> */}
     </div>
   );
 };

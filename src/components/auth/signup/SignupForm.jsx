@@ -80,7 +80,6 @@ const SignupForm = () => {
   const handleRegister = (values, actions) => {
     const payload = { ...values };
     delete payload.confirmedPassword;
-    // console.log(payload);
 
     dispatch(register(payload))
       .then(() => {
@@ -269,12 +268,12 @@ const SignupForm = () => {
           </Form>
         )}
       </Formik>
-      <div className="or-container flex items-center my-3 gap-3">
+      <div className="or-container hidden items-center my-3 gap-3">
         <div className="separator bg-gray-200 h-[2px] w-full"></div>
         <div className="or">or</div>
         <div className="separator bg-gray-200 h-[2px] w-full"></div>
       </div>
-      <Button className="w-full cursor-not-allowed" isDisabled>
+      <Button className="w-full cursor-not-allowed" display={"none"} isDisabled>
         <span>
           <img
             src="https://w7.pngwing.com/pngs/543/934/png-transparent-google-app-logo-google-logo-g-suite-google-text-logo-circle.png"
@@ -282,7 +281,7 @@ const SignupForm = () => {
             alt="google-icon"
           />
         </span>
-        Login With Google
+        Continue With Google
       </Button>
     </div>
   );

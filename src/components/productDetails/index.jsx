@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { Button, Skeleton } from "@chakra-ui/react";
 import { getProduct } from "@/redux/slices/product";
-import { addToCart } from "@/redux/slices/cart";
+import { addToCart, getCart } from "@/redux/slices/cart";
 import { getCookie } from "@/utils/cookies";
 import ProductImage, { ProductImageSkeleton } from "./components/ProductImage";
 import ProductInfo, { ProductInfoSkeleton } from "./components/ProductInfo";
@@ -56,6 +56,7 @@ const index = () => {
         })
       )
         .then(() => {
+          dispatch(getCart());
           toast({
             title: "Product added to cart",
             status: "success",
