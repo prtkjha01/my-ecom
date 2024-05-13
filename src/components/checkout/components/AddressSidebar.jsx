@@ -70,7 +70,7 @@ const AddressSidebar = ({ onClose }) => {
           {(props) => (
             <Form>
               {/* h={"calc(100vh - 134px)"} */}
-              <DrawerBody h={"calc(100vh - 134px)"} pb={[0, 0, 0, "120px"]}>
+              <DrawerBody h={"calc(100vh - 134px)"} pb={"120px"}>
                 <Field name="name" validate={validateName}>
                   {({ field, form }) => (
                     <FormControl
