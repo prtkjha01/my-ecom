@@ -49,14 +49,15 @@ const Addresses = ({ handleClick, onSelect }) => {
         <h1>No Addresses Found</h1>
       ) : (
         <div className="addresses flex flex-col sm:grid sm:grid-cols-2 md:grid-cols-3  gap-5 mt-4">
-          {addresses.map((address) => (
-            <AddressCard
-              key={address._id}
-              address={address}
-              isSelected={selectedAddress === address._id}
-              handleSelect={handleAddressSelection}
-            />
-          ))}
+          {addresses.length > 0 &&
+            addresses.map((address) => (
+              <AddressCard
+                key={address._id}
+                address={address}
+                isSelected={selectedAddress === address._id}
+                handleSelect={handleAddressSelection}
+              />
+            ))}
         </div>
       )}
       <div className="flex justify-end mt-4">
