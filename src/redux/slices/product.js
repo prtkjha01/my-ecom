@@ -78,7 +78,7 @@ export const getCarouselProducts = () => {
         dispatch(slice.actions.setCarouselProducts(carouselData));
       }
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
   };
 };
@@ -91,6 +91,7 @@ export const getProducts = (payload, type) => {
       dispatch(slice.actions.setProducts(response.data.products));
     } catch (error) {
       dispatch(slice.actions.setProductsError(true));
+      throw error;
     } finally {
       dispatch(slice.actions.setProductsLoading(false));
     }
@@ -104,6 +105,7 @@ export const getProductsByCategory = (payload) => {
       dispatch(slice.actions.setProducts(response.data.products));
     } catch (error) {
       dispatch(slice.actions.setProductsError(true));
+      throw error;
     } finally {
       dispatch(slice.actions.setProductsLoading(false));
     }
@@ -117,6 +119,7 @@ export const getProduct = (payload) => {
       await dispatch(slice.actions.setProduct(response.data));
     } catch (error) {
       dispatch(slice.actions.setProductError(true));
+      throw error;
     } finally {
       dispatch(slice.actions.setProductLoading(false));
     }

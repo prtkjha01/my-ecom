@@ -15,7 +15,7 @@ const index = () => {
     if (token) {
       dispatch(getCart());
     } else {
-      router.push("/login");
+      router.push("/login?redirect=/cart");
     }
   }, []);
   return (

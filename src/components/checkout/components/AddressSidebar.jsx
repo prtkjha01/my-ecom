@@ -15,12 +15,14 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
+  useToast,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { getAddresses, createAddress } from "@/redux/slices/address";
 const AddressSidebar = ({ onClose }) => {
   const dispatch = useDispatch();
+  const toast = useToast();
   const validateName = (value) => (!value ? "Name is required" : null);
   const validateMobile = (value) => (!value ? "Mobile is required" : null);
   const validateAddressLine1 = (value) =>
@@ -41,7 +43,14 @@ const AddressSidebar = ({ onClose }) => {
       })
       .catch((error) => {
         actions.setSubmitting(false);
-        throw new Error(error);
+        toast({
+          title: error.message,
+          status: "error",
+          variant: "left-accent",
+          position: "top-right",
+          duration: 1500,
+          isClosable: true,
+        });
       });
   };
   return (

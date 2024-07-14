@@ -77,14 +77,14 @@ const index = () => {
           });
         });
     } else {
-      router.push("/login");
+      router.push(`/login?redirect=/product/${product._id}`);
     }
   };
   const handleBuyNow = () => {
     if (token) {
       router.push(`/checkout/${product._id}`);
     } else {
-      router.push("/login");
+      router.push(`/login?redirect=/checkout/${product._id}`);
     }
   };
   return (

@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { Icon, createIcon } from "@chakra-ui/react";
+import { Icon, useToast } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { getCarouselProducts } from "@/redux/slices/product";
@@ -9,6 +9,7 @@ const Carousel = () => {
   const test = useRef(null);
   const dispatch = useDispatch();
   const router = useRouter();
+  const toast = useToast();
   const carouselProducts = useSelector(
     (state) => state.product?.carouselProducts
   );
@@ -80,7 +81,18 @@ const Carousel = () => {
   }, [activeIndex, carouselData.length]);
 
   useEffect(() => {
-    dispatch(getCarouselProducts());
+    dispatch(getCarouselProducts())
+      .then()
+      .catch((error) => {
+        toast({
+          title: error.message,
+          status: "error",
+          variant: "left-accent",
+          position: "top-right",
+          duration: 1500,
+          isClosable: true,
+        });
+      });
   }, []);
   useEffect(() => {
     setCarouselData(carouselProducts);
