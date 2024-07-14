@@ -29,7 +29,11 @@ const Actions = () => {
   useEffect(() => {
     if (token) {
       setIsLoggedIn(true);
-      dispatch(getCurrentUser());
+      dispatch(getCurrentUser())
+        .then(() => {})
+        .catch((error) => {
+          deleteCookie("token");
+        });
       dispatch(getCart());
     }
   }, [isLoggedIn]);

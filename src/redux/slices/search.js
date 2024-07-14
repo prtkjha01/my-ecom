@@ -8,7 +8,6 @@ const initialState = {
     hasError: null,
     data: {},
   },
-  //   products: [],
 };
 const slice = createSlice({
   name: "search",
@@ -27,14 +26,10 @@ const slice = createSlice({
       };
     },
     setProducts(state, action) {
-      //   state.products.data = action.payload;
       state.products = {
         ...state.products,
         data: action.payload,
       };
-      //   console.log("setProducts called");
-      //   state.products = action.payload;
-      //   console.log("this is state.products in search slice", state.products);
     },
   },
 });

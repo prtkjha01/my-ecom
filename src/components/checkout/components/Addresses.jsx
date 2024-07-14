@@ -14,7 +14,6 @@ const Addresses = ({ handleClick, onSelect }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedAddress, setSelectedAddress] = useState(null);
   const handleAddressSelection = (id) => {
-    console.log(id);
     selectedAddress === id ? setSelectedAddress(null) : setSelectedAddress(id);
     onSelect(id);
   };

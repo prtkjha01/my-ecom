@@ -41,7 +41,7 @@ const AddressSidebar = ({ onClose }) => {
       })
       .catch((error) => {
         actions.setSubmitting(false);
-        console.log(error);
+        throw new Error(error);
       });
   };
   return (

@@ -12,23 +12,6 @@ const App = ({ Component, pageProps: { session, ...pageProps } }) => {
   const router = useRouter();
   const [cookies, setCookie] = useCookies(["auth_token"]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // console.log(store.getState());
-  // const handleAuth = () => {
-  //   let test = store.getState().auth.user.token;
-  //   console.log("test", test);
-  //   store.getState().auth.user.token
-  //     ? setCookie("auth_token", store.getState().auth.user.token)
-  //     : setCookie("auth_token", null);
-  //   console.log("cookies", cookies.auth_token);
-  // };
-
-  // console.log("cookies =>", cookies);
-
-  const checkLogin = () => {
-    // if (!cookies.auth_token) {
-    //   router.push("/login");
-    // }
-  };
 
   return (
     <SessionProvider session={session}>
