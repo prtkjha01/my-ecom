@@ -33,6 +33,7 @@ export const getAddresses = () => {
       dispatch(slice.actions.setAddresses(response.data));
     } catch (error) {
       dispatch(slice.actions.setIsError(true));
+      throw error;
     } finally {
       dispatch(slice.actions.setIsLoading(false));
     }
@@ -45,7 +46,7 @@ export const createAddress = (payload) => {
       const response = await api.createAddress(payload);
       dispatch(slice.actions.setAddresses(response.data));
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
   };
 };
@@ -55,7 +56,7 @@ export const deleteAddress = (payload) => {
     try {
       await api.deleteAddress(payload);
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
   };
 };

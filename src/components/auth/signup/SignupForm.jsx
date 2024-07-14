@@ -94,11 +94,11 @@ const SignupForm = () => {
         });
         router.push("/login");
       })
-      .catch(() => {
+      .catch((error) => {
         actions.setSubmitting(false);
         toast({
           title: "Error",
-          description: "Something went wrong",
+          description: error?.message || "Something went wrong",
           status: "error",
           variant: "left-accent",
           position: "top-right",

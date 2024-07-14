@@ -25,6 +25,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 const index = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const { redirect } = router.query;
   const toast = useToast();
   const [show, setShow] = useState(false);
   const isLoggedIn = useSelector((state) => state.auth.user.isLoggedIn);
@@ -53,15 +54,15 @@ const index = () => {
         actions.setSubmitting(false);
 
         if (typeof window !== "undefined") {
-          window.location.href = "/";
+          window.location.href = redirect || "/";
         }
       })
-      .catch((err) => {
+      .catch((error) => {
         actions.setSubmitting(false);
 
         toast({
           title: "Error",
-          description: "Something went wrong",
+          description: error?.message || "Something went wrong",
           status: "error",
           duration: 3000,
           isClosable: true,

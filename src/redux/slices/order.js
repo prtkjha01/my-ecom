@@ -29,7 +29,7 @@ export const placeOrder = (payload) => {
       const response = await api.placeOrder(payload);
       return response;
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
   };
 };
@@ -50,6 +50,7 @@ export const getOrders = () => {
       }
     } catch (error) {
       dispatch(slice.actions.setOrdersError(true));
+      throw error;
     } finally {
       dispatch(slice.actions.setOrdersLoading(false));
     }

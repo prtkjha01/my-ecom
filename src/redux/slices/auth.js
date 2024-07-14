@@ -33,20 +33,19 @@ export const getCurrentUser = () => {
       const response = await api.getCurrentUser();
       await dispatch(slice.actions.setCurrentUser(response.data));
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
   };
 };
 export const login = (payload) => {
   return async (dispatch) => {
     try {
-      // api.initService();
       const response = await api.login(payload);
       await dispatch(slice.actions.setToken(response.data.token));
       await dispatch(slice.actions.setIsLoggedIn(true));
       return response;
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
   };
 };
@@ -55,7 +54,7 @@ export const register = (payload) => {
     try {
       await api.register(payload);
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
   };
 };

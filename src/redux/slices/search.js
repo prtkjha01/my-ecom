@@ -43,6 +43,7 @@ export const getProducts = async () => {
   } catch (error) {
     dispatch(slice.actions.setErrorForProducts(true));
     dispatch(slice.actions.setLoadingForProducts(false));
+    throw error;
   } finally {
     dispatch(slice.actions.setLoadingForProducts(false));
   }
