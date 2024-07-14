@@ -19,11 +19,7 @@ const index = () => {
       ...prev,
       address: selectedAddressId,
     }));
-    // console.log(checkoutPayload);
   };
-  useEffect(() => {
-    console.log(checkoutPayload);
-  }, [checkoutPayload]);
   useEffect(() => {
     dispatch(getCart());
   }, []);

@@ -12,7 +12,7 @@ const Carousel = () => {
   const carouselProducts = useSelector(
     (state) => state.product?.carouselProducts
   );
-  // console.log("carouselProducts", carouselProducts);
+
   const [carouselData, setCarouselData] = useState(carouselProducts || []);
   const [activeIndex, setActiveIndex] = useState(0);
 

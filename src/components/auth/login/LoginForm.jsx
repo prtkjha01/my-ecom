@@ -133,15 +133,13 @@ const index = () => {
                 </FormControl>
               )}
             </Field>
-            <div className="signup-redirect mt-8">
-              <Text align={"end"}>
-                Don't have an account?{" "}
-                <span
-                  className="text-[#014aad] cursor-pointer hover:underline"
-                  onClick={() => router.push("/signup")}
-                >
-                  Signup
-                </span>
+            <div className="forgot-password-redirect hidden justify-end mt-2">
+              <Text
+                color={"#014aad"}
+                w={"max-content"}
+                className=" cursor-pointer hover:underline"
+              >
+                Forgot Password?
               </Text>
             </div>
             <Button
@@ -153,6 +151,17 @@ const index = () => {
             >
               Login
             </Button>
+            <div className="signup-redirect mt-8">
+              <Text align={"center"}>
+                Don't have an account?{" "}
+                <span
+                  className="text-[#014aad] cursor-pointer hover:underline"
+                  onClick={() => router.push("/signup")}
+                >
+                  Signup
+                </span>
+              </Text>
+            </div>
           </Form>
         )}
       </Formik>

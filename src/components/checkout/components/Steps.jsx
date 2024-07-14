@@ -27,7 +27,6 @@ const Stepss = ({ step, handleClick }) => {
   const [activeStep, setActiveStep] = useState(step);
   useEffect(() => {
     setActiveStep(step);
-    // console.log(activeStep);
   }, [step]);
   return (
     <>
@@ -42,8 +41,6 @@ const Stepss = ({ step, handleClick }) => {
                     handleClick(0);
                     setActiveStep(0);
                   }
-
-                  // console.log(activeStep);
                 }}
               >
                 <StepStatus
@@ -60,7 +57,6 @@ const Stepss = ({ step, handleClick }) => {
                 >
                   {step.title}
                 </StepTitle>
-                {/* <StepDescription>{step.description}</StepDescription> */}
               </Box>
             </div>
 
