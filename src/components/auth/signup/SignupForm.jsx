@@ -87,8 +87,6 @@ const SignupForm = () => {
         toast({
           title: "Successfully Registered !",
           status: "success",
-          variant: "left-accent",
-          position: "top-right",
           duration: 1500,
           isClosable: true,
         });
@@ -100,8 +98,6 @@ const SignupForm = () => {
           title: "Error",
           description: error?.message || "Something went wrong",
           status: "error",
-          variant: "left-accent",
-          position: "top-right",
           duration: 1500,
           isClosable: true,
         });

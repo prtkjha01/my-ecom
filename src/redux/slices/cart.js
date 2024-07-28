@@ -8,6 +8,11 @@ const initialState = {
     data: [],
     isError: false,
   },
+  addToCart: {
+    isLoading: false,
+    data: [],
+    isError: false,
+  },
 };
 const slice = createSlice({
   name: "cart",
@@ -33,6 +38,27 @@ const slice = createSlice({
         isLoading: action.payload,
       };
     },
+
+    setAddToCart(state, action) {
+      state.addToCart = {
+        ...state.addToCart,
+        data: action.payload,
+      };
+    },
+
+    setAddToCartError(state, action) {
+      state.addToCart = {
+        ...state.addToCart,
+        isError: action.payload,
+      };
+    },
+
+    setAddToCartLoading(state, action) {
+      state.addToCart = {
+        ...state.addToCart,
+        isLoading: action.payload,
+      };
+    },
   },
 });
 export const getCart = () => {
@@ -52,10 +78,14 @@ export const getCart = () => {
 export const addToCart = (payload) => {
   return async (dispatch) => {
     try {
+      dispatch(slice.actions.setAddToCartLoading(true));
       const response = await api.addToCart(payload);
       return response;
     } catch (error) {
+      dispatch(slice.actions.setAddToCartError(true));
       throw error;
+    } finally {
+      dispatch(slice.actions.setAddToCartLoading(false));
     }
   };
 };

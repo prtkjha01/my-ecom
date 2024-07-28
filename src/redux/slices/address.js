@@ -8,6 +8,16 @@ const initialState = {
     data: [],
     isError: false,
   },
+  createAddress: {
+    isLoading: false,
+    data: [],
+    isError: false,
+  },
+  deleteAddress: {
+    isLoading: false,
+    data: [],
+    isError: false,
+  },
 };
 const slice = createSlice({
   name: "address",
@@ -21,6 +31,30 @@ const slice = createSlice({
     },
     setIsError(state, action) {
       state.addresses = { ...state.addresses, isError: action.payload };
+    },
+    setCreateAddress(state, action) {
+      state.createAddress = { ...state.createAddress, data: action.payload };
+    },
+    setCreateAddressIsLoading(state, action) {
+      state.createAddress = {
+        ...state.createAddress,
+        isLoading: action.payload,
+      };
+    },
+    setCreateAddressIsError(state, action) {
+      state.createAddress = {
+        ...state.createAddress,
+        isError: action.payload,
+      };
+    },
+    setDeleteAddress(state, action) {
+      state.deleteAddress = { ...state.deleteAddress, data: action.payload };
+    },
+    setDeleteAddressIsLoading(state, action) {
+      state.deleteAddress = {
+        ...state.deleteAddress,
+        isLoading: action.payload,
+      };
     },
   },
 });
@@ -43,10 +77,14 @@ export const getAddresses = () => {
 export const createAddress = (payload) => {
   return async (dispatch) => {
     try {
+      dispatch(slice.actions.setCreateAddressIsLoading(true));
       const response = await api.createAddress(payload);
       dispatch(slice.actions.setAddresses(response.data));
     } catch (error) {
+      dispatch(slice.actions.setCreateAddressIsError(true));
       throw error;
+    } finally {
+      dispatch(slice.actions.setCreateAddressIsLoading(false));
     }
   };
 };

@@ -32,7 +32,7 @@ const Actions = () => {
       dispatch(getCurrentUser())
         .then(() => {})
         .catch((error) => {
-          deleteCookie("token");
+          // deleteCookie("token");
         });
       dispatch(getCart());
     }

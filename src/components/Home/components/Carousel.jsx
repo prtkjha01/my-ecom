@@ -87,8 +87,7 @@ const Carousel = () => {
         toast({
           title: error.message,
           status: "error",
-          variant: "left-accent",
-          position: "top-right",
+
           duration: 1500,
           isClosable: true,
         });

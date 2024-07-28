@@ -134,11 +134,12 @@ const index = () => {
                 </FormControl>
               )}
             </Field>
-            <div className="forgot-password-redirect hidden justify-end mt-2">
+            <div className="forgot-password-redirect flex justify-end mt-2">
               <Text
                 color={"#014aad"}
                 w={"max-content"}
                 className=" cursor-pointer hover:underline"
+                onClick={() => router.push("/forgot-password")}
               >
                 Forgot Password?
               </Text>
@@ -146,8 +147,11 @@ const index = () => {
             <Button
               mt={8}
               className="w-full"
-              colorScheme="telegram"
+              backgroundColor={"#014aad"}
+              borderRadius={0}
               isLoading={props.isSubmitting}
+              colorScheme="blue"
+              spinner={<div className="loader" />}
               type="submit"
             >
               Login
