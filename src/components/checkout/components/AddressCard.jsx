@@ -41,9 +41,7 @@ export const AddressCardSkeleton = () => (
 );
 const Address = ({ address, isSelected, handleSelect }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const handleAddressDelete = () => {
-    onOpen();
-  };
+  const handleAddressDelete = () => onOpen();
 
   return (
     <div key={address._id} className="p-3 relative bg-white shadow">

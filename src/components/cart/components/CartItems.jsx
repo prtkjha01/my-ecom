@@ -61,8 +61,6 @@ const CartItem = ({ item: { product, count }, isLast, variant }) => {
         toast({
           title: "Product removed !",
           status: "success",
-          variant: "left-accent",
-          position: "top-right",
           duration: 1500,
           isClosable: true,
         });
@@ -71,8 +69,6 @@ const CartItem = ({ item: { product, count }, isLast, variant }) => {
         toast({
           title: error.message,
           status: "error",
-          variant: "left-accent",
-          position: "top-right",
           duration: 1500,
           isClosable: true,
         });
@@ -93,8 +89,6 @@ const CartItem = ({ item: { product, count }, isLast, variant }) => {
         toast({
           title: error.message,
           status: "error",
-          variant: "left-accent",
-          position: "top-right",
           duration: 1500,
           isClosable: true,
         });

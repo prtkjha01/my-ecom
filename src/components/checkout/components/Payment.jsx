@@ -113,8 +113,6 @@ const Payment = ({ payload }) => {
         toast({
           title: error.message,
           status: "error",
-          variant: "left-accent",
-          position: "top-right",
           duration: 1500,
           isClosable: true,
         });
@@ -138,6 +136,7 @@ const Payment = ({ payload }) => {
             _hover={{ backgroundColor: "#cae0ff" }}
             isLoading={codLoading}
             leftIcon={<FaMoneyBill size={20} />}
+            spinner={<div className="loader primary" />}
             onClick={handleCod}
           >
             Cash on Delivery
@@ -152,6 +151,7 @@ const Payment = ({ payload }) => {
             _hover={{ backgroundColor: "#729ad1" }}
             isLoading={onlineLoading}
             leftIcon={<MdOutlinePayment size={20} />}
+            spinner={<div className="loader" />}
             onClick={displayRazorpay}
           >
             Online

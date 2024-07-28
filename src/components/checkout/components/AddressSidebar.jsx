@@ -22,6 +22,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAddresses, createAddress } from "@/redux/slices/address";
 const AddressSidebar = ({ onClose }) => {
   const dispatch = useDispatch();
+  const createAddressIsLoading = useSelector(
+    (state) => state?.address?.createAddress?.isLoading
+  );
   const toast = useToast();
   const validateName = (value) => (!value ? "Name is required" : null);
   const validateMobile = (value) => (!value ? "Mobile is required" : null);
@@ -46,8 +49,6 @@ const AddressSidebar = ({ onClose }) => {
         toast({
           title: error.message,
           status: "error",
-          variant: "left-accent",
-          position: "top-right",
           duration: 1500,
           isClosable: true,
         });
@@ -72,9 +73,7 @@ const AddressSidebar = ({ onClose }) => {
             country: "",
             type: null,
           }}
-          onSubmit={(values, actions) => {
-            handleSubmit(values, actions);
-          }}
+          onSubmit={handleSubmit}
         >
           {(props) => (
             <Form>
@@ -228,15 +227,19 @@ const AddressSidebar = ({ onClose }) => {
               >
                 <Button
                   className="w-full"
-                  leftIcon={<AddIcon boxSize={3} />}
                   fontWeight={"bold"}
+                  leftIcon={<AddIcon boxSize={3} mr={2} />}
                   backgroundColor={"#014aad"}
                   borderRadius={0}
+                  isLoading={
+                    // props.isSubmitting
+                    createAddressIsLoading
+                  }
                   colorScheme="blue"
-                  isLoading={props.isSubmitting}
+                  spinner={<div className="loader" />}
                   type="submit"
                 >
-                  Add
+                  Add New Address
                 </Button>
               </DrawerFooter>
             </Form>
