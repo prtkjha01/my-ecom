@@ -25,6 +25,10 @@ instance.interceptors.response.use(
 const getCurrentUser = () => instance.get("/user/current");
 const register = (payload) => instance.post("/auth/register", payload);
 const login = (payload) => instance.post("/auth/login", payload);
+const sendOtp = (payload) => instance.post("/auth/send-otp", payload);
+const verifyOtp = (payload) => instance.post("/auth/verify-otp", payload);
+const resetPassword = (payload) =>
+  instance.patch("/auth/reset-password", payload);
 const getCarouselProducts = () => instance.get("/product/carousel");
 const getProducts = (payload, type) => {
   if (type === "WITHOUT_FILTERS") {
@@ -77,4 +81,7 @@ export const api = {
   // initService,
   register,
   login,
+  sendOtp,
+  verifyOtp,
+  resetPassword,
 };

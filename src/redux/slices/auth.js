@@ -58,4 +58,31 @@ export const register = (payload) => {
     }
   };
 };
+export const sendOtp = (payload) => {
+  return async (dispatch) => {
+    try {
+      await api.sendOtp(payload);
+    } catch (error) {
+      throw error;
+    }
+  };
+};
+export const verifyOtp = (payload) => {
+  return async (dispatch) => {
+    try {
+      await api.verifyOtp(payload);
+    } catch (error) {
+      throw error;
+    }
+  };
+};
+export const resetPassword = (payload) => {
+  return async (dispatch) => {
+    try {
+      await api.resetPassword(payload);
+    } catch (error) {
+      throw error;
+    }
+  };
+};
 export default slice.reducer;
