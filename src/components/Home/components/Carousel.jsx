@@ -85,7 +85,7 @@ const Carousel = () => {
       .then()
       .catch((error) => {
         toast({
-          title: error.message,
+          title: error?.message || "Something went wrong",
           status: "error",
 
           duration: 1500,
