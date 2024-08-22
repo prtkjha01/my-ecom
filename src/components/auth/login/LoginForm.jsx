@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import {
   Button,
@@ -11,17 +11,12 @@ import {
 } from "@chakra-ui/react";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import logo from "@assets/logo.png";
-import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-} from "@chakra-ui/react";
-import axios from "axios";
+import { FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "@/redux/slices/auth";
 import { useRouter } from "next/router";
-import { useSession, signIn, signOut } from "next-auth/react";
+import Image from "next/image";
+
 const index = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -73,7 +68,7 @@ const index = () => {
   return (
     <div className="p-4 md:p-48 lg:p-28 w-full">
       <header className="login-form-header flex flex-col items-center gap-3 mb-10">
-        <img src={logo.src} className="brand h-16 w-16" alt="brand-logo" />
+        <Image src={logo.src} height={64} width={64} alt="brand-logo" />
         <Text className=" text-[#3A003D] font-[700] text-4xl">
           Login to MyEcom
         </Text>

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import {
   Box,
   Step,
-  StepDescription,
   StepIcon,
   StepIndicator,
   StepNumber,
@@ -11,7 +10,6 @@ import {
   StepStatus,
   StepTitle,
   Stepper,
-  useSteps,
 } from "@chakra-ui/react";
 
 const Stepss = ({ step, handleClick }) => {
@@ -20,10 +18,7 @@ const Stepss = ({ step, handleClick }) => {
     { title: "Order Summary", description: "Order Summary" },
     { title: "Payment", description: "Payment" },
   ];
-  // const { activeStep } = useSteps({
-  //   index: step,
-  //   count: steps.length,
-  // });
+
   const [activeStep, setActiveStep] = useState(step);
   useEffect(() => {
     setActiveStep(step);

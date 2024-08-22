@@ -22,8 +22,6 @@ const Search = () => {
           setQuery(e.target.value);
         }}
         onKeyUp={(e) => {
-          // setQuery(e.target.value);
-
           if (e.key === "Enter") {
             router.push("/search?q=" + query);
           }

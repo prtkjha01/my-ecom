@@ -8,7 +8,6 @@ const SortOptions = () => {
     {
       id: 1,
       label: <span>Price &uarr;</span>,
-      // "Price ⬆️",
       value: "PHTL",
       active: false,
     },

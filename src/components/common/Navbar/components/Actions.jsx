@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import {
   Icon,
@@ -14,7 +14,6 @@ import {
   PopoverFooter,
 } from "@chakra-ui/react";
 import { MdOutlineShoppingCart } from "react-icons/md";
-import { AiOutlineHeart } from "react-icons/ai";
 import { FaBox } from "react-icons/fa";
 import { TbLogout2 } from "react-icons/tb";
 import { useSelector, useDispatch } from "react-redux";
@@ -60,7 +59,7 @@ const Actions = () => {
           </span>
         )}
       </div>
-      {/* <Icon className="cursor-pointer" as={AiOutlineHeart} boxSize={6} /> */}
+
       {isLoggedIn ? (
         <Popover placement="bottom-end">
           <PopoverTrigger>

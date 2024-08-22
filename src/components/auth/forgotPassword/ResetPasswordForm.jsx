@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import {
   Button,
@@ -11,10 +11,11 @@ import {
 } from "@chakra-ui/react";
 import logo from "@assets/logo.png";
 import { FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-import { sendOtp, resetPassword } from "@/redux/slices/auth";
+import { resetPassword } from "@/redux/slices/auth";
 import { useRouter } from "next/router";
+import Image from "next/image";
 const ResetPasswordForm = ({ email }) => {
   const router = useRouter();
   const toast = useToast();
@@ -71,7 +72,7 @@ const ResetPasswordForm = ({ email }) => {
   return (
     <div className="p-4 md:p-48 lg:p-28 w-full">
       <header className="login-form-header flex flex-col items-center gap-3 mb-10">
-        <img src={logo.src} className="brand h-16 w-16" alt="brand-logo" />
+        <Image src={logo.src} height={64} width={64} alt="brand-logo" />
         <Text className=" text-[#3A003D] font-[700] text-4xl">
           Reset Password ?
         </Text>

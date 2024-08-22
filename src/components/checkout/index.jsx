@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Steps from "./components/Steps";
 import Addresses from "./components/Addresses";
 import OrderSummary from "./components/OrderSummary";

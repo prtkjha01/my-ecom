@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import SendOtpForm from "./SendOtpForm";
 import VerifyOtpForm from "./VerifyOtpForm";
 import ResetPasswordForm from "./ResetPasswordForm";
@@ -10,7 +10,6 @@ const RightView = () => {
   const handleSetEmail = (newEmail) => setEmail(newEmail);
   return (
     <>
-      {/* <button onClick={() => setCurrentStep((prev) => prev + 1)}>+</button> */}
       {currentStep === 1 && (
         <SendOtpForm onProgress={handleProgress} onOtp={handleSetEmail} />
       )}

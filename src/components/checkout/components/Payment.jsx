@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import { useState } from "react";
 import { Button, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
@@ -14,8 +14,8 @@ const Payment = ({ payload }) => {
   const dispatch = useDispatch();
   const toast = useToast();
   const router = useRouter();
-  const [codLoading, setCodLoading] = React.useState(false);
-  const [onlineLoading, setOnlineLoading] = React.useState(false);
+  const [codLoading, setCodLoading] = useState(false);
+  const [onlineLoading, setOnlineLoading] = useState(false);
   function loadScript(src) {
     return new Promise((resolve) => {
       const script = document.createElement("script");

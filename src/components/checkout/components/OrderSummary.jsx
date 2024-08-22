@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import CartItems from "@/components/cart/components/CartItems";
 import OrderTotal from "./OrderTotal";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,9 +9,6 @@ import { useRouter } from "next/router";
 const OrderSummary = ({ handleClick, type }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-  // const moveToPayment = () => {
-  //   handleClick(2);
-  // };
   const product = useSelector((state) => state.product?.product?.data);
   useEffect(() => {
     type === "CART"

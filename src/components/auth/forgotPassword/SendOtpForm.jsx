@@ -1,14 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
 import { Button, Input, Text, useToast } from "@chakra-ui/react";
 import logo from "@assets/logo.png";
 import { FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { sendOtp } from "@/redux/slices/auth";
-import { useRouter } from "next/router";
+import Image from "next/image";
 const SendOtpForm = ({ onProgress: handleProgress, onOtp: setEmail }) => {
-  const router = useRouter();
   const toast = useToast();
   const dispatch = useDispatch();
 
@@ -53,7 +51,7 @@ const SendOtpForm = ({ onProgress: handleProgress, onOtp: setEmail }) => {
   return (
     <div className="p-4 md:p-48 lg:p-28 w-full">
       <header className="login-form-header flex flex-col items-center gap-3 mb-10">
-        <img src={logo.src} className="brand h-16 w-16" alt="brand-logo" />
+        <Image src={logo.src} height={64} width={64} alt="brand-logo" />
         <Text className=" text-[#3A003D] font-[700] text-4xl">
           Forgot Password ?
         </Text>

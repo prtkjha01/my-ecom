@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAddresses } from "@/redux/slices/address";
 import { Button, Drawer, useDisclosure, Skeleton } from "@chakra-ui/react";
@@ -77,13 +77,7 @@ const Addresses = ({ handleClick, onSelect }) => {
           </Button>
         )}
       </div>
-      <Drawer
-        isOpen={isOpen}
-        placement="right"
-        size="sm"
-        onClose={onClose}
-        // finalFocusRef={btnRef}
-      >
+      <Drawer isOpen={isOpen} placement="right" size="sm" onClose={onClose}>
         <AddressSidebar onClose={onClose} />
       </Drawer>
     </div>

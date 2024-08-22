@@ -1,7 +1,7 @@
 "use client";
 import Head from "next/head";
 import { useToast } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { Button, Skeleton } from "@chakra-ui/react";

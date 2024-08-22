@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Text, Skeleton, SkeletonText } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 

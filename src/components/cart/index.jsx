@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import CartItems, { CartItemsSkeleton } from "./components/CartItems";
 import CartSummary, { CartSummarySkeleton } from "./components/CartSummary";
 import { useSelector, useDispatch } from "react-redux";

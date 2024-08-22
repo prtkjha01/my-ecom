@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Text } from "@chakra-ui/react";
 import ProductCard, { ProductCardSkeleton } from "./ProductCard";
 import { useDispatch, useSelector } from "react-redux";

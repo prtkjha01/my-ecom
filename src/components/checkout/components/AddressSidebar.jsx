@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { Field, Form, Formik } from "formik";
 import {
   Button,
@@ -34,7 +33,6 @@ const AddressSidebar = ({ onClose }) => {
   const validateState = (value) => (!value ? "State is required" : null);
   const validatePincode = (value) => (!value ? "Pincode is required" : null);
   const validateCountry = (value) => (!value ? "Country is required" : null);
-  const validateType = (value) => (!value ? "Type is required" : null);
 
   const handleSubmit = (values, actions) => {
     dispatch(createAddress(values))
@@ -77,7 +75,6 @@ const AddressSidebar = ({ onClose }) => {
         >
           {(props) => (
             <Form>
-              {/* h={"calc(100vh - 134px)"} */}
               <DrawerBody h={"calc(100vh - 134px)"} pb={"120px"}>
                 <Field name="name" validate={validateName}>
                   {({ field, form }) => (
@@ -231,10 +228,7 @@ const AddressSidebar = ({ onClose }) => {
                   leftIcon={<AddIcon boxSize={3} mr={2} />}
                   backgroundColor={"#014aad"}
                   borderRadius={0}
-                  isLoading={
-                    // props.isSubmitting
-                    createAddressIsLoading
-                  }
+                  isLoading={createAddressIsLoading}
                   colorScheme="blue"
                   spinner={<div className="loader" />}
                   type="submit"

@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { dispatch } from "../store";
 import { api } from "../../services/apis";
-import { getCookie } from "../../utils/cookies";
+
 const initialState = {
   user: {
     isLoggedIn: false,

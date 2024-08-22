@@ -1,20 +1,12 @@
 import {
   Icon,
-  Button,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   SkeletonText,
   Skeleton,
   useDisclosure,
 } from "@chakra-ui/react";
 import { MdLocalPhone } from "react-icons/md";
 import AddressModal from "./AddressModal";
-import React from "react";
 
 export const AddressCardSkeleton = () => (
   <div className="p-3 relative bg-white shadow">

@@ -7,7 +7,6 @@ import {
   InputRightElement,
   Spinner,
 } from "@chakra-ui/react";
-import { PhoneIcon } from "@chakra-ui/icons";
 import { MdLocationOn } from "react-icons/md";
 import { useState } from "react";
 const DeliveryInfo = () => {

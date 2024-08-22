@@ -1,4 +1,3 @@
-import React from "react";
 import { useRouter } from "next/router";
 import { Skeleton, SkeletonText } from "@chakra-ui/react";
 import myEcomAssured from "@assets/MyEcomAssured.png";

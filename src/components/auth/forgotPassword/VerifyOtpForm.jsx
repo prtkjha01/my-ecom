@@ -1,14 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
 import { Button, Input, Text, useToast } from "@chakra-ui/react";
 import logo from "@assets/logo.png";
 import { FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/react";
-import { useSelector, useDispatch } from "react-redux";
-import { sendOtp, verifyOtp } from "@/redux/slices/auth";
-import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { verifyOtp } from "@/redux/slices/auth";
+import Image from "next/image";
 const VerifyOtpForm = ({ email, onProgress: handleProgress }) => {
-  const router = useRouter();
   const toast = useToast();
   const dispatch = useDispatch();
 
@@ -48,7 +46,7 @@ const VerifyOtpForm = ({ email, onProgress: handleProgress }) => {
   return (
     <div className="p-4 md:p-48 lg:p-28 w-full">
       <header className="login-form-header flex flex-col items-center gap-3 mb-10">
-        <img src={logo.src} className="brand h-16 w-16" alt="brand-logo" />
+        <Image src={logo.src} height={64} width={64} alt="brand-logo" />
         <Text className=" text-[#3A003D] font-[700] text-4xl">Verify OTP</Text>
       </header>
       <Formik

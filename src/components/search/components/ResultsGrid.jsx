@@ -1,6 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
-import { sortProducts } from "@/redux/slices/product";
+import { useEffect } from "react";
 import ProductCard, { ProductCardSkeleton } from "./ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "@/redux/slices/product";

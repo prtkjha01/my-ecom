@@ -6,7 +6,6 @@ import OrderSummary from "./components/OrderSummary";
 import Payment from "./components/Payment";
 import { useSelector, useDispatch } from "react-redux";
 import { getCart } from "@/redux/slices/cart";
-import product from "@/redux/slices/product";
 
 const BuyNow = () => {
   const [step, setStep] = useState(0);

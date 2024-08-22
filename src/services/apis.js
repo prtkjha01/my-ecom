@@ -1,6 +1,4 @@
 import axios from "axios";
-import { store } from "../redux/store";
-import { useSelector } from "react-redux";
 import { getCookie } from "../utils/cookies";
 
 const token = getCookie("token");
@@ -22,15 +20,20 @@ instance.interceptors.response.use(
   }
 );
 
+/******************************* User APIs *********************************/
 const getCurrentUser = () => instance.get("/user/current");
 const subscribeToNewsletter = (payload) =>
   instance.post("/user/subscribe-to-newsletter", payload);
+
+/********************************* Auth APIs *********************************/
 const register = (payload) => instance.post("/auth/register", payload);
 const login = (payload) => instance.post("/auth/login", payload);
 const sendOtp = (payload) => instance.post("/auth/send-otp", payload);
 const verifyOtp = (payload) => instance.post("/auth/verify-otp", payload);
 const resetPassword = (payload) =>
   instance.patch("/auth/reset-password", payload);
+
+/********************************* Product APIs *********************************/
 const getCarouselProducts = () => instance.get("/product/carousel");
 const getProducts = (payload, type) => {
   if (type === "WITHOUT_FILTERS") {
@@ -54,17 +57,24 @@ const getProducts = (payload, type) => {
 const getProductsByCategory = (category, page, limit) =>
   instance.get(`product/by-category/${category}?page=${page}&limit=${limit}`);
 const getProduct = (id) => instance.get(`product/${id}`);
+
+/********************************* Cart APIs *********************************/
 const getCart = () => instance.get("/cart");
 const addToCart = (payload) => instance.patch(`/cart/add`, payload);
 const removeFromCart = (id) => instance.patch(`/cart/remove/${id}`);
 const updateProductQuantity = (id, payload) =>
   instance.patch(`/cart/update-count/${id}`, payload);
+
+/********************************* Address APIs *********************************/
 const getAddresses = () => instance.get("/address");
 const createAddress = (payload) => instance.post("/address", payload);
 const deleteAddress = (id) => instance.delete(`/address/${id}`);
+
+/********************************* Order APIs *********************************/
 const placeOrder = (payload) =>
   instance.post("/order/payment-success", payload);
 const getAllOrders = () => instance.get("/order/all");
+
 export const api = {
   getCurrentUser,
   subscribeToNewsletter,

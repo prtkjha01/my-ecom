@@ -1,9 +1,7 @@
 "use client";
 import React from "react";
 import {
-  Icon,
   Button,
-  Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,

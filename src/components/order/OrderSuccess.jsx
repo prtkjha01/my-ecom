@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { FaCheck, FaAngleRight } from "react-icons/fa";
 import { useRouter } from "next/router";
 const OrderSuccess = () => {

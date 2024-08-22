@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Text,
   RangeSlider,
@@ -16,14 +16,12 @@ import { useDispatch } from "react-redux";
 import { getProducts } from "@/redux/slices/product";
 import { useRouter } from "next/router";
 const Filters = () => {
-  //   const { getTrackProps, getFilledTrackProps, getThumbProps, value } =
-  //     useRangeSlider();
   const router = useRouter();
   const dispatch = useDispatch();
-  const [priceRange, setPriceRange] = React.useState([0, 10000]);
-  const [isAssured, setIsAssured] = React.useState("");
-  const [discount, setDiscount] = React.useState("");
-  const [filters, setFilters] = React.useState({});
+  const [priceRange, setPriceRange] = useState([0, 10000]);
+  const [isAssured, setIsAssured] = useState("");
+  const [discount, setDiscount] = useState("");
+  const [filters, setFilters] = useState({});
   const { val } = useRangeSlider({
     min: 0,
     max: 10000,

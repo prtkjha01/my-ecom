@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Skeleton } from "@chakra-ui/react";
 import { getOrders } from "@/redux/slices/order";
@@ -64,7 +64,7 @@ const Orders = () => {
         break;
     }
   };
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(getOrders());
   }, []);
 

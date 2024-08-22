@@ -1,4 +1,3 @@
-import React from "react";
 import { Text, Skeleton } from "@chakra-ui/react";
 import RatingBadge from "@/components/common/RatingBadge";
 

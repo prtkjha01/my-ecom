@@ -5,11 +5,9 @@ import testReducer from "./slices/test";
 import searchReducer from "./slices/search";
 import productReducer from "./slices/product";
 import authReducer from "./slices/auth";
-import cartReducer from './slices/cart';
+import cartReducer from "./slices/cart";
 import addressReducer from "./slices/address";
-import orderReducer from './slices/order'
-import { persistReducer } from "redux-persist";
-// ----------------------------------------------------------------------
+import orderReducer from "./slices/order";
 
 const createNoopStorage = () => ({
   getItem() {
@@ -24,9 +22,9 @@ const createNoopStorage = () => ({
 });
 
 const storage =
-  typeof window !== "undefined" ?
-    createWebStorage("local") :
-    createNoopStorage();
+  typeof window !== "undefined"
+    ? createWebStorage("local")
+    : createNoopStorage();
 
 const rootPersistConfig = {
   key: "root",
@@ -37,12 +35,6 @@ const rootPersistConfig = {
   //TODO: Add whitelist array.
 };
 
-const authPersistConfig = {
-  key: "auth",
-  storage,
-  blacklist: ["step", ""],
-};
-
 const rootReducer = combineReducers({
   test: testReducer,
   search: searchReducer,
@@ -50,8 +42,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   cart: cartReducer,
   address: addressReducer,
-  order: orderReducer
-  //   auth: persistReducer(authPersistConfig, authReducer),
+  order: orderReducer,
 });
 
 export { rootPersistConfig, rootReducer };

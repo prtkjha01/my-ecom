@@ -2,7 +2,6 @@ import Head from "next/head";
 import { Inter } from "@next/font/google";
 import MainLayout from "@layouts/Main";
 import Homepage from "@components/Home/index";
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (

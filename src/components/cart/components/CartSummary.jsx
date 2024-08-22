@@ -1,4 +1,3 @@
-import React from "react";
 import { useRouter } from "next/router";
 import { Button, Skeleton } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";

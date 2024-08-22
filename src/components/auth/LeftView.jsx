@@ -1,5 +1,3 @@
-import React from "react";
-
 const LeftView = () => {
   return (
     <div className=" w-max">
