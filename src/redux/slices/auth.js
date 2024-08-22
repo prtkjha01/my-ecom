@@ -37,6 +37,15 @@ export const getCurrentUser = () => {
     }
   };
 };
+export const subscribeToNewsletter = (payload) => {
+  return async (dispatch) => {
+    try {
+      await api.subscribeToNewsletter(payload);
+    } catch (error) {
+      throw error;
+    }
+  };
+};
 export const login = (payload) => {
   return async (dispatch) => {
     try {

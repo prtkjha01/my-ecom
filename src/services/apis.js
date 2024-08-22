@@ -23,6 +23,8 @@ instance.interceptors.response.use(
 );
 
 const getCurrentUser = () => instance.get("/user/current");
+const subscribeToNewsletter = (payload) =>
+  instance.post("/user/subscribe-to-newsletter", payload);
 const register = (payload) => instance.post("/auth/register", payload);
 const login = (payload) => instance.post("/auth/login", payload);
 const sendOtp = (payload) => instance.post("/auth/send-otp", payload);
@@ -65,6 +67,7 @@ const placeOrder = (payload) =>
 const getAllOrders = () => instance.get("/order/all");
 export const api = {
   getCurrentUser,
+  subscribeToNewsletter,
   getCarouselProducts,
   getProducts,
   getProductsByCategory,

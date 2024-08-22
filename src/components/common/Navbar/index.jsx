@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import logo from "@assets/logo.png";
-import Search from "./Search";
-import Actions from "./Actions";
+import Search from "./components/Search";
+import Actions from "./components/Actions";
 
 const Navbar = () => {
   const router = useRouter();
