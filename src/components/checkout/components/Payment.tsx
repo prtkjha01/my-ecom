@@ -7,16 +7,47 @@ import { placeOrder } from "@/redux/slices/order";
 import { FaMoneyBill } from "react-icons/fa";
 import { MdOutlinePayment } from "react-icons/md";
 import { useRouter } from "next/router";
+import { RootState } from "@/redux/store";
 
-const Payment = ({ payload }) => {
-  const cart = useSelector((state) => state?.cart?.cart?.data);
-  const product = useSelector((state) => state?.product?.product?.data);
+interface PaymentPayload {
+  address?: string;
+  products?: Array<{
+    product: string;
+    count: number;
+  }>;
+  total?: number;
+  payment_method?: string;
+  expected_delivery_date?: Date;
+  razorpay_data?: {
+    order_creation_id: string;
+    razorpay_payment_id: string;
+    razorpay_order_id: string;
+    razorpay_signature: string;
+  };
+}
+
+interface RazorpayResponse {
+  razorpay_payment_id: string;
+  razorpay_order_id: string;
+  razorpay_signature: string;
+}
+
+interface PaymentProps {
+  payload: PaymentPayload;
+}
+
+const Payment: React.FC<PaymentProps> = ({ payload }) => {
+  const cart = useSelector((state: RootState) => state?.cart?.cart?.data);
+  const product = useSelector(
+    (state: RootState) => state?.product?.product?.data
+  );
   const dispatch = useDispatch();
   const toast = useToast();
   const router = useRouter();
   const [codLoading, setCodLoading] = useState(false);
   const [onlineLoading, setOnlineLoading] = useState(false);
-  function loadScript(src) {
+
+  function loadScript(src: string): Promise<boolean> {
     return new Promise((resolve) => {
       const script = document.createElement("script");
       script.src = src;
@@ -62,17 +93,19 @@ const Payment = ({ payload }) => {
       name: "My Ecom",
       description: "Test Transaction",
       order_id: order_id,
-      handler: async (response) => handlePayment(response, order_id),
+      handler: async (response: RazorpayResponse) =>
+        handlePayment(response, order_id),
       theme: {
         color: "#014aad",
       },
     };
 
-    const paymentObject = new window.Razorpay(options);
+    const paymentObject = new (window as any).Razorpay(options);
     paymentObject.open();
   };
-  const handlePayment = async (response, orderId) => {
-    const orderPayload = {
+
+  const handlePayment = async (response: RazorpayResponse, orderId: string) => {
+    const orderPayload: PaymentPayload = {
       ...payload,
       payment_method: "ONLINE",
       expected_delivery_date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
@@ -86,15 +119,17 @@ const Payment = ({ payload }) => {
 
     handleOrder("ONLINE", orderPayload);
   };
+
   const handleCod = () => {
-    const orderPayload = {
+    const orderPayload: PaymentPayload = {
       ...payload,
       payment_method: "COD",
       expected_delivery_date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
     };
     handleOrder("COD", orderPayload);
   };
-  const handleOrder = (type, payload) => {
+
+  const handleOrder = (type: "COD" | "ONLINE", payload: PaymentPayload) => {
     type === "COD" ? setCodLoading(true) : setOnlineLoading(true);
     dispatch(placeOrder(payload))
       .then(() => {
@@ -118,6 +153,7 @@ const Payment = ({ payload }) => {
         });
       });
   };
+
   return (
     <>
       <div className="flex flex-col justify-center items-center mt-20 gap-4">

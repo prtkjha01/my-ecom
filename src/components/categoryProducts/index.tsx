@@ -4,25 +4,34 @@ import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { getProductsByCategory } from "@/redux/slices/product";
 import ProductCard from "../search/components/ProductCard";
+import { RootState } from "@/redux/store";
 
-const index = () => {
+interface Product {
+  _id: string;
+  [key: string]: any;
+}
+
+const CategoryProducts: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const category = router.query.category;
-  const products = useSelector((state) => state?.product?.products?.data);
+  const category = router.query.category as string;
+  const products = useSelector(
+    (state: RootState) => state?.product?.products?.data
+  ) as Product[];
+
   useEffect(() => {
     if (category) {
       dispatch(getProductsByCategory(category.toUpperCase()));
     }
-  }, [category]);
+  }, [category, dispatch]);
+
   return (
     <>
-      {products.length ? (
+      {products?.length ? (
         <div className="p-4 sm:p-12 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
-          {products?.length > 0 &&
-            products.map((product) => (
-              <ProductCard key={product._id} product={product} />
-            ))}
+          {products.map((product) => (
+            <ProductCard key={product._id} product={product} />
+          ))}
         </div>
       ) : (
         <div className="flex flex-col justify-center items-center min-h-[calc(100vh-428px)]">
@@ -37,4 +46,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default CategoryProducts;

@@ -6,18 +6,24 @@ import { useSelector, useDispatch } from "react-redux";
 import { getCart } from "@/redux/slices/cart";
 import { getCookie } from "@/utils/cookies";
 import { useRouter } from "next/router";
-const index = () => {
+import { RootState } from "@/redux/store";
+
+const Cart: React.FC = () => {
   const token = getCookie("token");
   const router = useRouter();
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.cart?.cart?.isLoading);
+  const loading = useSelector(
+    (state: RootState) => state.cart?.cart?.isLoading
+  );
+
   useEffect(() => {
     if (token) {
       dispatch(getCart());
     } else {
       router.push("/login?redirect=/cart");
     }
-  }, []);
+  }, [dispatch, router, token]);
+
   return (
     <div className="p-4 sm:p-12">
       <div className="cart-container flex flex-col md:flex-row ">
@@ -32,4 +38,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Cart;

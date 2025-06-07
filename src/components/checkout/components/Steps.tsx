@@ -12,27 +12,39 @@ import {
   Stepper,
 } from "@chakra-ui/react";
 
-const Stepss = ({ step, handleClick }) => {
-  const steps = [
+interface Step {
+  title: string;
+  description: string;
+}
+
+interface StepsProps {
+  step: number;
+  handleClick: (step: number) => void;
+}
+
+const Steps: React.FC<StepsProps> = ({ step, handleClick }) => {
+  const steps: Step[] = [
     { title: "Address", description: "Address" },
     { title: "Order Summary", description: "Order Summary" },
     { title: "Payment", description: "Payment" },
   ];
 
-  const [activeStep, setActiveStep] = useState(step);
+  const [activeStep, setActiveStep] = useState<number>(step);
+
   useEffect(() => {
     setActiveStep(step);
   }, [step]);
+
   return (
     <>
       <Stepper index={activeStep}>
-        {steps.map((step, index) => (
+        {steps.map((stepItem, index) => (
           <Step key={index}>
             <div className="flex flex-col md:flex-row gap-2 items-center">
               <StepIndicator
-                className={step.title === "Address" && "cursor-pointer"}
+                className={stepItem.title === "Address" ? "cursor-pointer" : ""}
                 onClick={() => {
-                  if (step.title === "Address") {
+                  if (stepItem.title === "Address") {
                     handleClick(0);
                     setActiveStep(0);
                   }
@@ -50,7 +62,7 @@ const Stepss = ({ step, handleClick }) => {
                   fontSize={["10px", "12px", "14px", "16px"]}
                   className="w-[60px] md:w-max text-center"
                 >
-                  {step.title}
+                  {stepItem.title}
                 </StepTitle>
               </Box>
             </div>
@@ -63,4 +75,4 @@ const Stepss = ({ step, handleClick }) => {
   );
 };
 
-export default Stepss;
+export default Steps;

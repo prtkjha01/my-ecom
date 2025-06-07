@@ -20,30 +20,55 @@ import { useSelector, useDispatch } from "react-redux";
 import { getCookie, deleteCookie } from "@/utils/cookies";
 import { getCurrentUser } from "@/redux/slices/auth";
 import { getCart } from "@/redux/slices/cart";
-const Actions = () => {
+import { RootState } from "@/redux/store";
+
+interface User {
+  name: string;
+  [key: string]: any;
+}
+
+interface Cart {
+  products?: Array<{
+    product: {
+      _id: string;
+      [key: string]: any;
+    };
+    count: number;
+  }>;
+  [key: string]: any;
+}
+
+const Actions: React.FC = () => {
   const router = useRouter();
   const token = getCookie("token");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (token) {
       setIsLoggedIn(true);
       dispatch(getCurrentUser())
         .then(() => {})
-        .catch((error) => {
+        .catch((error: Error) => {
           // deleteCookie("token");
         });
       dispatch(getCart());
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, dispatch, token]);
 
   const handleLogout = () => {
     deleteCookie("token");
     setIsLoggedIn(false);
     window.location.reload();
   };
-  const user = useSelector((state) => state?.auth?.currentUser);
-  const cart = useSelector((state) => state?.cart?.cart?.data);
+
+  const user = useSelector(
+    (state: RootState) => state?.auth?.currentUser
+  ) as User | null;
+  const cart = useSelector(
+    (state: RootState) => state?.cart?.cart?.data
+  ) as Cart | null;
+
   return (
     <div className="flex items-center gap-7">
       <div className="relative">
@@ -53,9 +78,9 @@ const Actions = () => {
           boxSize={6}
           onClick={() => router.push("/cart")}
         />
-        {cart.products?.length > 0 && (
+        {cart?.products?.length > 0 && (
           <span className="absolute top-[-5px] right-[-4px] bg-red-500 text-[10px] font-semibold text-white rounded-full w-[13px] h-[13px] flex justify-center items-center">
-            {cart.products?.length}
+            {cart.products.length}
           </span>
         )}
       </div>

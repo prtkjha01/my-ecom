@@ -15,42 +15,57 @@ import {
 import { useDispatch } from "react-redux";
 import { getProducts } from "@/redux/slices/product";
 import { useRouter } from "next/router";
-const Filters = () => {
+
+interface Filters {
+  min_price?: number;
+  max_price?: number;
+  min_discount?: number;
+  max_discount?: number;
+  is_assured?: string;
+}
+
+const Filters: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [priceRange, setPriceRange] = useState([0, 10000]);
-  const [isAssured, setIsAssured] = useState("");
-  const [discount, setDiscount] = useState("");
-  const [filters, setFilters] = useState({});
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
+  const [isAssured, setIsAssured] = useState<string>("");
+  const [discount, setDiscount] = useState<string>("");
+  const [filters, setFilters] = useState<Filters>({});
+
   const { val } = useRangeSlider({
     min: 0,
     max: 10000,
     defaultValue: [120, 2400],
     step: 500,
   });
-  const handlePriceRange = (val) => {
+
+  const handlePriceRange = (val: [number, number]) => {
     setPriceRange([val[0], val[1]]);
     handleFiltering();
   };
-  const handleSetAssured = (val) => {
+
+  const handleSetAssured = (val: string) => {
     setIsAssured((prev) => (prev === "true" ? "false" : "true"));
   };
 
-  const handleDiscount = (val) => {
+  const handleDiscount = (val: string) => {
     setDiscount(val);
   };
+
   useEffect(() => {
     handleFiltering();
   }, [discount, isAssured]);
+
   const handleClearFilter = () => {
     setPriceRange([0, 10000]);
     setIsAssured("");
     setDiscount("");
     setFilters({});
   };
+
   const handleFiltering = () => {
-    let newFilters = {};
-    if (priceRange.length == 2) {
+    let newFilters: Filters = {};
+    if (priceRange.length === 2) {
       newFilters = {
         ...newFilters,
         min_price: priceRange[0],
@@ -65,7 +80,6 @@ const Filters = () => {
             min_discount: 0,
             max_discount: 20,
           };
-
           break;
         case "20_40":
           newFilters = {
@@ -73,7 +87,6 @@ const Filters = () => {
             min_discount: 20,
             max_discount: 40,
           };
-
           break;
         case "MT_40":
           newFilters = {
@@ -94,14 +107,17 @@ const Filters = () => {
     }
     setFilters(newFilters);
   };
+
   useEffect(() => {
     getProducts({ query: router?.query?.q || "" }, "WITHOUT_FILTERS");
   }, []);
+
   useEffect(() => {
     dispatch(
       getProducts({ query: router?.query?.q || "", ...filters }, "WITH_FILTERS")
     );
-  }, [filters]);
+  }, [filters, dispatch, router.query.q]);
+
   return (
     <div className="mt-5 px-5 ">
       <Text className="text-center font-[600]">FILTERS</Text>
@@ -157,9 +173,7 @@ const Filters = () => {
           className="btn btn-primary"
           width={"100%"}
           borderRadius={0}
-          onClick={() => {
-            handleClearFilter();
-          }}
+          onClick={handleClearFilter}
         >
           Clear
         </Button>

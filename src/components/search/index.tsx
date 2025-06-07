@@ -9,8 +9,10 @@ import Filters from "./components/Filters";
 import ResultsGrid from "./components/ResultsGrid";
 import SortOptions from "./components/SortOptions";
 import { IoIosOptions } from "react-icons/io";
-const index = () => {
+
+const Search: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <>
       <div className="flex min-h-screen bg-white">
@@ -40,4 +42,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Search;

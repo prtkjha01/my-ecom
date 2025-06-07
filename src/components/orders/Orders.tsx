@@ -3,7 +3,27 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Skeleton } from "@chakra-ui/react";
 import { getOrders } from "@/redux/slices/order";
-const OrderSkeleton = () => (
+import { RootState } from "@/redux/store";
+
+interface Product {
+  product: {
+    _id: string;
+    images: string[];
+    product_name: string;
+  };
+  count: number;
+}
+
+interface Order {
+  _id: string;
+  status: "PLACED" | "SHIPPED" | "DELIVERED" | "CANCELLED";
+  products: Product[];
+  total: number;
+  payment_method: string;
+  expected_delivery_date: string;
+}
+
+const OrderSkeleton: React.FC = () => (
   <div className="bg-white p-3 mb-4">
     <div className="flex justify-between">
       <div className="order-id flex items-center">
@@ -30,11 +50,17 @@ const OrderSkeleton = () => (
     </div>
   </div>
 );
-const Orders = () => {
+
+const Orders: React.FC = () => {
   const dispatch = useDispatch();
-  const orders = useSelector((state) => state.order?.orders?.data);
-  const loading = useSelector((state) => state.order?.orders?.isLoading);
-  const getStatusBadge = (status) => {
+  const orders = useSelector(
+    (state: RootState) => state.order?.orders?.data
+  ) as Order[];
+  const loading = useSelector(
+    (state: RootState) => state.order?.orders?.isLoading
+  );
+
+  const getStatusBadge = (status: Order["status"]) => {
     switch (status) {
       case "PLACED":
         return (
@@ -61,16 +87,17 @@ const Orders = () => {
           </span>
         );
       default:
-        break;
+        return null;
     }
   };
+
   useEffect(() => {
     dispatch(getOrders());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="p-4 sm:p-12">
-      {orders.length > 0 && !loading
+      {orders?.length > 0 && !loading
         ? orders.map((order) => (
             <div key={order._id} className="bg-white p-3 mb-4">
               <div className="flex justify-between">
