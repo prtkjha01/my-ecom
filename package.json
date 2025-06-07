@@ -38,6 +38,7 @@
         "@types/node": "^22.15.28",
         "@types/react": "^19.1.6",
         "@types/react-dom": "^19.1.5",
+        "@types/redux-persist": "^4.3.1",
         "autoprefixer": "^10.4.13",
         "eslint": "9.28.0",
         "eslint-config-next": "15.3.3",
