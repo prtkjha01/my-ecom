@@ -94,8 +94,7 @@ const CartItem: React.FC<CartItemProps> = ({
     try {
       await updateProductQuantity({
         id: product._id,
-        quantity:
-          type === "INCREMENT" ? productQuantity + 1 : productQuantity - 1,
+        count: type === "INCREMENT" ? productQuantity + 1 : productQuantity - 1,
       }).unwrap();
       await refetchCart();
     } catch (error: any) {

@@ -4,7 +4,7 @@ export type CartPayload = {
 
 export type UpdateProductQuantityPayload = {
   id: string;
-  quantity: number;
+  count: number;
 };
 
 export type Product = {

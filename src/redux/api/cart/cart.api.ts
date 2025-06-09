@@ -32,10 +32,10 @@ export const cartApi = api.injectEndpoints({
       }),
     }),
     updateProductQuantity: builder.mutation({
-      query: ({ id, quantity }: UpdateProductQuantityPayload) => ({
+      query: ({ id, count }: UpdateProductQuantityPayload) => ({
         url: CART_ENDPOINTS.UPDATE_PRODUCT_QUANTITY.replace(":id", id),
         method: "PATCH",
-        body: { quantity },
+        body: { count },
       }),
     }),
   }),
