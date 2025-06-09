@@ -99,44 +99,4 @@ const slice = createSlice({
   },
 });
 
-export const getAddresses = () => {
-  return async (dispatch: AppDispatch) => {
-    try {
-      dispatch(slice.actions.setIsLoading(true));
-      const response = await api.getAddresses();
-      dispatch(slice.actions.setAddresses(response.data));
-    } catch (error) {
-      dispatch(slice.actions.setIsError(true));
-      throw error;
-    } finally {
-      dispatch(slice.actions.setIsLoading(false));
-    }
-  };
-};
-
-export const createAddress = (payload: CreateAddressPayload) => {
-  return async (dispatch: AppDispatch) => {
-    try {
-      dispatch(slice.actions.setCreateAddressIsLoading(true));
-      const response = await api.createAddress(payload);
-      dispatch(slice.actions.setAddresses(response.data));
-    } catch (error) {
-      dispatch(slice.actions.setCreateAddressIsError(true));
-      throw error;
-    } finally {
-      dispatch(slice.actions.setCreateAddressIsLoading(false));
-    }
-  };
-};
-
-export const deleteAddress = (payload: string) => {
-  return async (dispatch: AppDispatch) => {
-    try {
-      await api.deleteAddress(payload);
-    } catch (error) {
-      throw error;
-    }
-  };
-};
-
 export default slice.reducer;

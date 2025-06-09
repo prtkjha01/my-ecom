@@ -18,9 +18,8 @@ import { FaBox } from "react-icons/fa";
 import { TbLogout2 } from "react-icons/tb";
 import { useSelector, useDispatch } from "react-redux";
 import { getCookie, deleteCookie } from "@/utils/cookies";
-import { getCart } from "@/redux/slices/cart";
-import { RootState } from "@/redux/store";
 import { useGetCurrentUserQuery } from "@/redux/api/user/user.api";
+import { useGetCartQuery } from "@/redux/api/cart/cart.api";
 
 interface User {
   name: string;
@@ -47,11 +46,13 @@ const Actions: React.FC = () => {
   const { data: userData } = useGetCurrentUserQuery(undefined, {
     skip: !token,
   });
-
+  const { data: cartData } = useGetCartQuery(undefined, {
+    skip: !token,
+  });
+  const cart = cartData?.data;
   useEffect(() => {
     if (token) {
       setIsLoggedIn(true);
-      dispatch(getCart());
     }
   }, [token, dispatch]);
 
@@ -62,9 +63,6 @@ const Actions: React.FC = () => {
   };
 
   const user = userData?.data as User | null;
-  const cart = useSelector(
-    (state: RootState) => state?.cart?.cart?.data
-  ) as Cart | null;
 
   return (
     <div className="flex items-center gap-7">

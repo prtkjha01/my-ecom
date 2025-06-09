@@ -4,9 +4,6 @@ import Steps from "./components/Steps";
 import Addresses from "./components/Addresses";
 import OrderSummary from "./components/OrderSummary";
 import Payment from "./components/Payment";
-import { useSelector, useDispatch } from "react-redux";
-import { getCart } from "@/redux/slices/cart";
-import { RootState } from "@/redux/store";
 import { useGetProductQuery } from "@/redux/api/product/product.api";
 import { useRouter } from "next/router";
 

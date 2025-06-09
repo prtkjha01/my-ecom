@@ -56,21 +56,4 @@ const slice = createSlice({
   },
 });
 
-export const getProducts = async (
-  payload: ProductSearchPayload
-): Promise<void> => {
-  dispatch(slice.actions.setLoadingForProducts(true));
-  try {
-    const response = await api.getProducts(payload);
-    dispatch(slice.actions.setProducts(response.data.data));
-    dispatch(slice.actions.setErrorForProducts(false));
-  } catch (error) {
-    dispatch(slice.actions.setErrorForProducts(true));
-    dispatch(slice.actions.setLoadingForProducts(false));
-    throw error;
-  } finally {
-    dispatch(slice.actions.setLoadingForProducts(false));
-  }
-};
-
 export default slice.reducer;

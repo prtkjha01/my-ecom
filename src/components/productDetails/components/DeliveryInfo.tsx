@@ -37,7 +37,6 @@ const DeliveryInfo: React.FC = () => {
           placeholder="Enter Your Zip Code"
           borderRadius={0}
           border={"none"}
-          _loading={true}
           borderBottom={"1px solid var(--chakra-colors-chakra-body-text)"}
           sx={{
             "&:focus-visible": {

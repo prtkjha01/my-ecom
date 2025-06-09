@@ -62,28 +62,4 @@ instance.interceptors.response.use(
   }
 );
 
-/********************************* Auth APIs *********************************/
-// const register = (payload: AuthPayload) =>
-//   instance.post("/auth/register", payload);
-// const login = (payload: AuthPayload) => instance.post("/auth/login", payload);
-// const sendOtp = (payload: { email: string }) =>
-//   instance.post("/auth/send-otp", payload);
-// const verifyOtp = (payload: OtpPayload) =>
-//   instance.post("/auth/verify-otp", payload);
-// const resetPassword = (payload: { email: string; password: string }) =>
-//   instance.patch("/auth/reset-password", payload);
-
-/********************************* Order APIs *********************************/
-const placeOrder = (payload: OrderPayload) =>
-  instance.post("/order/payment-success", payload);
-const getAllOrders = () => instance.get("/order/all");
-
-export const api = {
-  placeOrder,
-  getAllOrders,
-  // register,
-  // login,
-  // sendOtp,
-  // verifyOtp,
-  // resetPassword,
-};
+export const api = {};
