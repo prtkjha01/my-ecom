@@ -22,3 +22,7 @@ export const getCookie = (cookieName: string): string | null => {
 export const deleteCookie = (cookieName: string): void => {
   document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 };
+
+export const setCookie = (cookieName: string, cookieValue: string): void => {
+  document.cookie = `${cookieName}=${cookieValue}; path=/`;
+};

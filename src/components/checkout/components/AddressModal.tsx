@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import {
   Button,
@@ -10,13 +9,27 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
-import { getAddresses, deleteAddress } from "@/redux/slices/address";
-const AddressModal = ({ onClose, id }) => {
+import {
+  useDeleteAddressMutation,
+  useGetAddressesQuery,
+} from "@/redux/api/address/address.api";
+import { AddressModalProps } from "@/types/address.types";
+
+const AddressModal = ({ onClose, id }: AddressModalProps) => {
   const dispatch = useDispatch();
-  const handleDelete = () => {
-    dispatch(deleteAddress(id));
-    dispatch(getAddresses());
+  const [deleteAddress] = useDeleteAddressMutation();
+  const { refetch } = useGetAddressesQuery();
+
+  const handleDelete = async () => {
+    try {
+      await deleteAddress(id).unwrap();
+      refetch();
+      onClose();
+    } catch (error) {
+      console.error("Failed to delete address:", error);
+    }
   };
+
   return (
     <>
       <ModalOverlay />

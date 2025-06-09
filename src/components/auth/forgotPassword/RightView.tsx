@@ -6,8 +6,8 @@ import ResetPasswordForm from "./ResetPasswordForm";
 const RightView = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [email, setEmail] = useState("");
-  const handleProgress = (step) => setCurrentStep(step);
-  const handleSetEmail = (newEmail) => setEmail(newEmail);
+  const handleProgress = (step: number) => setCurrentStep(step);
+  const handleSetEmail = (newEmail: string) => setEmail(newEmail);
   return (
     <>
       {currentStep === 1 && (

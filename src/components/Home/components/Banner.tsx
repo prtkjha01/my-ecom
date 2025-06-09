@@ -1,4 +1,3 @@
-import landingPageBanner from "@assets/LandingPageBanner.png";
 import { useRouter } from "next/router";
 
 const Banner: React.FC = () => {
@@ -9,7 +8,7 @@ const Banner: React.FC = () => {
       onClick={() => router.push("/search?q=iphone")}
     >
       <img
-        src={landingPageBanner.src}
+        src="/png/LandingPageBanner.png"
         className="aspect-[18/9] md:aspect-[21/9] lg:aspect-[25/9] cursor-pointer"
         alt="Landing page banner"
       />

@@ -5,13 +5,17 @@ import {
   TypedUseSelectorHook,
 } from "react-redux";
 import { rootReducer } from "./rootReducer";
+import { api } from "./api";
 
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: {
+    ...rootReducer,
+    [api.reducerPath]: api.reducer,
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }),
+    }).concat(api.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

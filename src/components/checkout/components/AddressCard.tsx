@@ -7,6 +7,7 @@ import {
 } from "@chakra-ui/react";
 import { MdLocalPhone } from "react-icons/md";
 import AddressModal from "./AddressModal";
+import { AddressCardProps } from "@/types/address.types";
 
 export const AddressCardSkeleton = () => (
   <div className="p-3 relative bg-white shadow">
@@ -31,7 +32,12 @@ export const AddressCardSkeleton = () => (
     />
   </div>
 );
-const Address = ({ address, isSelected, handleSelect }) => {
+
+const AddressCard = ({
+  address,
+  isSelected,
+  handleSelect,
+}: AddressCardProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleAddressDelete = () => onOpen();
 
@@ -66,8 +72,6 @@ const Address = ({ address, isSelected, handleSelect }) => {
       <input
         className="tag absolute top-2 right-2 h-5 w-5 cursor-pointer"
         type="checkbox"
-        name=""
-        id=""
         checked={isSelected}
         onChange={() => {
           handleSelect(address._id);
@@ -80,4 +84,4 @@ const Address = ({ address, isSelected, handleSelect }) => {
   );
 };
 
-export default Address;
+export default AddressCard;

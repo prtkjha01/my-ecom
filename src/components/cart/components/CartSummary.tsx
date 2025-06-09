@@ -1,9 +1,14 @@
+"use client";
 import { useRouter } from "next/router";
 import { Button, Skeleton } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { useSelector } from "react-redux";
+import { useGetCartQuery } from "@/redux/api/cart/cart.api";
 
-export const CartSummarySkeleton = () => (
+interface CartData {
+  total_subtotal: number;
+}
+
+export const CartSummarySkeleton: React.FC = () => (
   <>
     <div className="w-full border p-5 shadow-sm rounded bg-white">
       <h2 className="text-lg font-semibold">
@@ -21,9 +26,12 @@ export const CartSummarySkeleton = () => (
     <Skeleton height="40px" width="100%" shadow={"lg"} mt={2} />
   </>
 );
-const CartSummary = () => {
+
+const CartSummary: React.FC = () => {
   const router = useRouter();
-  const cart = useSelector((state) => state?.cart?.cart?.data);
+  const { data: cartData } = useGetCartQuery();
+  const cart = cartData?.data as CartData | undefined;
+
   return (
     <>
       <div className="w-full border p-5 shadow-sm rounded bg-white">
@@ -31,7 +39,7 @@ const CartSummary = () => {
         <div className="cart-summary-details mt-4">
           <div className="flex justify-between">
             <p>Subtotal</p>
-            <p>₹ {cart.total_subtotal}</p>
+            <p>₹ {cart?.total_subtotal || 0}</p>
           </div>
 
           <div className="flex justify-between mt-1">
@@ -46,7 +54,7 @@ const CartSummary = () => {
 
           <div className="flex justify-between border-t border-gray-400 border-dashed mt-2 pt-1">
             <p>Total</p>
-            <p>₹ {cart.total_subtotal}</p>
+            <p>₹ {cart?.total_subtotal || 0}</p>
           </div>
         </div>
       </div>

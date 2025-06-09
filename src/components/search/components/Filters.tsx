@@ -6,65 +6,78 @@ import {
   RangeSliderTrack,
   RangeSliderFilledTrack,
   RangeSliderThumb,
-  useRangeSlider,
   Radio,
   RadioGroup,
   Tooltip,
   Button,
 } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
-import { getProducts } from "@/redux/slices/product";
 import { useRouter } from "next/router";
+import { useGetProductsQuery } from "@/redux/api/product/product.api";
 
-interface Filters {
-  min_price?: number;
-  max_price?: number;
-  min_discount?: number;
-  max_discount?: number;
-  is_assured?: string;
+interface FiltersProps {
+  priceRange: [number, number];
+  isAssured: string;
+  discount: string;
+  onPriceRangeChange: (val: [number, number]) => void;
+  onAssuredChange: (val: string) => void;
+  onDiscountChange: (val: string) => void;
+  onClearFilter: () => void;
 }
 
-const Filters: React.FC = () => {
+const Filters: React.FC<FiltersProps> = ({
+  priceRange,
+  isAssured,
+  discount,
+  onPriceRangeChange,
+  onAssuredChange,
+  onDiscountChange,
+  onClearFilter,
+}) => {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
-  const [isAssured, setIsAssured] = useState<string>("");
-  const [discount, setDiscount] = useState<string>("");
-  const [filters, setFilters] = useState<Filters>({});
+  const [filters, setFilters] = useState<{
+    min_price?: number;
+    max_price?: number;
+    min_discount?: number;
+    max_discount?: number;
+    is_assured?: boolean;
+  }>({});
 
-  const { val } = useRangeSlider({
-    min: 0,
-    max: 10000,
-    defaultValue: [120, 2400],
-    step: 500,
-  });
+  const { refetch } = useGetProductsQuery(
+    {
+      query: (router.query.q as string) || "",
+      ...filters,
+    },
+    {
+      skip: !router.query.q,
+      refetchOnMountOrArgChange: true,
+    }
+  );
 
   const handlePriceRange = (val: [number, number]) => {
-    setPriceRange([val[0], val[1]]);
+    onPriceRangeChange(val);
     handleFiltering();
   };
 
   const handleSetAssured = (val: string) => {
-    setIsAssured((prev) => (prev === "true" ? "false" : "true"));
+    onAssuredChange(val === "true" ? "false" : "true");
   };
 
   const handleDiscount = (val: string) => {
-    setDiscount(val);
+    onDiscountChange(val);
   };
 
   useEffect(() => {
     handleFiltering();
   }, [discount, isAssured]);
 
-  const handleClearFilter = () => {
-    setPriceRange([0, 10000]);
-    setIsAssured("");
-    setDiscount("");
-    setFilters({});
-  };
-
   const handleFiltering = () => {
-    let newFilters: Filters = {};
+    let newFilters: {
+      min_price?: number;
+      max_price?: number;
+      min_discount?: number;
+      max_discount?: number;
+      is_assured?: boolean;
+    } = {};
     if (priceRange.length === 2) {
       newFilters = {
         ...newFilters,
@@ -102,21 +115,17 @@ const Filters: React.FC = () => {
     if (isAssured) {
       newFilters = {
         ...newFilters,
-        is_assured: isAssured,
+        is_assured: isAssured === "true",
       };
     }
     setFilters(newFilters);
   };
 
   useEffect(() => {
-    getProducts({ query: router?.query?.q || "" }, "WITHOUT_FILTERS");
-  }, []);
-
-  useEffect(() => {
-    dispatch(
-      getProducts({ query: router?.query?.q || "", ...filters }, "WITH_FILTERS")
-    );
-  }, [filters, dispatch, router.query.q]);
+    if (router.query.q) {
+      refetch();
+    }
+  }, [filters, router.query.q, refetch]);
 
   return (
     <div className="mt-5 px-5 ">
@@ -127,10 +136,9 @@ const Filters: React.FC = () => {
           aria-label={["min", "max"]}
           max={10000}
           min={0}
-          value={[priceRange[0], priceRange[1]]}
-          onChange={(val) => setPriceRange(val)}
+          value={priceRange}
+          onChange={(val) => onPriceRangeChange(val as [number, number])}
           step={500}
-          onChangeEnd={handlePriceRange}
         >
           <RangeSliderTrack>
             <RangeSliderFilledTrack />
@@ -149,7 +157,7 @@ const Filters: React.FC = () => {
           className="flex flex-col gap-1"
           defaultValue="LT_20"
           value={discount}
-          onChange={handleDiscount}
+          onChange={onDiscountChange}
         >
           <Radio value="LT_20">{"< "}20%</Radio>
           <Radio value="20_40">20 % - 40%</Radio>
@@ -173,7 +181,7 @@ const Filters: React.FC = () => {
           className="btn btn-primary"
           width={"100%"}
           borderRadius={0}
-          onClick={handleClearFilter}
+          onClick={onClearFilter}
         >
           Clear
         </Button>

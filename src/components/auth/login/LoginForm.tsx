@@ -10,22 +10,27 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-import logo from "@assets/logo.png";
 import { FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/react";
-import { useSelector, useDispatch } from "react-redux";
-import { login } from "@/redux/slices/auth";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { useLoginMutation } from "@/redux/api/auth/auth.api";
+import { setCookie } from "@/utils/cookies";
 
-const index = () => {
-  const dispatch = useDispatch();
+type LoginFormValues = {
+  email: string;
+  password: string;
+};
+
+const LoginForm = () => {
   const router = useRouter();
   const { redirect } = router.query;
   const toast = useToast();
   const [show, setShow] = useState(false);
-  const isLoggedIn = useSelector((state) => state.auth.user.isLoggedIn);
+  const [login] = useLoginMutation();
+
   const handleClick = () => setShow(!show);
-  const validateEmail = (value) => {
+
+  const validateEmail = (value: string) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const isValidEmail = emailRegex.test(value);
     let error;
@@ -36,39 +41,40 @@ const index = () => {
     }
     return error;
   };
-  const validatePassword = (value) => {
+
+  const validatePassword = (value: string) => {
     let error;
     if (!value) {
       error = "Password is required";
     }
     return error;
   };
-  const handleLogin = (values, actions) => {
-    dispatch(login(values))
-      .then(() => {
-        actions.setSubmitting(false);
 
-        if (typeof window !== "undefined") {
-          window.location.href = redirect || "/";
-        }
-      })
-      .catch((error) => {
-        actions.setSubmitting(false);
+  const handleLogin = async (values: LoginFormValues, actions: any) => {
+    try {
+      const response = await login(values).unwrap();
+      setCookie("token", response?.data?.token);
+      actions.setSubmitting(false);
 
-        toast({
-          title: "Error",
-          description: error?.message || "Something went wrong",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
+      if (typeof window !== "undefined") {
+        window.location.href = (redirect as string) || "/";
+      }
+    } catch (error: any) {
+      actions.setSubmitting(false);
+      toast({
+        title: "Error",
+        description: error?.data?.message || "Something went wrong",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
       });
+    }
   };
 
   return (
     <div className="p-4 md:p-48 lg:p-28 w-full">
       <header className="login-form-header flex flex-col items-center gap-3 mb-10">
-        <Image src={logo.src} height={64} width={64} alt="brand-logo" />
+        <Image src="/png/logo.png" height={64} width={64} alt="brand-logo" />
         <Text className=" text-[#3A003D] font-[700] text-4xl">
           Login to MyEcom
         </Text>
@@ -85,7 +91,7 @@ const index = () => {
         {(props) => (
           <Form>
             <Field name="email" validate={validateEmail}>
-              {({ field, form }) => (
+              {({ field, form }: any) => (
                 <FormControl
                   isInvalid={form.errors.email && form.touched.email}
                 >
@@ -96,7 +102,7 @@ const index = () => {
               )}
             </Field>
             <Field name="password" validate={validatePassword}>
-              {({ field, form }) => (
+              {({ field, form }: any) => (
                 <FormControl
                   className="mt-4"
                   isInvalid={form.errors.password && form.touched.password}
@@ -184,4 +190,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default LoginForm;

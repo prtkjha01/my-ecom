@@ -1,12 +1,14 @@
 "use client";
 import Head from "next/head";
 import { useToast } from "@chakra-ui/react";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import { useRouter } from "next/router";
 import { Button, Skeleton } from "@chakra-ui/react";
-import { getProduct } from "@/redux/slices/product";
-import { addToCart, getCart } from "@/redux/slices/cart";
+import { useGetProductQuery } from "@/redux/api/product/product.api";
+import {
+  useAddToCartMutation,
+  useGetCartQuery,
+} from "@/redux/api/cart/cart.api";
 import { getCookie } from "@/utils/cookies";
 import ProductImage, { ProductImageSkeleton } from "./components/ProductImage";
 import ProductInfo, { ProductInfoSkeleton } from "./components/ProductInfo";
@@ -18,80 +20,33 @@ import ProductReviews, {
 } from "./components/ProductReviews";
 import FAQs, { FAQsSkeleton } from "./components/FAQs";
 import DeliveryInfo from "./components/DeliveryInfo";
-import { AppDispatch, RootState } from "@/redux/store";
-import { createAsyncThunk } from "@reduxjs/toolkit";
-
-interface Product {
-  _id: string;
-  product_name: string;
-  brand: string;
-  images: string[];
-  price: number;
-  currency_symbol: string;
-  rating?: number;
-  active?: boolean;
-}
 
 const Index: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const toast = useToast();
   const token = getCookie("token");
   const router = useRouter();
   const { id } = router.query;
-  const product = useSelector(
-    (state: RootState) => state?.product?.product?.data
-  ) as Product | null;
-  const loading = useSelector(
-    (state: RootState) => state?.product?.product?.isLoading
-  );
-  const addToCartLoading = useSelector(
-    (state: RootState) => state?.cart?.addToCart?.isLoading
-  );
-  const description = `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam at ut
-  recusandae sequi, hic soluta velit magnam, facere quis nulla ea debitis
-  perferendis quaerat sit numquam odio tempora harum porro esse deleniti
-  consequatur omnis repellat eveniet. Esse tempora provident minus
-  consequuntur. Deserunt voluptatibus sed labore laboriosam aliquid
-  reiciendis qui beatae. Laborum in atque ipsam recusandae ducimus
-  architecto quibusdam similique nam. Veritatis neque deleniti quis
-  dolorem ratione magni. Facere numquam odit corporis animi, laboriosam
-  laudantium pariatur accusantium fugiat doloremque laborum eius possimus
-  inventore! Dolorum quaerat nulla exercitationem, a maiores perferendis
-  ut quae soluta ipsum? Dignissimos magnam quaerat optio temporibus
-  veritatis dicta.`;
 
-  const fetchProduct = async () => {
-    if (typeof id === "string") {
-      try {
-        await dispatch(getProduct(id)).unwrap();
-      } catch (error: any) {
-        toast({
-          title: error.message,
-          status: "error",
-          duration: 1500,
-          isClosable: true,
-        });
-      }
-    }
-  };
-  useEffect(() => {
-    if (id && typeof window !== "undefined") {
-      fetchProduct();
-    }
-  }, [id]);
+  const { data: productData, isLoading: loading } = useGetProductQuery(
+    id as string
+  );
+  const product = productData?.data;
+  const [addToCart, { isLoading: addToCartLoading }] = useAddToCartMutation();
+  const { refetch: refetchCart } = useGetCartQuery();
+
+  const description = `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam at ut
+  recusandae sequi.`;
 
   const handleAddToCart = async () => {
     if (!product?._id) return;
 
     if (token) {
       try {
-        await dispatch(
-          addToCart({
-            product_id: product._id,
-            quantity: 1,
-          })
-        ).unwrap();
-        await dispatch(getCart()).unwrap();
+        await addToCart({
+          product_id: product._id,
+          quantity: 1,
+        }).unwrap();
+        await refetchCart();
         toast({
           title: "Product added to cart",
           status: "success",
@@ -100,7 +55,7 @@ const Index: React.FC = () => {
         });
       } catch (error: any) {
         toast({
-          title: error.message,
+          title: error.message || "Failed to add to cart",
           status: "error",
           duration: 1500,
           isClosable: true,
@@ -110,6 +65,7 @@ const Index: React.FC = () => {
       router.push(`/login?redirect=/product/${product._id}`);
     }
   };
+
   const handleBuyNow = () => {
     if (!product?._id) return;
 
@@ -120,15 +76,11 @@ const Index: React.FC = () => {
     }
   };
 
-  if (!product && !loading) {
-    return null;
-  }
-
   return (
     <>
       <Head>
         <title>
-          {product ? `${product.brand} ${product.product_name}` : "Product"} |
+          {product ? `${product?.brand} ${product.product_name}` : "Product"} |
           MyEcom
         </title>
       </Head>
@@ -182,7 +134,7 @@ const Index: React.FC = () => {
                 currencySymbol={product?.currency_symbol || "$"}
                 price={product?.price || 0}
                 discount={0}
-                description={description}
+                description={product?.description || ""}
               />
             )}
           </div>
@@ -199,19 +151,21 @@ const Index: React.FC = () => {
             {loading ? (
               <ProductSpecificationsSkeleton />
             ) : (
-              <ProductSpecifications specifications={[]} />
+              <ProductSpecifications
+                specifications={product?.specifications || []}
+              />
             )}
           </div>
 
           <div className="faqs mt-12">
-            {loading ? <FAQsSkeleton /> : <FAQs faqs={[]} />}
+            {loading ? <FAQsSkeleton /> : <FAQs faqs={product?.faqs || []} />}
           </div>
 
           <div className="reviews mt-12">
             {loading ? (
               <ProductReviewsSkeleton />
             ) : (
-              <ProductReviews reviews={[]} />
+              <ProductReviews reviews={product?.reviews || []} />
             )}
           </div>
         </div>

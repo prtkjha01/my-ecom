@@ -18,9 +18,9 @@ import { FaBox } from "react-icons/fa";
 import { TbLogout2 } from "react-icons/tb";
 import { useSelector, useDispatch } from "react-redux";
 import { getCookie, deleteCookie } from "@/utils/cookies";
-import { getCurrentUser } from "@/redux/slices/auth";
 import { getCart } from "@/redux/slices/cart";
 import { RootState } from "@/redux/store";
+import { useGetCurrentUserQuery } from "@/redux/api/user/user.api";
 
 interface User {
   name: string;
@@ -44,17 +44,16 @@ const Actions: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const dispatch = useDispatch();
 
+  const { data: userData } = useGetCurrentUserQuery(undefined, {
+    skip: !token,
+  });
+
   useEffect(() => {
     if (token) {
       setIsLoggedIn(true);
-      dispatch(getCurrentUser())
-        .then(() => {})
-        .catch((error: Error) => {
-          // deleteCookie("token");
-        });
       dispatch(getCart());
     }
-  }, [isLoggedIn, dispatch, token]);
+  }, [token, dispatch]);
 
   const handleLogout = () => {
     deleteCookie("token");
@@ -62,9 +61,7 @@ const Actions: React.FC = () => {
     window.location.reload();
   };
 
-  const user = useSelector(
-    (state: RootState) => state?.auth?.currentUser
-  ) as User | null;
+  const user = userData?.data as User | null;
   const cart = useSelector(
     (state: RootState) => state?.cart?.cart?.data
   ) as Cart | null;
@@ -78,7 +75,7 @@ const Actions: React.FC = () => {
           boxSize={6}
           onClick={() => router.push("/cart")}
         />
-        {cart?.products?.length > 0 && (
+        {cart?.products && cart.products.length > 0 && (
           <span className="absolute top-[-5px] right-[-4px] bg-red-500 text-[10px] font-semibold text-white rounded-full w-[13px] h-[13px] flex justify-center items-center">
             {cart.products.length}
           </span>

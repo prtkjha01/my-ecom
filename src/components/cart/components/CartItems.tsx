@@ -18,14 +18,20 @@ import {
   SkeletonText,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
-import { useSelector, useDispatch } from "react-redux";
 import {
-  getCart,
-  removeFromCart,
-  updateProductQuantity,
-} from "@/redux/slices/cart";
+  useGetCartQuery,
+  useRemoveFromCartMutation,
+  useUpdateProductQuantityMutation,
+} from "@/redux/api/cart/cart.api";
+import { CartItem as CartItemType, Product } from "@/redux/api/cart/cart.types";
 
-export const CartItemsSkeleton = () =>
+interface CartItemProps {
+  item: CartItemType;
+  isLast: boolean;
+  variant: "CART" | "ORDER_SUMMARY";
+}
+
+export const CartItemsSkeleton: React.FC = () =>
   [1, 2, 3, 4].map((i) => (
     <div
       key={i}
@@ -38,8 +44,12 @@ export const CartItemsSkeleton = () =>
       <SkeletonText width="100%" noOfLines={3} spacing="2" skeletonHeight="4" />
     </div>
   ));
-const CartItem = ({ item: { product, count }, isLast, variant }) => {
-  const dispatch = useDispatch();
+
+const CartItem: React.FC<CartItemProps> = ({
+  item: { product, count },
+  isLast,
+  variant,
+}) => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
@@ -53,46 +63,49 @@ const CartItem = ({ item: { product, count }, isLast, variant }) => {
   const dec = getDecrementButtonProps();
   const input = getInputProps();
 
-  const handleRemove = () => {
-    dispatch(removeFromCart(product._id))
-      .then(() => {
-        dispatch(getCart());
-        onClose();
-        toast({
-          title: "Product removed !",
-          status: "success",
-          duration: 1500,
-          isClosable: true,
-        });
-      })
-      .catch((error) => {
-        toast({
-          title: error.message,
-          status: "error",
-          duration: 1500,
-          isClosable: true,
-        });
+  const [removeFromCart] = useRemoveFromCartMutation();
+  const [updateProductQuantity] = useUpdateProductQuantityMutation();
+  const { refetch: refetchCart } = useGetCartQuery();
+
+  const handleRemove = async () => {
+    try {
+      await removeFromCart(product._id).unwrap();
+      await refetchCart();
+      onClose();
+      toast({
+        title: "Product removed !",
+        status: "success",
+        duration: 1500,
+        isClosable: true,
       });
+    } catch (error: any) {
+      toast({
+        title: error.message || "Failed to remove product",
+        status: "error",
+        duration: 1500,
+        isClosable: true,
+      });
+    }
   };
 
-  const handleProductQuantityUpdate = (type) => {
-    dispatch(
-      updateProductQuantity({
+  const handleProductQuantityUpdate = async (
+    type: "INCREMENT" | "DECREMENT"
+  ) => {
+    try {
+      await updateProductQuantity({
         id: product._id,
-        count: type === "INCREMENT" ? productQuantity + 1 : productQuantity - 1,
-      })
-    )
-      .then(() => {
-        dispatch(getCart());
-      })
-      .catch((error) => {
-        toast({
-          title: error.message,
-          status: "error",
-          duration: 1500,
-          isClosable: true,
-        });
+        quantity:
+          type === "INCREMENT" ? productQuantity + 1 : productQuantity - 1,
+      }).unwrap();
+      await refetchCart();
+    } catch (error: any) {
+      toast({
+        title: error.message || "Failed to update quantity",
+        status: "error",
+        duration: 1500,
+        isClosable: true,
       });
+    }
   };
 
   return (
@@ -212,23 +225,30 @@ const CartItem = ({ item: { product, count }, isLast, variant }) => {
     </div>
   );
 };
-const CartItems = ({ variant }) => {
-  const cart = useSelector((state) => state?.cart?.cart?.data);
+
+interface CartItemsProps {
+  variant: "CART" | "ORDER_SUMMARY";
+}
+
+const CartItems: React.FC<CartItemsProps> = ({ variant }) => {
+  const { data: cartData } = useGetCartQuery();
+  const cart = cartData?.data;
+  const products = cart?.products || [];
 
   return (
     <>
       {variant === "CART" && (
         <h2 className="text-lg font-semibold mb-8">
-          Your Cart {`(${cart?.products?.length || 0})`}
+          Your Cart {`(${products.length})`}
         </h2>
       )}
       <div className="cart-items-list ">
-        {cart?.products?.length > 0 ? (
-          cart?.products.map((item, index) => (
+        {products.length > 0 ? (
+          products.map((item, index) => (
             <CartItem
               key={item.product._id}
               item={item}
-              isLast={index !== cart?.products.length - 1}
+              isLast={index !== products.length - 1}
               variant={variant}
             />
           ))

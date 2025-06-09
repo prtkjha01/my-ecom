@@ -1,9 +1,7 @@
 "use client";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { Skeleton } from "@chakra-ui/react";
-import { getOrders } from "@/redux/slices/order";
-import { RootState } from "@/redux/store";
+import { useGetOrdersQuery } from "@/redux/api/order/order.api";
+import { Order } from "@/redux/api/order/order.types";
 
 interface Product {
   product: {
@@ -12,15 +10,6 @@ interface Product {
     product_name: string;
   };
   count: number;
-}
-
-interface Order {
-  _id: string;
-  status: "PLACED" | "SHIPPED" | "DELIVERED" | "CANCELLED";
-  products: Product[];
-  total: number;
-  payment_method: string;
-  expected_delivery_date: string;
 }
 
 const OrderSkeleton: React.FC = () => (
@@ -52,13 +41,8 @@ const OrderSkeleton: React.FC = () => (
 );
 
 const Orders: React.FC = () => {
-  const dispatch = useDispatch();
-  const orders = useSelector(
-    (state: RootState) => state.order?.orders?.data
-  ) as Order[];
-  const loading = useSelector(
-    (state: RootState) => state.order?.orders?.isLoading
-  );
+  const { data: ordersData, isLoading } = useGetOrdersQuery();
+  const orders = ordersData?.data || [];
 
   const getStatusBadge = (status: Order["status"]) => {
     switch (status) {
@@ -91,14 +75,10 @@ const Orders: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    dispatch(getOrders());
-  }, [dispatch]);
-
   return (
     <div className="p-4 sm:p-12">
-      {orders?.length > 0 && !loading
-        ? orders.map((order) => (
+      {orders.length > 0 && !isLoading
+        ? orders.map((order: Order) => (
             <div key={order._id} className="bg-white p-3 mb-4">
               <div className="flex justify-between">
                 <div className="order-id flex items-center">
@@ -115,7 +95,7 @@ const Orders: React.FC = () => {
               </div>
               <div className="flex justify-between items-center">
                 <div className="w-[70%] flex flex-wrap gap-3">
-                  {order.products?.map((product) => (
+                  {order.products?.map((product: Product) => (
                     <div
                       key={product.product._id}
                       className=" flex justify-between mt-2 relative"

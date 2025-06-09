@@ -2,12 +2,25 @@
 import React from "react";
 import { Button } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-const CartSummary = ({ handleClick }) => {
+import { useGetCartQuery } from "@/redux/api/cart/cart.api";
+import { useGetProductQuery } from "@/redux/api/product/product.api";
+
+interface OrderTotalProps {
+  handleClick: (step: number) => void;
+}
+
+const OrderTotal: React.FC<OrderTotalProps> = ({ handleClick }) => {
   const router = useRouter();
-  const cart = useSelector((state) => state?.cart?.cart?.data);
-  const product = useSelector((state) => state.product?.product?.data);
+  const { data: cartData } = useGetCartQuery(undefined, {
+    skip: !!router.query.id,
+  });
+  const { data: productData } = useGetProductQuery(router.query?.id as string, {
+    skip: !router.query.id,
+  });
+
+  const cart = cartData?.data;
+  const product = productData?.data;
 
   return (
     <>
@@ -16,7 +29,7 @@ const CartSummary = ({ handleClick }) => {
         <div className="cart-summary-details mt-4">
           <div className="flex justify-between">
             <p>Subtotal</p>
-            <p>₹ {router.query.id ? product.price : cart.total_subtotal}</p>
+            <p>₹ {router.query.id ? product?.price : cart?.total_subtotal}</p>
           </div>
 
           <div className="flex justify-between mt-1">
@@ -26,12 +39,12 @@ const CartSummary = ({ handleClick }) => {
 
           <div className="flex justify-between mt-1">
             <p>Discount</p>
-            <p className=" text-green-700"> - ₹ 0.00</p>
+            <p className="text-green-700"> - ₹ 0.00</p>
           </div>
 
           <div className="flex justify-between border-t border-gray-400 border-dashed mt-2 pt-1">
             <p>Total</p>
-            <p>₹ {router.query.id ? product.price : cart.total_subtotal}</p>
+            <p>₹ {router.query.id ? product?.price : cart?.total_subtotal}</p>
           </div>
         </div>
       </div>
@@ -69,4 +82,4 @@ const CartSummary = ({ handleClick }) => {
   );
 };
 
-export default CartSummary;
+export default OrderTotal;

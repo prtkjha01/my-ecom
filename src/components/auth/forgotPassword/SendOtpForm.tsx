@@ -1,16 +1,27 @@
 "use client";
 import { Field, Form, Formik } from "formik";
 import { Button, Input, Text, useToast } from "@chakra-ui/react";
-import logo from "@assets/logo.png";
 import { FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
-import { sendOtp } from "@/redux/slices/auth";
 import Image from "next/image";
-const SendOtpForm = ({ onProgress: handleProgress, onOtp: setEmail }) => {
-  const toast = useToast();
-  const dispatch = useDispatch();
+import { useSendOtpMutation } from "@/redux/api/auth/auth.api";
 
-  const validateEmail = (value) => {
+interface SendOtpFormProps {
+  onProgress: (step: number) => void;
+  onOtp: (email: string) => void;
+}
+
+interface FormValues {
+  email: string;
+}
+
+const SendOtpForm: React.FC<SendOtpFormProps> = ({
+  onProgress: handleProgress,
+  onOtp: setEmail,
+}) => {
+  const toast = useToast();
+  const [sendOtp, { isLoading }] = useSendOtpMutation();
+
+  const validateEmail = (value: string) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const isValidEmail = emailRegex.test(value);
     let error;
@@ -21,42 +32,41 @@ const SendOtpForm = ({ onProgress: handleProgress, onOtp: setEmail }) => {
     }
     return error;
   };
-  const handleSendOtp = (values, actions) => {
-    dispatch(sendOtp(values))
-      .then(() => {
-        actions.setSubmitting(false);
-        setEmail(values.email);
-        handleProgress(2);
-        toast({
-          title: "Success",
-          description: "OTP sent successfully !",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
-      })
-      .catch((error) => {
-        actions.setSubmitting(false);
 
-        toast({
-          title: "Error",
-          description: error?.message || "Something went wrong",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
+  const handleSendOtp = async (values: FormValues, actions: any) => {
+    try {
+      await sendOtp({ email: values.email }).unwrap();
+      actions.setSubmitting(false);
+      setEmail(values.email);
+      handleProgress(2);
+      toast({
+        title: "Success",
+        description: "OTP sent successfully !",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
       });
+    } catch (error: any) {
+      actions.setSubmitting(false);
+      toast({
+        title: "Error",
+        description: error?.data?.message || "Something went wrong",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
     <div className="p-4 md:p-48 lg:p-28 w-full">
       <header className="login-form-header flex flex-col items-center gap-3 mb-10">
-        <Image src={logo.src} height={64} width={64} alt="brand-logo" />
+        <Image src="/png/logo.png" height={64} width={64} alt="brand-logo" />
         <Text className=" text-[#3A003D] font-[700] text-4xl">
           Forgot Password ?
         </Text>
       </header>
-      <Formik
+      <Formik<FormValues>
         initialValues={{
           email: "",
         }}
@@ -67,7 +77,7 @@ const SendOtpForm = ({ onProgress: handleProgress, onOtp: setEmail }) => {
         {(props) => (
           <Form>
             <Field name="email" validate={validateEmail}>
-              {({ field, form }) => (
+              {({ field, form }: any) => (
                 <FormControl
                   isInvalid={form.errors.email && form.touched.email}
                 >
@@ -86,7 +96,7 @@ const SendOtpForm = ({ onProgress: handleProgress, onOtp: setEmail }) => {
               className="w-full"
               backgroundColor={"#014aad"}
               borderRadius={0}
-              isLoading={props.isSubmitting}
+              isLoading={isLoading}
               colorScheme="blue"
               spinner={<div className="loader" />}
               type="submit"

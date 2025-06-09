@@ -10,21 +10,29 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-import logo from "@assets/logo.png";
 import { FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
-import { register } from "@/redux/slices/auth";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { useRegisterMutation } from "@/redux/api/auth/auth.api";
+
+interface FormValues {
+  name: string;
+  mobile: string;
+  email: string;
+  password: string;
+  confirmedPassword: string;
+}
+
 const SignupForm = () => {
-  const dispatch = useDispatch();
   const router = useRouter();
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
   const handleClick = () => setShow(!show);
   const handleClick2 = () => setShow2(!show2);
   const toast = useToast();
-  const validateEmail = (value) => {
+  const [register] = useRegisterMutation();
+
+  const validateEmail = (value: string) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const isValidEmail = emailRegex.test(value);
     let error;
@@ -36,7 +44,7 @@ const SignupForm = () => {
     return error;
   };
 
-  const validateName = (value) => {
+  const validateName = (value: string) => {
     let error;
     if (!value) {
       error = "Name is required";
@@ -44,7 +52,7 @@ const SignupForm = () => {
     return error;
   };
 
-  const validateMobile = (value) => {
+  const validateMobile = (value: string) => {
     let error;
     if (!value) {
       error = "Mobile is required";
@@ -55,7 +63,7 @@ const SignupForm = () => {
     return error;
   };
 
-  const validatePassword = (value) => {
+  const validatePassword = (value: string) => {
     let error;
     if (!value) {
       error = "Password is required";
@@ -63,7 +71,10 @@ const SignupForm = () => {
     return error;
   };
 
-  const validateConfirmedPassword = (value, { password }) => {
+  const validateConfirmedPassword = (
+    value: string,
+    { password }: { password: string }
+  ) => {
     let error;
     if (!value) {
       error = "Password is required";
@@ -72,41 +83,46 @@ const SignupForm = () => {
     }
     return error;
   };
-  const handleRegister = (values, actions) => {
-    const payload = { ...values };
-    delete payload.confirmedPassword;
 
-    dispatch(register(payload))
-      .then(() => {
-        actions.setSubmitting(false);
-        toast({
-          title: "Successfully Registered !",
-          status: "success",
-          duration: 1500,
-          isClosable: true,
-        });
-        router.push("/login");
-      })
-      .catch((error) => {
-        actions.setSubmitting(false);
-        toast({
-          title: "Error",
-          description: error?.message || "Something went wrong",
-          status: "error",
-          duration: 1500,
-          isClosable: true,
-        });
+  const handleRegister = async (values: FormValues, actions: any) => {
+    try {
+      const payload = {
+        email: values.email,
+        password: values.password,
+        name: values.name,
+        mobile: values.mobile,
+      };
+
+      await register(payload).unwrap();
+      actions.setSubmitting(false);
+      toast({
+        title: "Successfully Registered !",
+        status: "success",
+        duration: 1500,
+        isClosable: true,
       });
+      router.push("/login");
+    } catch (error: any) {
+      actions.setSubmitting(false);
+      toast({
+        title: "Error",
+        description: error?.data?.message || "Something went wrong",
+        status: "error",
+        duration: 1500,
+        isClosable: true,
+      });
+    }
   };
+
   return (
     <div className="p-4  md:px-48 lg:px-28 w-full">
       <header className="login-form-header flex flex-col items-center gap-3 mb-10">
-        <Image src={logo.src} height={64} width={64} alt="brand-logo" />
+        <Image src="/png/logo.png" height={64} width={64} alt="brand-logo" />
         <Text className=" text-[#3A003D] font-[700] text-4xl">
           Get Started with MyEcom
         </Text>
       </header>
-      <Formik
+      <Formik<FormValues>
         initialValues={{
           name: "",
           mobile: "",
@@ -121,7 +137,7 @@ const SignupForm = () => {
         {(props) => (
           <Form>
             <Field name="name" validate={validateName}>
-              {({ field, form }) => (
+              {({ field, form }: any) => (
                 <FormControl isInvalid={form.errors.name && form.touched.name}>
                   <FormLabel>Name</FormLabel>
                   <Input {...field} placeholder="Enter your Name" />
@@ -130,7 +146,7 @@ const SignupForm = () => {
               )}
             </Field>
             <Field name="mobile" validate={validateMobile}>
-              {({ field, form }) => (
+              {({ field, form }: any) => (
                 <FormControl
                   className="mt-4"
                   isInvalid={form.errors.mobile && form.touched.mobile}
@@ -146,7 +162,7 @@ const SignupForm = () => {
               )}
             </Field>
             <Field name="email" validate={validateEmail}>
-              {({ field, form }) => (
+              {({ field, form }: any) => (
                 <FormControl
                   className="mt-4"
                   isInvalid={form.errors.email && form.touched.email}
@@ -158,7 +174,7 @@ const SignupForm = () => {
               )}
             </Field>
             <Field name="password" validate={validatePassword}>
-              {({ field, form }) => (
+              {({ field, form }: any) => (
                 <FormControl
                   className="mt-4"
                   isInvalid={form.errors.password && form.touched.password}
@@ -194,11 +210,11 @@ const SignupForm = () => {
 
             <Field
               name="confirmedPassword"
-              validate={(value) =>
+              validate={(value: string) =>
                 validateConfirmedPassword(value, props.values)
               }
             >
-              {({ field, form }) => (
+              {({ field, form }: any) => (
                 <FormControl
                   className="mt-4"
                   isInvalid={
@@ -249,6 +265,8 @@ const SignupForm = () => {
             </div>
             <Button
               mt={8}
+              backgroundColor={"#014aad"}
+              borderRadius={0}
               className="w-full"
               colorScheme="telegram"
               isLoading={props.isSubmitting}

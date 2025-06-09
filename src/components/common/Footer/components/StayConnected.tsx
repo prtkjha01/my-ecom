@@ -1,12 +1,10 @@
 "use client";
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { subscribeToNewsletter } from "@/redux/slices/auth";
 import { Button, Icon, useToast } from "@chakra-ui/react";
 import { MdFacebook } from "react-icons/md";
 import { FaXTwitter, FaLinkedin, FaInstagram } from "react-icons/fa6";
 import { IconType } from "react-icons";
-import { AppDispatch } from "@/redux/store";
+import { useSubscribeToNewsletterMutation } from "@/redux/api/user/user.api";
 
 interface SocialIcon {
   id: number;
@@ -15,13 +13,9 @@ interface SocialIcon {
   icon: IconType;
 }
 
-interface ApiError {
-  message?: string;
-}
-
 const StayConnected: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const toast = useToast();
+  const [subscribeToNewsletter] = useSubscribeToNewsletterMutation();
   const [loading, setLoading] = useState<boolean>(false);
   const [icons] = useState<SocialIcon[]>([
     {
@@ -54,32 +48,30 @@ const StayConnected: React.FC = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
     setEmail(e.target.value);
 
-  const handleSubscription = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubscription = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    console.log(email);
-    dispatch(subscribeToNewsletter({ email }))
-      .then(() => {
-        setLoading(false);
-        toast({
-          title: "Success",
-          description: "You're now subscribed to MyEcom newsletter !",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
-      })
-      .catch((error: ApiError) => {
-        setLoading(false);
-        setEmail("");
-        toast({
-          title: "Error",
-          description: error?.message || "Something went wrong",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
+    try {
+      await subscribeToNewsletter({ email }).unwrap();
+      setLoading(false);
+      toast({
+        title: "Success",
+        description: "You're now subscribed to MyEcom newsletter !",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
       });
+    } catch (error: any) {
+      setLoading(false);
+      setEmail("");
+      toast({
+        title: "Error",
+        description: error?.data?.message || "Something went wrong",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
 
   return (

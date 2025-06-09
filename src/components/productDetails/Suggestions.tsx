@@ -1,32 +1,33 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { Text, Skeleton } from "@chakra-ui/react";
 import ProductCard, {
   ProductCardSkeleton,
 } from "../search/components/ProductCard";
-import { useDispatch, useSelector } from "react-redux";
-import { getProductsByCategory } from "@/redux/slices/product";
-import { AppDispatch, RootState } from "@/redux/store";
+import { useGetProductsByCategoryQuery } from "@/redux/api/product/product.api";
+import { useGetProductQuery } from "@/redux/api/product/product.api";
 import { Product } from "@/types/product";
+import { useRouter } from "next/router";
 
 const Suggestions: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
+  const { id } = router.query;
+  const { data: productData } = useGetProductQuery(id as string);
+  const product = productData?.data;
 
-  const product = useSelector(
-    (state: RootState) => state?.product?.product?.data
-  );
-  const products = useSelector(
-    (state: RootState) => state?.product?.products?.data
-  );
-  const isLoading = useSelector(
-    (state: RootState) => state?.product?.products?.isLoading
-  );
-
-  useEffect(() => {
-    if (product?.category) {
-      dispatch(getProductsByCategory(product.category));
+  const { data: productsData, isLoading } = useGetProductsByCategoryQuery(
+    {
+      category: product?.category || "",
+      page: 1,
+      limit: 100,
+    },
+    {
+      skip: !product?.category,
+      refetchOnMountOrArgChange: true,
     }
-  }, [product, dispatch]);
+  );
+
+  const products = productsData?.data?.products || [];
 
   return (
     <div className="px-4 lg:px-12 bg-white">

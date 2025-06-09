@@ -18,40 +18,51 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { getAddresses, createAddress } from "@/redux/slices/address";
-const AddressSidebar = ({ onClose }) => {
-  const dispatch = useDispatch();
-  const createAddressIsLoading = useSelector(
-    (state) => state?.address?.createAddress?.isLoading
-  );
-  const toast = useToast();
-  const validateName = (value) => (!value ? "Name is required" : null);
-  const validateMobile = (value) => (!value ? "Mobile is required" : null);
-  const validateAddressLine1 = (value) =>
-    !value ? "Address line 1 is required" : null;
-  const validateCity = (value) => (!value ? "City is required" : null);
-  const validateState = (value) => (!value ? "State is required" : null);
-  const validatePincode = (value) => (!value ? "Pincode is required" : null);
-  const validateCountry = (value) => (!value ? "Country is required" : null);
+import {
+  useCreateAddressMutation,
+  useGetAddressesQuery,
+} from "@/redux/api/address/address.api";
+import { AddressSidebarProps } from "@/types/address.types";
+import { Address } from "@/redux/api/address/address.types";
 
-  const handleSubmit = (values, actions) => {
-    dispatch(createAddress(values))
-      .then(() => {
-        actions.setSubmitting(false);
-        dispatch(getAddresses());
-        actions.resetForm();
-        onClose();
-      })
-      .catch((error) => {
-        actions.setSubmitting(false);
-        toast({
-          title: error.message,
-          status: "error",
-          duration: 1500,
-          isClosable: true,
-        });
+const AddressSidebar = ({ onClose }: AddressSidebarProps) => {
+  const dispatch = useDispatch();
+  const [createAddress, { isLoading: createAddressIsLoading }] =
+    useCreateAddressMutation();
+  const { refetch } = useGetAddressesQuery();
+  const toast = useToast();
+
+  const validateName = (value: string) => (!value ? "Name is required" : null);
+  const validateMobile = (value: string) =>
+    !value ? "Mobile is required" : null;
+  const validateAddressLine1 = (value: string) =>
+    !value ? "Address line 1 is required" : null;
+  const validateCity = (value: string) => (!value ? "City is required" : null);
+  const validateState = (value: string) =>
+    !value ? "State is required" : null;
+  const validatePincode = (value: string) =>
+    !value ? "Pincode is required" : null;
+  const validateCountry = (value: string) =>
+    !value ? "Country is required" : null;
+
+  const handleSubmit = async (values: Partial<Address>, actions: any) => {
+    try {
+      await createAddress(values as Address).unwrap();
+      actions.setSubmitting(false);
+      refetch();
+      actions.resetForm();
+      onClose();
+    } catch (error: any) {
+      actions.setSubmitting(false);
+      toast({
+        title: error.message || "Failed to create address",
+        status: "error",
+        duration: 1500,
+        isClosable: true,
       });
+    }
   };
+
   return (
     <>
       <DrawerOverlay />
@@ -59,7 +70,7 @@ const AddressSidebar = ({ onClose }) => {
         <DrawerCloseButton top={"1rem"} />
         <DrawerHeader className="!font-[700]">Add New Address</DrawerHeader>
 
-        <Formik
+        <Formik<Partial<Address>>
           initialValues={{
             name: "",
             mobile: "",
@@ -69,7 +80,7 @@ const AddressSidebar = ({ onClose }) => {
             state: "",
             pincode: "",
             country: "",
-            type: null,
+            type: undefined,
           }}
           onSubmit={handleSubmit}
         >
@@ -77,7 +88,7 @@ const AddressSidebar = ({ onClose }) => {
             <Form>
               <DrawerBody h={"calc(100vh - 134px)"} pb={"120px"}>
                 <Field name="name" validate={validateName}>
-                  {({ field, form }) => (
+                  {({ field, form }: any) => (
                     <FormControl
                       isInvalid={form.errors.name && form.touched.name}
                       isRequired
@@ -90,7 +101,7 @@ const AddressSidebar = ({ onClose }) => {
                 </Field>
 
                 <Field name="mobile" validate={validateMobile}>
-                  {({ field, form }) => (
+                  {({ field, form }: any) => (
                     <FormControl
                       className="mt-2"
                       isInvalid={form.errors.mobile && form.touched.mobile}
@@ -104,7 +115,7 @@ const AddressSidebar = ({ onClose }) => {
                 </Field>
 
                 <Field name="address_line_1" validate={validateAddressLine1}>
-                  {({ field, form }) => (
+                  {({ field, form }: any) => (
                     <FormControl
                       className="mt-2"
                       isInvalid={
@@ -123,7 +134,7 @@ const AddressSidebar = ({ onClose }) => {
                 </Field>
 
                 <Field name="address_line_2">
-                  {({ field, form }) => (
+                  {({ field, form }: any) => (
                     <FormControl
                       className="mt-2"
                       isInvalid={
@@ -138,7 +149,7 @@ const AddressSidebar = ({ onClose }) => {
                 </Field>
 
                 <Field name="city" validate={validateCity}>
-                  {({ field, form }) => (
+                  {({ field, form }: any) => (
                     <FormControl
                       className="mt-2"
                       isInvalid={form.errors.city && form.touched.city}
@@ -152,7 +163,7 @@ const AddressSidebar = ({ onClose }) => {
                 </Field>
 
                 <Field name="state" validate={validateState}>
-                  {({ field, form }) => (
+                  {({ field, form }: any) => (
                     <FormControl
                       className="mt-2"
                       isInvalid={form.errors.state && form.touched.state}
@@ -166,7 +177,7 @@ const AddressSidebar = ({ onClose }) => {
                 </Field>
 
                 <Field name="pincode" validate={validatePincode}>
-                  {({ field, form }) => (
+                  {({ field, form }: any) => (
                     <FormControl
                       className="mt-2"
                       isInvalid={form.errors.pincode && form.touched.pincode}
@@ -180,7 +191,7 @@ const AddressSidebar = ({ onClose }) => {
                 </Field>
 
                 <Field name="country" validate={validateCountry}>
-                  {({ field, form }) => (
+                  {({ field, form }: any) => (
                     <FormControl
                       className="mt-2"
                       isInvalid={form.errors.country && form.touched.country}
@@ -193,7 +204,7 @@ const AddressSidebar = ({ onClose }) => {
                   )}
                 </Field>
                 <Field name="type">
-                  {({ field, form }) => (
+                  {({ field, form }: any) => (
                     <FormControl
                       className="mt-2"
                       isInvalid={form.errors.type && form.touched.type}

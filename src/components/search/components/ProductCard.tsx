@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { Skeleton, SkeletonText } from "@chakra-ui/react";
-import myEcomAssured from "@assets/MyEcomAssured.png";
 import RatingBadge from "@/components/common/RatingBadge";
 export const ProductCardSkeleton = () => (
   <div className="bg-white sm:min-w-52 shadow hover:scale-105 transition duration-300 cursor-pointer">
@@ -20,7 +19,7 @@ export const ProductCardSkeleton = () => (
     </div>
   </div>
 );
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product }: any) => {
   const {
     _id,
     product_name,
@@ -56,7 +55,7 @@ const ProductCard = ({ product }) => {
           <div className="product-price flex gap-2 mt-2">
             <span className="">
               {currency_symbol}
-              {parseInt(price - price * (discount / 100))}
+              {Math.floor(price - price * (discount / 100))}
             </span>
             <span className="line-through">
               {currency_symbol}
@@ -66,7 +65,7 @@ const ProductCard = ({ product }) => {
           </div>
           {is_assured && (
             <img
-              src={myEcomAssured.src}
+              src="/png/MyEcomAssured.png"
               className=" h-7 mt-2"
               alt="assured-png"
             />

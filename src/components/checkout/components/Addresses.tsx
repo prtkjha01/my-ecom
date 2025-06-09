@@ -1,25 +1,24 @@
-"use client";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getAddresses } from "@/redux/slices/address";
+import { useDispatch } from "react-redux";
+import { useGetAddressesQuery } from "@/redux/api/address/address.api";
 import { Button, Drawer, useDisclosure, Skeleton } from "@chakra-ui/react";
 import { AddIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import AddressCard, { AddressCardSkeleton } from "./AddressCard";
 import AddressSidebar from "./AddressSidebar";
+import { AddressesProps } from "@/types/address.types";
 
-const Addresses = ({ handleClick, onSelect }) => {
+const Addresses = ({ handleClick, onSelect }: AddressesProps) => {
   const dispatch = useDispatch();
-  const addresses = useSelector((state) => state?.address?.addresses?.data);
-  const loading = useSelector((state) => state?.address?.addresses?.isLoading);
+  const { data: addressesData, isLoading: loading } = useGetAddressesQuery();
+  const addresses = addressesData?.data || [];
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [selectedAddress, setSelectedAddress] = useState(null);
-  const handleAddressSelection = (id) => {
+  const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
+
+  const handleAddressSelection = (id: string) => {
     selectedAddress === id ? setSelectedAddress(null) : setSelectedAddress(id);
     onSelect(id);
   };
-  useEffect(() => {
-    dispatch(getAddresses());
-  }, []);
+
   return (
     <div className="">
       <div className="add-address-btn flex justify-end">

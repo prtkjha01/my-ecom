@@ -2,10 +2,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { Icon, useToast } from "@chakra-ui/react";
-import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import { getCarouselProducts } from "@/redux/slices/product";
-import { RootState } from "@/redux/store";
+import { useGetCarouselProductsQuery } from "@/redux/api/product/product.api";
 
 interface CarouselItem {
   _id: string;
@@ -15,20 +13,17 @@ interface CarouselItem {
 
 const Carousel: React.FC = () => {
   const test = useRef<HTMLDivElement>(null);
-  const dispatch = useDispatch();
   const router = useRouter();
   const toast = useToast();
-  const carouselProducts = useSelector(
-    (state: RootState) => state.product?.carouselProducts
-  );
+  const { data: carouselProducts, error } = useGetCarouselProductsQuery();
 
   const [carouselData, setCarouselData] = useState<CarouselItem[]>(
-    carouselProducts || []
+    carouselProducts?.data || []
   );
   const [activeIndex, setActiveIndex] = useState(0);
 
   const updateCarouselData = (index: number) => {
-    const updatedData = carouselData.map((item, i) => ({
+    const updatedData = carouselData?.map((item, i) => ({
       ...item,
       active: i === index,
     }));
@@ -48,12 +43,12 @@ const Carousel: React.FC = () => {
 
   const scrollLeft = () => {
     const newIndex =
-      (activeIndex - 1 + carouselData.length) % carouselData.length;
+      (activeIndex - 1 + carouselData?.length) % carouselData?.length;
     setActiveIndex(newIndex);
     updateCarouselData(newIndex);
 
     if (test.current) {
-      if (newIndex === carouselData.length - 1) {
+      if (newIndex === carouselData?.length - 1) {
         test.current.scrollTo({
           left: test.current.scrollWidth - test.current.clientWidth,
           behavior: "smooth",
@@ -89,30 +84,31 @@ const Carousel: React.FC = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const newIndex = (activeIndex + 1) % carouselData.length;
+      const newIndex = (activeIndex + 1) % carouselData?.length;
       scrollToIndex(newIndex);
     }, 1500);
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [activeIndex, carouselData.length]);
+  }, [activeIndex, carouselData?.length]);
 
   useEffect(() => {
-    dispatch(getCarouselProducts() as any)
-      .then()
-      .catch((error: Error) => {
-        toast({
-          title: error?.message || "Something went wrong",
-          status: "error",
-          duration: 1500,
-          isClosable: true,
-        });
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to load carousel products",
+        status: "error",
+        duration: 1500,
+        isClosable: true,
       });
-  }, []);
+    }
+  }, [error, toast]);
 
   useEffect(() => {
-    setCarouselData(carouselProducts);
+    if (carouselProducts?.data) {
+      setCarouselData(carouselProducts.data);
+    }
   }, [carouselProducts]);
 
   return (
@@ -122,7 +118,7 @@ const Carousel: React.FC = () => {
           className="carousel-wrapper flex overflow-x-hidden lg:h-[600px] md:h-[500px] sm:h-[400px] h-[250px] w-full"
           ref={test}
         >
-          {carouselData.map((carouselItem) => (
+          {carouselData?.map((carouselItem) => (
             <div
               key={carouselItem._id}
               className="carousel-item bg-white min-w-full cursor-pointer"
@@ -138,7 +134,7 @@ const Carousel: React.FC = () => {
         </div>
         {/* PAGINATION INDICATORS START */}
         <div className="pagination-container absolute bottom-0 pb-1 w-full bg-[#4b4b4b6b] flex justify-center items-center gap-[5px]">
-          {carouselData.map((item, index) => (
+          {carouselData?.map((item, index) => (
             <div
               key={item._id}
               className="pagination-indicator cursor-pointer"

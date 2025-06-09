@@ -2,29 +2,15 @@
 import { useState } from "react";
 import { Button, useToast } from "@chakra-ui/react";
 import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
-import { placeOrder } from "@/redux/slices/order";
+import { useSelector } from "react-redux";
 import { FaMoneyBill } from "react-icons/fa";
 import { MdOutlinePayment } from "react-icons/md";
 import { useRouter } from "next/router";
 import { RootState } from "@/redux/store";
-
-interface PaymentPayload {
-  address?: string;
-  products?: Array<{
-    product: string;
-    count: number;
-  }>;
-  total?: number;
-  payment_method?: string;
-  expected_delivery_date?: Date;
-  razorpay_data?: {
-    order_creation_id: string;
-    razorpay_payment_id: string;
-    razorpay_order_id: string;
-    razorpay_signature: string;
-  };
-}
+import { usePlaceOrderMutation } from "@/redux/api/order/order.api";
+import { OrderPayload } from "@/redux/api/order/order.types";
+import { useGetCartQuery } from "@/redux/api/cart/cart.api";
+import { useGetProductQuery } from "@/redux/api/product/product.api";
 
 interface RazorpayResponse {
   razorpay_payment_id: string;
@@ -33,17 +19,23 @@ interface RazorpayResponse {
 }
 
 interface PaymentProps {
-  payload: PaymentPayload;
+  payload: OrderPayload;
 }
 
 const Payment: React.FC<PaymentProps> = ({ payload }) => {
-  const cart = useSelector((state: RootState) => state?.cart?.cart?.data);
-  const product = useSelector(
-    (state: RootState) => state?.product?.product?.data
-  );
-  const dispatch = useDispatch();
-  const toast = useToast();
   const router = useRouter();
+  const id = router.query.id;
+
+  const { data: productData } = useGetProductQuery(id as string, {
+    skip: !id,
+  });
+  const product = productData?.data;
+
+  const { data: cartData } = useGetCartQuery();
+  const cart = cartData?.data;
+  const [placeOrder, { isLoading: isPlacingOrder }] = usePlaceOrderMutation();
+  const toast = useToast();
+
   const [codLoading, setCodLoading] = useState(false);
   const [onlineLoading, setOnlineLoading] = useState(false);
 
@@ -105,53 +97,48 @@ const Payment: React.FC<PaymentProps> = ({ payload }) => {
   };
 
   const handlePayment = async (response: RazorpayResponse, orderId: string) => {
-    const orderPayload: PaymentPayload = {
-      ...payload,
+    const orderPayload: OrderPayload = {
+      address_id: payload.address_id,
       payment_method: "ONLINE",
-      expected_delivery_date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
-      razorpay_data: {
-        order_creation_id: orderId,
-        razorpay_payment_id: response.razorpay_payment_id,
-        razorpay_order_id: response.razorpay_order_id,
-        razorpay_signature: response.razorpay_signature,
-      },
     };
 
     handleOrder("ONLINE", orderPayload);
   };
 
   const handleCod = () => {
-    const orderPayload: PaymentPayload = {
-      ...payload,
+    const orderPayload: OrderPayload = {
+      address_id: payload.address_id,
       payment_method: "COD",
-      expected_delivery_date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
     };
     handleOrder("COD", orderPayload);
   };
 
-  const handleOrder = (type: "COD" | "ONLINE", payload: PaymentPayload) => {
-    type === "COD" ? setCodLoading(true) : setOnlineLoading(true);
-    dispatch(placeOrder(payload))
-      .then(() => {
-        type === "COD" ? setCodLoading(true) : setOnlineLoading(true);
-        toast({
-          title: "Order Placed",
-          description: "Your order has been placed successfully",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
-        router.push("/order/success");
-      })
-      .catch((error) => {
-        type === "COD" ? setCodLoading(true) : setOnlineLoading(true);
-        toast({
-          title: error.message,
-          status: "error",
-          duration: 1500,
-          isClosable: true,
-        });
+  const handleOrder = async (
+    type: "COD" | "ONLINE",
+    orderPayload: OrderPayload
+  ) => {
+    try {
+      type === "COD" ? setCodLoading(true) : setOnlineLoading(true);
+      await placeOrder(orderPayload).unwrap();
+
+      toast({
+        title: "Order Placed",
+        description: "Your order has been placed successfully",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
       });
+      router.push("/order/success");
+    } catch (error: any) {
+      toast({
+        title: error.message || "Failed to place order",
+        status: "error",
+        duration: 1500,
+        isClosable: true,
+      });
+    } finally {
+      type === "COD" ? setCodLoading(false) : setOnlineLoading(false);
+    }
   };
 
   return (

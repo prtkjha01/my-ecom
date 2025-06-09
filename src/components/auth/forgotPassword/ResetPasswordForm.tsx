@@ -9,24 +9,32 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import logo from "@assets/logo.png";
 import { FormControl, FormLabel, FormErrorMessage } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-import { resetPassword } from "@/redux/slices/auth";
 import { useRouter } from "next/router";
 import Image from "next/image";
-const ResetPasswordForm = ({ email }) => {
+import { useResetPasswordMutation } from "@/redux/api/auth/auth.api";
+
+interface ResetPasswordFormProps {
+  email: string;
+}
+
+interface FormValues {
+  password: string;
+  confirmedPassword: string;
+}
+
+const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ email }) => {
   const router = useRouter();
   const toast = useToast();
-  const dispatch = useDispatch();
+  const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
   const handleClick = () => setShow(!show);
   const handleClick2 = () => setShow2(!show2);
 
-  const validatePassword = (value) => {
+  const validatePassword = (value: string) => {
     let error;
     if (!value) {
       error = "Password is required";
@@ -34,7 +42,10 @@ const ResetPasswordForm = ({ email }) => {
     return error;
   };
 
-  const validateConfirmedPassword = (value, { password }) => {
+  const validateConfirmedPassword = (
+    value: string,
+    { password }: { password: string }
+  ) => {
     let error;
     if (!value) {
       error = "Password is required";
@@ -43,41 +54,40 @@ const ResetPasswordForm = ({ email }) => {
     }
     return error;
   };
-  const handleResetPassword = (values, actions) => {
-    dispatch(resetPassword({ email, ...values }))
-      .then(() => {
-        actions.setSubmitting(false);
-        toast({
-          title: "Success",
-          description: "Password Changed successfully !",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
-        router.push("/login");
-      })
-      .catch((error) => {
-        actions.setSubmitting(false);
 
-        toast({
-          title: "Error",
-          description: error?.message || "Something went wrong",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
+  const handleResetPassword = async (values: FormValues, actions: any) => {
+    try {
+      await resetPassword({ email, password: values.password }).unwrap();
+      actions.setSubmitting(false);
+      toast({
+        title: "Success",
+        description: "Password Changed successfully !",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
       });
+      router.push("/login");
+    } catch (error: any) {
+      actions.setSubmitting(false);
+      toast({
+        title: "Error",
+        description: error?.data?.message || "Something went wrong",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
     <div className="p-4 md:p-48 lg:p-28 w-full">
       <header className="login-form-header flex flex-col items-center gap-3 mb-10">
-        <Image src={logo.src} height={64} width={64} alt="brand-logo" />
+        <Image src="/png/logo.png" height={64} width={64} alt="brand-logo" />
         <Text className=" text-[#3A003D] font-[700] text-4xl">
           Reset Password ?
         </Text>
       </header>
-      <Formik
+      <Formik<FormValues>
         initialValues={{
           password: "",
           confirmedPassword: "",
@@ -89,7 +99,7 @@ const ResetPasswordForm = ({ email }) => {
         {(props) => (
           <Form>
             <Field name="password" validate={validatePassword}>
-              {({ field, form }) => (
+              {({ field, form }: any) => (
                 <FormControl
                   className="mt-4"
                   isInvalid={form.errors.password && form.touched.password}
@@ -125,11 +135,11 @@ const ResetPasswordForm = ({ email }) => {
 
             <Field
               name="confirmedPassword"
-              validate={(value) =>
+              validate={(value: string) =>
                 validateConfirmedPassword(value, props.values)
               }
             >
-              {({ field, form }) => (
+              {({ field, form }: any) => (
                 <FormControl
                   className="mt-4"
                   isInvalid={
@@ -173,7 +183,7 @@ const ResetPasswordForm = ({ email }) => {
               className="w-full"
               backgroundColor={"#014aad"}
               borderRadius={0}
-              isLoading={props.isSubmitting}
+              isLoading={isLoading}
               colorScheme="blue"
               spinner={<div className="loader" />}
               type="submit"
