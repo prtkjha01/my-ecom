@@ -1,6 +1,5 @@
 export type CartPayload = {
-  product_id: string;
-  quantity: number;
+  products: string[];
 };
 
 export type UpdateProductQuantityPayload = {

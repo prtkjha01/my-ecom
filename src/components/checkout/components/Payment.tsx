@@ -98,8 +98,15 @@ const Payment: React.FC<PaymentProps> = ({ payload }) => {
 
   const handlePayment = async (response: RazorpayResponse, orderId: string) => {
     const orderPayload: OrderPayload = {
-      address_id: payload.address_id,
+      ...payload,
       payment_method: "ONLINE",
+      expected_delivery_date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+      razorpay_data: {
+        order_creation_id: orderId,
+        razorpay_payment_id: response.razorpay_payment_id,
+        razorpay_order_id: response.razorpay_order_id,
+        razorpay_signature: response.razorpay_signature,
+      },
     };
 
     handleOrder("ONLINE", orderPayload);
@@ -107,8 +114,9 @@ const Payment: React.FC<PaymentProps> = ({ payload }) => {
 
   const handleCod = () => {
     const orderPayload: OrderPayload = {
-      address_id: payload.address_id,
+      ...payload,
       payment_method: "COD",
+      expected_delivery_date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
     };
     handleOrder("COD", orderPayload);
   };

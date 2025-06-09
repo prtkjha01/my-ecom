@@ -7,6 +7,8 @@ import Payment from "./components/Payment";
 import { useSelector, useDispatch } from "react-redux";
 import { getCart } from "@/redux/slices/cart";
 import { RootState } from "@/redux/store";
+import { useGetProductQuery } from "@/redux/api/product/product.api";
+import { useRouter } from "next/router";
 
 interface CheckoutPayload {
   address?: string;
@@ -23,13 +25,14 @@ interface Product {
 }
 
 const BuyNow: React.FC = () => {
+  const router = useRouter();
+  const id = router.query.id;
   const [step, setStep] = useState<number>(0);
   const [checkoutPayload, setCheckoutPayload] = useState<CheckoutPayload>({});
-  const dispatch = useDispatch();
-  const cart = useSelector((state: RootState) => state?.cart?.cart?.data);
-  const product = useSelector(
-    (state: RootState) => state.product?.product?.data
-  ) as Product | null;
+  const { data: productData } = useGetProductQuery(id as string, {
+    skip: !id,
+  });
+  const product = productData?.data;
 
   const handleClick = (step: number) => {
     setStep(step);
@@ -43,22 +46,7 @@ const BuyNow: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(getCart());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (cart && !product) {
-      const checkoutProducts = cart.products?.map((product) => ({
-        product: product.product._id,
-        count: product.count,
-      }));
-
-      setCheckoutPayload((prev) => ({
-        ...prev,
-        products: checkoutProducts,
-        total: cart.total_subtotal,
-      }));
-    } else if (product) {
+    if (product) {
       setCheckoutPayload((prev) => ({
         ...prev,
         products: [
@@ -70,7 +58,7 @@ const BuyNow: React.FC = () => {
         total: product.price,
       }));
     }
-  }, [cart, product]);
+  }, [product]);
 
   return (
     <div className="p-4 sm:p-12">

@@ -43,8 +43,7 @@ const Index: React.FC = () => {
     if (token) {
       try {
         await addToCart({
-          product_id: product._id,
-          quantity: 1,
+          products: [product._id],
         }).unwrap();
         await refetchCart();
         toast({

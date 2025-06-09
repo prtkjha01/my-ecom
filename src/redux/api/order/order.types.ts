@@ -1,6 +1,18 @@
 export type OrderPayload = {
-  address_id: string;
-  payment_method: string;
+  address_id?: string;
+  payment_method?: string;
+  expected_delivery_date?: Date;
+  products?: {
+    product: string;
+    count: number;
+  }[];
+  total?: number;
+  razorpay_data?: {
+    order_creation_id: string;
+    razorpay_payment_id: string;
+    razorpay_order_id: string;
+    razorpay_signature: string;
+  };
 };
 
 type Product = {

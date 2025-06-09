@@ -4,9 +4,8 @@ import Steps from "./components/Steps";
 import Addresses from "./components/Addresses";
 import OrderSummary from "./components/OrderSummary";
 import Payment from "./components/Payment";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 import { OrderPayload } from "@/redux/api/order/order.types";
+import { useGetCartQuery } from "@/redux/api/cart/cart.api";
 
 const Checkout: React.FC = () => {
   const [step, setStep] = useState<number>(0);
@@ -14,9 +13,9 @@ const Checkout: React.FC = () => {
     address_id: "",
     payment_method: "",
   });
-  const cart = useSelector(
-    (state: RootState) => state.api.queries["getCart"]?.data as any
-  )?.data;
+  const { data: cartData } = useGetCartQuery();
+  const cart = cartData?.data;
+  console.log(cart);
 
   const handleStepChange = (newStep: number) => {
     setStep(newStep);
@@ -31,12 +30,22 @@ const Checkout: React.FC = () => {
 
   useEffect(() => {
     if (cart) {
+      const checkoutProducts = cart.products?.map((product) => ({
+        product: product.product._id,
+        count: product.count,
+      }));
+
       setCheckoutPayload((prev) => ({
         ...prev,
-        payment_method: "", // This will be set in the Payment component
+        products: checkoutProducts,
+        total: cart.total_subtotal,
       }));
     }
   }, [cart]);
+
+  useEffect(() => {
+    console.log("checkoutPayload", checkoutPayload);
+  }, [checkoutPayload]);
 
   return (
     <div className="p-4 sm:p-12">
